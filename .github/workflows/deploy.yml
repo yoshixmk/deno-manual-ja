@@ -25,19 +25,19 @@ jobs:
 
       - name: Render
         run: |
-          cd deno_docs_zh_CN
+          cd deno_docs_ja
           mdbook build
           cd book
           cd ..
 
       - name: Debug
         run: |
-          ls deno_docs_zh_CN/book
+          ls deno_docs_ja/book
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: deno_docs_zh_CN/book
+          FOLDER: deno_docs_ja/book
           CLEAN: true

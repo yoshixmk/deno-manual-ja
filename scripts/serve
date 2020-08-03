@@ -1,4 +1,4 @@
 #! /bin/sh
-cd deno_docs_zh_CN
+cd deno_docs_ja
 mdbook serve -o
 cd ..

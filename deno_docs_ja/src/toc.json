@@ -1,0 +1,81 @@
+{
+  "introduction": {
+    "name": "介绍"
+  },
+  "getting_started": {
+    "name": "入门",
+    "children": {
+      "installation": "安装",
+      "setup_your_environment": "设置环境",
+      "first_steps": "第一步",
+      "command_line_interface": "命令行界面",
+      "permissions": "权限",
+      "typescript": "使用 TypeScript",
+      "webassembly": "使用 WebAssembly"
+    }
+  },
+  "runtime": {
+    "name": "运行时",
+    "children": {
+      "stability": "稳定性",
+      "program_lifecycle": "程序生命周期",
+      "compiler_apis": "编译器 API",
+      "workers": "Worker"
+    }
+  },
+  "linking_to_external_code": {
+    "name": "与外部代码连接",
+    "children": {
+      "reloading_modules": "重新加载模块",
+      "integrity_checking": "完整性检查",
+      "proxies": "代理",
+      "import_maps": "导入映射"
+    }
+  },
+  "standard_library": {
+    "name": "标准库"
+  },
+  "testing": {
+    "name": "测试",
+    "children": {
+      "assertions": "断言"
+    }
+  },
+  "tools": {
+    "name": "工具",
+    "children": {
+      "debugger": "调试器",
+      "script_installer": "脚本安装器",
+      "formatter": "格式化工具",
+      "bundler": "打包器",
+      "documentation_generator": "文档生成器",
+      "dependency_inspector": "依赖检查器",
+      "linter": "Linter"
+    }
+  },
+  "embedding_deno": {
+    "name": "嵌入 Deno"
+  },
+  "contributing": {
+    "name": "贡献",
+    "children": {
+      "building_from_source": "从源码构建",
+      "development_tools": "开发工具",
+      "style_guide": "风格指南",
+      "architecture": "架构"
+    }
+  },
+  "examples": {
+    "name": "示例",
+    "children": {
+      "unix_cat": "Unix cat",
+      "file_server": "文件服务",
+      "tcp_echo": "TCP echo",
+      "subprocess": "创建子进程",
+      "permissions": "检查与放弃权限",
+      "os_signals": "系统信号",
+      "file_system_events": "文件系统事件",
+      "testing_if_main": "测试当前文件是否为主程序"
+    }
+  }
+}

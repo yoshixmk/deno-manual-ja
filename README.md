@@ -1,29 +1,26 @@
-# Deno 中文手册
+# Deno 日本語マニュアル
 
-> 此版本更新于 2020 年 7 月 24 日
+<a href="https://github.com/denoland/deno/releases"><img src="https://img.shields.io/github/release/denoland/deno" alt="Deno English">※英語</a><br>
+<a href="https://github.com/denoland/deno/releases"><img src="https://img.shields.io/badge/release-v1.2.1-blue.svg" alt="deno manual zh cn version">※中国語</a><br>
+<a href="https://github.com/denoland/deno/releases"><img src="https://img.shields.io/badge/release-v1.2.1-blue.svg" alt="deno manual ja version">※日本語</a>
 
-点此阅读：[nugine.github.io/deno-manual-cn/](https://nugine.github.io/deno-manual-cn/)
+> 最終更新 2020 年 07 月 24 日  
+> Snapshot is [deno @ a8f74aa](https://github.com/denoland/deno/tree/a8f74aa381c99e9c3c3d8fdfde02919966a3a824)
 
-参与者：[@Nugine](https://github.com/Nugine), [@sbwww](https://github.com/sbwww), [@symbioticstar](https://github.com/symbioticstar), [@gylidian](https://github.com/gylidian), [@justjavac](https://github.com/justjavac)
+このマニュアルは[Deno公式マニュアル](https://github.com/[denoland/doc](https://deno.land/manual))  
+及び、Deno 中文手册由 [https://github.com/Nugine/deno-manual-cn](https://github.com/Nugine/deno-manual-cn)  
+を基に作成しています。
 
-## 如何参与改进？
+翻訳した内容は[https://yoshixmk.github.io/deno-manual-ja](https://yoshixmk.github.io/deno-manual-ja)にデプロイされます。
 
-勘误：<https://github.com/Nugine/deno-manual-cn/issues/new/choose>
+## 作者
 
-## 协议
+- [@yoshixmk](https://github.com/yoshixmk)
+
+## 誤訳・誤った文章を見つけた場合
+
+お手数ですが[こちら](https://github.com/yoshixmk/deno-manual-ja/issues/new)からIssueをいただけると助かります
+
+## LICENSE
 
 [![Creative Commons License](https://licensebuttons.net/l/by-nc/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc/4.0/)
-
-本项目采用 [CC BY-NC 4.0](http://creativecommons.org/licenses/by-nc/4.0/) 协议。
-
-## 镜像部署
-
-+ Deno 中文社区：<https://manual.deno.js.cn/>
-+ Deno 中文网：<https://denolang.cn/manual/>
-
-欢迎补充！
-
-## 生成器
-
-+ 本项目：[rust-lang/mdBook](https://github.com/rust-lang/mdBook)
-+ [Deno 中文社区镜像](https://github.com/denocn/deno_manual)：[xcatliu/pagic](https://github.com/xcatliu/pagic)

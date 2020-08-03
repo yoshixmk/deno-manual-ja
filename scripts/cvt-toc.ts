@@ -2,7 +2,7 @@
 
 import { readJson } from "https://deno.land/std/fs/read_json.ts";
 
-const tocUnknown = await readJson("deno_docs_zh_CN/src/toc.json");
+const tocUnknown = await readJson("deno_docs_ja/src/toc.json");
 
 interface Toc {
     [key: string]: {
