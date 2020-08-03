@@ -1,6 +1,6 @@
 # Summary
 
-- [介绍](introduction.md)
+- [前書き](introduction.md)
 - [入门](getting_started.md)
   - [安装](getting_started/installation.md)
   - [设置环境](getting_started/setup_your_environment.md)

@@ -7,3 +7,5 @@ title = "Deno 日本語マニュアル"
 
 [output.html]
 theme = "theme"
+google-analytics = "UA-149348992-5"
+git-repository-url = "https://github.com/yoshixmk/deno-manual-ja"
