@@ -1,9 +1,9 @@
 [book]
-authors = ["Nugine"]
-language = "zh-CN"
+authors = ["yoshixmk"]
+language = "ja"
 multilingual = false
 src = "src"
-title = "Deno 手册"
+title = "Deno 日本語マニュアル"
 
 [output.html]
 theme = "theme"
