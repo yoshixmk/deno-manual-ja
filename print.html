@@ -524,45 +524,45 @@ deno run net_client.ts --allow-net
 --seed &lt;NUMBER&gt;              Seed Math.random()
 --v8-flags=&lt;v8-flags&gt;        Set V8 command line options. For help: ...
 </code></pre>
-<h2><a class="header" href="#权限" id="权限">权限</a></h2>
-<p>默认情况下，Deno是安全的。因此 Deno 模块没有文件、网络或环境的访问权限，除非您为它授权。在命令行参数中为 deno 进程授权后才能访问安全敏感的功能。</p>
-<p>在以下示例中，<code>mod.ts</code> 只被授予文件系统的只读权限。它无法对其进行写入，或执行任何其他对安全性敏感的操作。</p>
+<h2><a class="header" href="#パーミッション" id="パーミッション">パーミッション</a></h2>
+<p>Denoはデフォルトで安全です。したがって、特に有効にしない限り、denoモジュールには、ファイル、ネットワーク、環境などのアクセス権がありません。セキュリティ上重要な領域や機能にアクセスするには、コマンドラインでdenoプロセスに許可を与える必要があります。</p>
+<p>次の例では、<code>mod.ts</code>にファイルシステムへの読み取り専用アクセスが許可されています。それに書き込むことも、その他の機密性の高い機能を実行することもできません。</p>
 <pre><code class="language-shell">deno run --allow-read mod.ts
 </code></pre>
-<h3><a class="header" href="#权限列表" id="权限列表">权限列表</a></h3>
-<p>以下权限是可用的：</p>
+<h3><a class="header" href="#パーミッションのリスト" id="パーミッションのリスト">パーミッションのリスト</a></h3>
+<p>次のパーミッションを使用できます：</p>
 <ul>
-<li><strong>-A, --allow-all</strong> 允许所有权限，这将禁用所有安全限制。</li>
-<li><strong>--allow-env</strong> 允许环境访问，例如读取和设置环境变量。</li>
-<li><strong>--allow-hrtime</strong> 允许高精度时间测量，高精度时间能够在计时攻击和特征识别中使用。</li>
-<li><strong>--allow-net=&lt;allow-net&gt;</strong> 允许网络访问。您可以指定一系列用逗号分隔的域名，来提供域名白名单。</li>
-<li><strong>--allow-plugin</strong> 允许加载插件。请注意：这是一个不稳定功能。</li>
-<li><strong>--allow-read=&lt;allow-read&gt;</strong> 允许读取文件系统。您可以指定一系列用逗号分隔的目录或文件，来提供文件系统白名单。</li>
-<li><strong>--allow-run</strong> 允许运行子进程。请注意，子进程不在沙箱中运行，因此没有与 deno 进程相同的安全限制，请谨慎使用。</li>
-<li><strong>--allow-write=&lt;allow-write&gt;</strong> 允许写入文件系统。您可以指定一系列用逗号分隔的目录或文件，来提供文件系统白名单。</li>
+<li><strong>-A, --allow-all</strong> すべての権限を許可します。これにより、すべてのセキュリティが無効になります。</li>
+<li><strong>--allow-env</strong> 環境変数の取得や設定などの環境アクセスを許可します。</li>
+<li><strong>--allow-hrtime</strong> 高分解能の時間測定を可能にします。高解像度の時間は、タイミング攻撃やフィンガープリントに使用できます。</li>
+<li><strong>--allow-net=&lt;allow-net&gt;</strong> ネットワークアクセスを許可します。オプションのドメインのコンマ区切りリストを指定して、許可されたドメインの許可リストを提供できます。</li>
+<li><strong>--allow-plugin</strong> プラグインの読み込みを許可します。 --allow-pluginは不安定な機能であることに注意してください。</li>
+<li><strong>--allow-read=&lt;allow-read&gt;</strong> ファイルシステムの読み取りアクセスを許可します。オプションのコンマ区切りのディレクトリまたはファイルのリストを指定して、許可されたファイルシステムアクセスの許可リストを提供できます。</li>
+<li><strong>--allow-run</strong> サブプロセスの実行を許可します。サブプロセスはサンドボックスで実行されないため、denoプロセスと同じセキュリティ制限がないことに注意してください。したがって、注意して使用してください。</li>
+<li><strong>--allow-write=&lt;allow-write&gt;</strong> ファイルシステムの書き込みアクセスを許可します。オプションのコンマ区切りのディレクトリまたはファイルのリストを指定して、許可されたファイルシステムアクセスの許可リストを提供できます。</li>
 </ul>
-<h3><a class="header" href="#权限白名单" id="权限白名单">权限白名单</a></h3>
-<p>Deno 还允许您使用白名单控制权限的粒度。</p>
-<p>这是一个用白名单限制文件系统访问权限的示例，仅允许访问 <code>/usr</code> 目录，但它会在尝试访问 <code>/etc</code> 目录时失败。</p>
+<h3><a class="header" href="#パーミッション許可リスト" id="パーミッション許可リスト">パーミッション許可リスト</a></h3>
+<p>Denoでは、許可リストを使用して一部の権限の細かさを制御することもできます。</p>
+<p>この例では、<code>/usr</code>ディレクトリのみを許可リストすることによってファイルシステムアクセスを制限していますが、プロセスが<code>/etc</code>ディレクトリ内のファイルにアクセスしようとしたため、実行は失敗します。</p>
 <pre><code class="language-shell">$ deno run --allow-read=/usr https://deno.land/std/examples/cat.ts /etc/passwd
 error: Uncaught PermissionDenied: read access to &quot;/etc/passwd&quot;, run again with the --allow-read flag
 ► $deno$/dispatch_json.ts:40:11
     at DenoError ($deno$/errors.ts:20:5)
     ...
 </code></pre>
-<p>改为 <code>/etc</code> 目录，赋予正确的权限，再试一次：</p>
+<p>代わりに<code>/etc</code>を許可リストにして、正しい権限でもう一度試してください:</p>
 <pre><code class="language-shell">deno run --allow-read=/etc https://deno.land/std/examples/cat.ts /etc/passwd
 </code></pre>
-<p><code>--allow-write</code> 也一样，代表写入权限。</p>
-<h3><a class="header" href="#网络访问" id="网络访问">网络访问</a></h3>
+<p><code>--allow-write</code> は<code>--allow-read</code>と同じように機能します</p>
+<h3><a class="header" href="#ネットワークアクセス" id="ネットワークアクセス">ネットワークアクセス</a></h3>
 <p><em>fetch.ts</em>:</p>
 <pre><code class="language-ts">const result = await fetch(&quot;https://deno.land/&quot;);
 </code></pre>
-<p>这是一个设置 host 或 url 白名单的示例：</p>
+<p>これは、ホスト/ URLを許可するリストの例です：</p>
 <pre><code class="language-shell">deno run --allow-net=github.com,deno.land fetch.ts
 </code></pre>
-<p>如果 <code>fetch.ts</code> 尝试与其他域名建立网络连接，那么这个进程将会失败。</p>
-<p>允许访问任意地址：</p>
+<p>もし<code>fetch.ts</code>が他のドメインへのネットワーク接続を確立しようとすると、プロセスは失敗します。</p>
+<p>すべてのホスト/ URLへの呼び出しを許可：</p>
 <pre><code class="language-shell">deno run --allow-net fetch.ts
 </code></pre>
 <h2><a class="header" href="#使用-typescript" id="使用-typescript">使用 TypeScript</a></h2>
@@ -887,7 +887,7 @@ new Worker(new URL(&quot;worker.js&quot;, import.meta.url).href);
 new Worker(new URL(&quot;worker.js&quot;, import.meta.url).href, { type: &quot;classic&quot; });
 new Worker(&quot;./worker.js&quot;, { type: &quot;module&quot; });
 </code></pre>
-<h3><a class="header" href="#权限-1" id="权限-1">权限</a></h3>
+<h3><a class="header" href="#权限" id="权限">权限</a></h3>
 <p>创建一个新的 <code>Worker</code> 实例的行为与动态导入类似，因此 Deno 需要适当的权限来做这个操作。</p>
 <p>对于使用本地模块的 worker，Deno 需要读取 (<code>--allow-read</code>) 权限：</p>
 <p><strong>main.ts</strong></p>
