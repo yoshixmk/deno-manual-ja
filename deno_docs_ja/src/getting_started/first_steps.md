@@ -1,30 +1,25 @@
-## 第一步
+## ファーストステップ
+このページには、Denoの基礎について説明するいくつかの例が含まれています。 
 
-这个页面包含一些示例，您可以从中学到 Deno 的基本概念。
-
-我们假设您已经对 JavaScript 有过预先的了解，特别是 `async`/`await`。如果您没有了解过 JavaScript，您可能需要先阅读这个指南：[JavaScript](https://developer.mozilla.org/zh-CN/docs/learn/JavaScript).
+このドキュメントは、JavaScript、特に`async`/`await`に関する予備知識があることを前提としています。 JavaScriptの予備知識がない場合は、Denoから始める前に、[JavaScript](https://developer.mozilla.org/zh-CN/docs/learn/JavaScript)の基本に関するガイドに従うことをお勧めします。
 
 ### Hello World
 
-Deno 是一个 JavaScript 和 TypeScript 的运行时，并尝试与浏览器兼容并使用现代的功能 (features)。
-
-由于 Deno 具有浏览器兼容性，`Hello World` 程序与浏览器里的没有区别。
+DenoはJavaScript / TypeScriptのランタイムであり、Web互換で、可能な限り最新の機能を使用しようとします。 ブラウザーの互換性は、Denoの`Hello World`プログラムがブラウザーで実行できるプログラムと同じであることを意味します。
 
 ```ts
 console.log("Welcome to Deno 🦕");
 ```
 
-尝试一下：
+プログラムを試してください：
 
 ```shell
 deno run https://deno.land/std/examples/welcome.ts
 ```
 
-### 发出一个 HTTP 请求
+### HTTPリクエストを行う
 
-通过 HTTP 请求从服务器获取数据是一件很常见的事。让我们编写一个简单的程序来获取文件并打印到终端。
-
-就像浏览器一样，您可以使用 web 标准的 [`fetch`](https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API) API 来发出请求。
+多くのプログラムは、HTTP要求を使用してWebサーバーからデータをフェッチします。ファイルをフェッチしてその内容を端末に出力する小さなプログラムを書いてみましょう。 ブラウザーと同様に、Web標準[`fetch`](https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API)APIを使用してHTTP呼び出しを行うことができます。
 
 ```typescript
 const url = Deno.args[0];
@@ -34,46 +29,48 @@ const body = new Uint8Array(await res.arrayBuffer());
 await Deno.stdout.write(body);
 ```
 
-让我们看看它做了什么：
+このアプリケーションの機能を見ていきましょう。
 
-1. 我们取得了第一个命令行参数，存储到变量 `url`。
+1. 最初の引数をアプリケーションに渡して、それを`url`定数に格納します。
 
-2. 我们向指定的地址发出请求，等待响应，然后存储到变量 `res`。
+2. 指定されたURLにリクエストを送信し、レスポンスを待って、`res`定数に格納します。
 
-3. 我们把响应体解析为一个 [`ArrayBuffer`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer)，等待接收完毕，将其转换为 [`Uint8Array`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array)，最后存储到变量 `body`。
+3. 応答の本文を[`ArrayBuffer`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer)として解析し、応答を待ち、[`Uint8Array`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array)に変換して`body`の定数に格納します。。
 
-4. 我们把 `body` 的内容写入标准输出流 `stdout`。
+4. `body`定数の内容を`stdout`に書き込みます。
 
-尝试一下：
+やってみよう：
 
 ```shell
 deno run https://deno.land/std/examples/curl.ts https://example.com
 ```
 
-这个程序将会返回一个关于网络权限的错误，我们做错了什么？您可能会想起来，Deno 默认用安全环境执行代码。这意味着您需要显式赋予程序权限，允许它进行一些特权操作，比如网络访问。
+このプログラムはネットワークアクセスに関するエラーを返しますが、何が問題だったのでしょうか。はじめに、Denoはデフォルトで安全なランタイムであることを覚えているかもしれません。つまり、ネットワークへのアクセスなど、特定の「特権」アクションを実行する許可をプログラムに明示的に与える必要があります。
 
-用正确的权限选项再试一次：
+正しい許可フラグでもう一度試してください:
 
 ```shell
 deno run --allow-net=example.com https://deno.land/std/examples/curl.ts https://example.com
 ```
 
-### 读取一个文件
+### ファイルを読み取る
 
-Deno 也提供内置的 API，它们都位于全局变量 `Deno` 中。您可以在此找到相关文档：[doc.deno.land](https://doc.deno.land/https/github.com/denoland/deno/releases/latest/download/lib.deno.d.ts)。
+Denoは、Web以外のAPIも提供しています。これらはすべて`Deno`グローバルに含まれています。これらのAPIのドキュメントは、[doc.deno.land](https://doc.deno.land/https/github.com/denoland/deno/releases/latest/download/lib.deno.d.ts)にあります。
 
-文件系统 API 没有 web 标准形式，所以 Deno 提供了内置的 API。
+たとえばファイルシステムAPIにはWeb標準形式がないため、Denoは独自のAPIを提供します。  
 
-示例：[Unix cat](../examples/unix_cat.md)
+このプログラムでは、各コマンドライン引数はファイル名であると想定され、ファイルが開かれ、標準出力に出力されます。
+
+例：[Unix cat](../examples/unix_cat.md)
 
 {{#include ../examples/unix_cat.md:2:}}
 
-### TCP 服务
+### TCP サーバー
 
-示例：[TCP echo](../examples/tcp_echo.md)
+例：[TCP echo](../examples/tcp_echo.md)
 
 {{#include ../examples/tcp_echo.md:2:}}
 
-### 更多示例
+### 更なる例について
 
-您可以在 [示例](../examples.md) 一章找到更多示例。
+HTTPファイルサーバーなどの例は、[例](../examples.md) の章にあります。
