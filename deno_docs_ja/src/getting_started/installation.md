@@ -1,76 +1,65 @@
-## 安装
+## インストール方法
 
-Deno 能够在 macOS、Linux 和 Windows 上运行。Deno 是一个单独的可执行文件，它没有额外的依赖。
+DenoはmacOS、Linux、およびWindowsで動作します。 Denoは単一のバイナリ実行ファイルです。外部依存関係はありません。
 
-### 下载安装
+### ダウンロードとインストール
 
-[deno_install](https://github.com/denoland/deno_install) 提供了方便的脚本，用以下载安装 Deno.
+[deno_install](https://github.com/denoland/deno_install)は、バイナリをダウンロードしてインストールするための便利なスクリプトを提供します。
 
-使用 Shell (macOS 和 Linux):
-
+Shellの場合 (macOS and Linux):
 ```shell
 curl -fsSL https://deno.land/x/install/install.sh | sh
 ```
 
-使用 PowerShell (Windows):
-
+PowerShellの場合 (Windows):
 ```shell
 iwr https://deno.land/x/install/install.ps1 -useb | iex
 ```
 
-使用 [Scoop](https://scoop.sh/) (Windows):
-
+[Scoop](https://scoop.sh/)の場合 (Windows):
 ```shell
 scoop install deno
 ```
 
-使用 [Chocolatey](https://chocolatey.org/packages/deno) (Windows):
-
+[Chocolatey](https://chocolatey.org/packages/deno)の場合 (Windows):
 ```shell
 choco install deno
 ```
 
-使用 [Homebrew](https://formulae.brew.sh/formula/deno) (macOS):
-
+[Homebrew](https://formulae.brew.sh/formula/deno)の場合 (macOS):
 ```shell
 brew install deno
 ```
 
-使用 [Cargo](https://crates.io/crates/deno) (Windows, macOS, Linux):
-
+[Cargo](https://crates.io/crates/deno)の場合 (Windows, macOS, Linux):
 ```shell
 cargo install deno
 ```
 
-Deno 也可以手动安装，只需从 [github.com/denoland/deno/releases](https://github.com/denoland/deno/releases) 下载一个 zip 文件。它仅包含一个单独的可执行文件。在 macOS 和 Linux 上，您需要为它设置执行权限。
+Denoのバイナリは
+[github.com/denoland/deno/releases](https://github.com/denoland/deno/releases)
+からZipファイルをダウンロードして、手動でインストールすることもできます。パッケージには、実行ファイルが1つだけ含まれています。macOSとLinuxは実行可能な成果物を選び設定する必要があります。
 
-### 测试安装
+### インストールのテスト
 
-运行 `deno --version`，如果它打印出 Deno 版本，说明安装成功。
+インストールをテストするには、`deno --version`を実行します。もしDenoバージョンがコンソールに出力されれば、インストールは成功しています。
 
-运行 `deno help` 以查看帮助文档。
+`deno help`を使用すると、Denoのオプションのフラグと利用方法を確認できます。
+CLIの詳細については、[こちら](./command_line_interface.md)をご確認ください。
 
-运行 `deno help <subcommand>` 以查看子命令的选项。
+### アップデート
 
-CLI 的详细指南在 [这里](./command_line_interface.md)。
-
-### 升级
-
-要升级已安装的版本，运行：
-
+以前にインストールされたバージョンのDenoを更新するには、次のコマンドを実行します:
 ```shell
 deno upgrade
 ```
 
-这会从 [github.com/denoland/deno/releases](https://github.com/denoland/deno/releases) 获取最新的发布版本，然后解压并替换现有的版本。
+これにより、[github.com/denoland/deno/releases](https://github.com/denoland/deno/releases)から、最新のリリースを取得し、解凍され、現在の実行ファイルと置き換えられます。
 
-您也可以用此来安装一个特定的版本：
-
+次のユーティリティを使用して、特定のバージョンのDenoをインストールすることもできます:
 ```shell
 deno upgrade --version 1.0.1
 ```
 
-
-### 从源码构建
-
-关于构建步骤的信息请查阅 [贡献](../contributing.md) 章节。
+### ソースからビルドする
+ソースからビルドする方法についての情報は、`貢献`の章にあります。
