@@ -303,15 +303,15 @@ CLIの詳細については、<a href="getting_started/./command_line_interface.
 </code></pre>
 <h3><a class="header" href="#ソースからビルドする" id="ソースからビルドする">ソースからビルドする</a></h3>
 <p>ソースからビルドする方法についての情報は、<code>貢献</code>の章にあります。</p>
-<h2><a class="header" href="#设置您的环境" id="设置您的环境">设置您的环境</a></h2>
-<p>要高效地使用 Deno，您需要设置环境，比如命令行自动补全、环境变量、编辑器或 IDE。</p>
-<h3><a class="header" href="#环境变量" id="环境变量">环境变量</a></h3>
-<p>这是一些控制 Deno 行为的环境变量：</p>
-<p><code>DENO_DIR</code> 默认为 <code>$HOME/.cache/deno</code>，但可以设置为任何路径。这是 Deno 存放生成的代码和缓存的源码的路径。</p>
-<p>如果 <code>NO_COLOR</code> 被设置，Deno 将会关闭彩色输出 (<a href="https://no-color.org/">https://no-color.org/</a>)。用户代码可以通过布尔常量 <code>Deno.noColor</code> 测试 <code>NO_COLOR</code> 是否被设置，这不需要环境权限 (<code>--allow-env</code>)。</p>
-<h3><a class="header" href="#命令行自动补全" id="命令行自动补全">命令行自动补全</a></h3>
-<p>通过 <code>deno completions &lt;shell&gt;</code> 命令可以生成补全脚本。它会输出到 stdout，您应该将它重定向到适当的文件。</p>
-<p>Deno 支持的 shell 如下：</p>
+<h2><a class="header" href="#環境セットアップ" id="環境セットアップ">環境セットアップ</a></h2>
+<p>Denoを生産的に使用するには、環境をセットアップする必要があります。つまり、シェルのオートコンプリート、環境変数、選択したエディターまたはIDEを設定します。</p>
+<h3><a class="header" href="#環境変数" id="環境変数">環境変数</a></h3>
+<p>Denoの動作を制御するいくつかの環境変数があります。：</p>
+<p><code>DENO_DIR</code>のデフォルトは <code>$HOME/.cache/deno</code>で、任意のパスに設定できますが、生成およびキャッシュされたソースコードの書き込みと読み取りを制御します。</p>
+<p>もし<code>NO_COLOR</code>を設定すれば、カラー出力がオフになります。 <a href="https://no-color.org/">https://no-color.org/</a>を参照してください。<code>NO_COLOR</code>を使用することで<code>--allow-env</code>を使うことなく、ソースコードでboolean定数の<code>Deno.noColor</code>を使用して、設定されているかどうかをテストできます。</p>
+<h3><a class="header" href="#シェルのオートコンプリート" id="シェルのオートコンプリート">シェルのオートコンプリート</a></h3>
+<p><code>deno completions &lt;shell&gt;</code>を使用して、 シェルのオートコンプリート用のスクリプトを生成できます 。コマンドはstdoutに出力するため、適切なファイルにリダイレクトする必要があります。</p>
+<p>Deno がサポートしているシェルは次の通り：</p>
 <ul>
 <li>zsh</li>
 <li>bash</li>
@@ -319,37 +319,30 @@ CLIの詳細については、<a href="getting_started/./command_line_interface.
 <li>powershell</li>
 <li>elvish</li>
 </ul>
-<p>示例 (bash)：</p>
+<p>例 (bash)：</p>
 <pre><code class="language-shell">deno completions bash &gt; /usr/local/etc/bash_completion.d/deno.bash
 source /usr/local/etc/bash_completion.d/deno.bash
 </code></pre>
-<p>示例 (zsh):</p>
+<p>例 (zsh):</p>
 <pre><code class="language-shell">mkdir ~/.oh-my-zsh/custom/plugins/deno
 deno completions zsh &gt; ~/.oh-my-zsh/custom/plugins/deno/_deno
 </code></pre>
 <p>在此之后，在 <code>~/.zshrc</code> 文件中的 plugins 标签下增加 <code>deno</code> 插件。</p>
-<h3><a class="header" href="#编辑器和-ide" id="编辑器和-ide">编辑器和 IDE</a></h3>
-<p>Deno 需要用文件后缀名来支持模块导入和 HTTP 导入。目前，大多数编辑器和语言服务器没有原生支持这点，一些编辑器可能会抛出“无法找到文件”的错误，或是“不必要的文件后缀名”错误。</p>
-<p>社区已经开发了一些插件用来解决这些问题。</p>
+<h3><a class="header" href="#エディターとide" id="エディターとide">エディターとIDE</a></h3>
+<p>Denoはモジュールのインポートにファイル拡張子を使用する必要があり、さらにはhttpのインポートを許可が必要で、現在ほとんどのエディターと言語サーバーはこれをネイティブでサポートしていないため、多くのエディターは不要なファイル拡張子を持つファイルまたはインポートを見つけられないというエラーをスローします。</p>
+<p>コミュニティは、一部の編集者がこれらの問題を解決するための拡張機能を開発しています:</p>
 <h4><a class="header" href="#vs-code" id="vs-code">VS Code</a></h4>
-<p>目前内测版的 <a href="https://github.com/denoland/vscode_deno">vscode_deno</a> 扩展已经发布到了 <a href="https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno">Visual Studio Marketplace</a>。如果遇到 bug 欢迎提 issues。</p>
+<p>ベータバージョンの <a href="https://github.com/denoland/vscode_deno">vscode_deno</a>が<a href="https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno">Visual Studio Marketplace</a>に公開されました。問題があればIssuesをください。</p>
 <h4><a class="header" href="#jetbrains-ide" id="jetbrains-ide">JetBrains IDE</a></h4>
-<p>JetBrains IDE 通过插件来提供 Deno 支持：<a href="https://plugins.jetbrains.com/plugin/14382-deno">Deno 插件</a></p>
-<p>要了解有关设置步骤的更多信息，请在 YouTrack 上阅读 <a href="https://youtrack.jetbrains.com/issue/WEB-41607#focus=streamItem-27-4160152.0-0">这个评论</a>。</p>
-<h3><a class="header" href="#vim-和-neovim" id="vim-和-neovim">Vim 和 NeoVim</a></h3>
-<p>如果您安装 <a href="https://github.com/neoclide/coc.nvim">CoC</a>（intellisense engine and language server protocol），Vim 对于 Deno/TypeScript 来说非常友好。</p>
+<p>JetBrains IDEのサポートは、<a href="https://plugins.jetbrains.com/plugin/14382-deno">the Deno plugin</a>を通じて利用できます。</p>
+<p>JetBrains IDEをDeno用に設定する方法の詳細については、YouTrackの<a href="https://youtrack.jetbrains.com/issue/WEB-41607#focus=streamItem-27-4160152.0-0">このコメント</a>を参照してください。</p>
+<h3><a class="header" href="#vim-と-neovim" id="vim-と-neovim">Vim と NeoVim</a></h3>
+<p>もし<a href="https://github.com/neoclide/coc.nvim">CoC</a>（intellisense engine and language server protocol）をインストールすれば、Vim は Deno/TypeScript に対してかなりうまく機能します。</p>
 <p>当安装完 CoC 后，可以在 Vim 内部运行 <code>:CocInstall coc-deno</code>。你会发现，诸如 <code>gd</code>（转到定义）和 <code>gr</code>（转到/查找引用）之类的东西可以正常工作了。</p>
+<p>CoCをインストールした後、Vim内からおよび<code>：CocInstall coc-deno</code>と<code>:CocInstall coc-deno</code>を実行します。 Denoタイプ定義でオートコンプリートを機能させるには、<code>：CocCommand deno.types</code>を実行します。必要に応じて、<code>：CocRestart</code>でCoCサーバーを再起動します。これからは、<code>gd</code>（定義に移動）や<code>gr</code>（goto / find参照）などが機能するようになります。</p>
 <h4><a class="header" href="#emacs" id="emacs">Emacs</a></h4>
-<p>对于目标为 Deno 的 TypeScript 项目，Emacs 工作得很好，只需使用两个插件：</p>
-<ul>
-<li>
-<p><a href="https://github.com/ananthakumaran/tide">tide</a>：这是在 Emacs 中使用 TypeScript 的典范方法。</p>
-</li>
-<li>
-<p><a href="https://github.com/justjavac/typescript-deno-plugin">typescript-deno-plugin</a>：它被 <a href="https://github.com/denoland/vscode_deno">Deno 官方 VSCode 插件</a> 使用。</p>
-</li>
-</ul>
-<p>首先确保您已经安装了 <code>tide</code>，下一步，按照 <a href="https://github.com/justjavac/typescript-deno-plugin">typescript-deno-plugin</a> 页面的指示，在项目中运行 <code>npm install --save-dev typescript-deno-plugin typescript</code> (<code>npm init -y</code> 是必要的)，并在 <code>tsconfig.json</code> 中添加以下设置，然后准备开发吧！</p>
+<p>Emacsは、Emacs内でTypeScriptを使用する標準的な方法である<a href="https://github.com/ananthakumaran/tide">tide</a>と、Denoの<a href="https://github.com/denoland/vscode_deno">公式VSCode拡張機能</a>で使用される<a href="https://github.com/justjavac/typescript-deno-plugin">typescript-deno-plugin</a>の組み合わせを使用することにより、DenoをターゲットとするTypeScriptプロジェクトでかなりうまく機能します。</p>
+<p>これを使用するには、まずEmacsのインスタンスに<code>tide</code>が設定されていることを確認してください。次に、 <a href="https://github.com/justjavac/typescript-deno-plugin">typescript-deno-plugin</a> ページで指示されているように、最初に <code>npm install --save-dev typescript-deno-plugin typescript</code> (<code>npm init -y</code>が必須)を行い、次に下記のブロックを<code>tsconfig.json</code>に追加すれば準備完了です！</p>
 <pre><code class="language-json">{
   &quot;compilerOptions&quot;: {
     &quot;plugins&quot;: [
@@ -362,7 +355,7 @@ deno completions zsh &gt; ~/.oh-my-zsh/custom/plugins/deno/_deno
   }
 }
 </code></pre>
-<p>如果您没有在列表中看到您最喜欢的 IDE，或许可以开发一个插件，我们的社区能够帮助您起步：<a href="https://discord.gg/deno">Discord</a></p>
+<p>このリストにお気に入りのIDEがない場合は、拡張機能を開発するかもしれません。私たちの<a href="https://discord.gg/deno">コミュニティのDiscordグループ</a>で、どこから始めればよいかについて、いくつか指針を差し上げることができます。</p>
 <h2><a class="header" href="#第一步" id="第一步">第一步</a></h2>
 <p>这个页面包含一些示例，您可以从中学到 Deno 的基本概念。</p>
 <p>我们假设您已经对 JavaScript 有过预先的了解，特别是 <code>async</code>/<code>await</code>。如果您没有了解过 JavaScript，您可能需要先阅读这个指南：<a href="https://developer.mozilla.org/zh-CN/docs/learn/JavaScript">JavaScript</a>.</p>
