@@ -10,8 +10,8 @@
       "first_steps": "ファーストステップ",
       "command_line_interface": "コマンドラインインターフェース(CLI)",
       "permissions": "権限",
-      "typescript": "TypeScript",
-      "webassembly": "WebAssembly"
+      "typescript": "TypeScriptの使用",
+      "webassembly": "WebAssemblyの使用"
     }
   },
   "runtime": {
@@ -20,7 +20,7 @@
       "stability": "安定性",
       "program_lifecycle": "ライフサイクル",
       "compiler_apis": "コンパイラAPI",
-      "workers": "Workers"
+      "workers": "Worker"
     }
   },
   "linking_to_external_code": {
@@ -49,7 +49,7 @@
       "formatter": "フォーマッター",
       "bundler": "バンドラー",
       "documentation_generator": "ドキュメントジェネレータ",
-      "dependency_inspector": "依存関係",
+      "dependency_inspector": "依存関係インスペクタ",
       "linter": "リンター"
     }
   },
