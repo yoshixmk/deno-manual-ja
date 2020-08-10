@@ -252,56 +252,57 @@
 <p>リモートURLからロードされたモジュール/ファイルは、不変的にキャッシュできることを目指しています。</p>
 </li>
 </ul>
-<h1><a class="header" href="#入门" id="入门">入门</a></h1>
-<p>在本章节，我们将讨论；</p>
+<h1><a class="header" href="#入門" id="入門">入門</a></h1>
+<p>この章では、以下について説明します。:</p>
 <ul>
-<li>安装 Deno</li>
-<li>设置您的环境</li>
-<li>运行一个 <code>Hello World</code> 脚本</li>
-<li>编写您自己的脚本</li>
-<li>命令行界面</li>
-<li>理解权限控制</li>
-<li>在 Deno 中使用 TypeScript</li>
-<li>在 Deno 中使用 WebAssembly</li>
+<li>Denoのインストール</li>
+<li>環境をセットアップする</li>
+<li><code>Hello World</code>スクリプトを実行する</li>
+<li>独自のスクリプトを書く</li>
+<li>コマンドラインインターフェース(CLI)</li>
+<li>権限について理解する</li>
+<li>TypeScriptでのDenoの使用</li>
+<li>WebAssemblyの使用</li>
 </ul>
-<h2><a class="header" href="#安装" id="安装">安装</a></h2>
-<p>Deno 能够在 macOS、Linux 和 Windows 上运行。Deno 是一个单独的可执行文件，它没有额外的依赖。</p>
-<h3><a class="header" href="#下载安装" id="下载安装">下载安装</a></h3>
-<p><a href="https://github.com/denoland/deno_install">deno_install</a> 提供了方便的脚本，用以下载安装 Deno.</p>
-<p>使用 Shell (macOS 和 Linux):</p>
+<h2><a class="header" href="#インストール方法" id="インストール方法">インストール方法</a></h2>
+<p>DenoはmacOS、Linux、およびWindowsで動作します。 Denoは単一のバイナリ実行ファイルです。外部依存関係はありません。</p>
+<h3><a class="header" href="#ダウンロードとインストール" id="ダウンロードとインストール">ダウンロードとインストール</a></h3>
+<p><a href="https://github.com/denoland/deno_install">deno_install</a>は、バイナリをダウンロードしてインストールするための便利なスクリプトを提供します。</p>
+<p>Shellの場合 (macOS and Linux):</p>
 <pre><code class="language-shell">curl -fsSL https://deno.land/x/install/install.sh | sh
 </code></pre>
-<p>使用 PowerShell (Windows):</p>
+<p>PowerShellの場合 (Windows):</p>
 <pre><code class="language-shell">iwr https://deno.land/x/install/install.ps1 -useb | iex
 </code></pre>
-<p>使用 <a href="https://scoop.sh/">Scoop</a> (Windows):</p>
+<p><a href="https://scoop.sh/">Scoop</a>の場合 (Windows):</p>
 <pre><code class="language-shell">scoop install deno
 </code></pre>
-<p>使用 <a href="https://chocolatey.org/packages/deno">Chocolatey</a> (Windows):</p>
+<p><a href="https://chocolatey.org/packages/deno">Chocolatey</a>の場合 (Windows):</p>
 <pre><code class="language-shell">choco install deno
 </code></pre>
-<p>使用 <a href="https://formulae.brew.sh/formula/deno">Homebrew</a> (macOS):</p>
+<p><a href="https://formulae.brew.sh/formula/deno">Homebrew</a>の場合 (macOS):</p>
 <pre><code class="language-shell">brew install deno
 </code></pre>
-<p>使用 <a href="https://crates.io/crates/deno">Cargo</a> (Windows, macOS, Linux):</p>
+<p><a href="https://crates.io/crates/deno">Cargo</a>の場合 (Windows, macOS, Linux):</p>
 <pre><code class="language-shell">cargo install deno
 </code></pre>
-<p>Deno 也可以手动安装，只需从 <a href="https://github.com/denoland/deno/releases">github.com/denoland/deno/releases</a> 下载一个 zip 文件。它仅包含一个单独的可执行文件。在 macOS 和 Linux 上，您需要为它设置执行权限。</p>
-<h3><a class="header" href="#测试安装" id="测试安装">测试安装</a></h3>
-<p>运行 <code>deno --version</code>，如果它打印出 Deno 版本，说明安装成功。</p>
-<p>运行 <code>deno help</code> 以查看帮助文档。</p>
-<p>运行 <code>deno help &lt;subcommand&gt;</code> 以查看子命令的选项。</p>
-<p>CLI 的详细指南在 <a href="getting_started/./command_line_interface.html">这里</a>。</p>
-<h3><a class="header" href="#升级" id="升级">升级</a></h3>
-<p>要升级已安装的版本，运行：</p>
+<p>Denoのバイナリは
+<a href="https://github.com/denoland/deno/releases">github.com/denoland/deno/releases</a>
+からZipファイルをダウンロードして、手動でインストールすることもできます。パッケージには、実行ファイルが1つだけ含まれています。macOSとLinuxは実行可能な成果物を選び設定する必要があります。</p>
+<h3><a class="header" href="#インストールのテスト" id="インストールのテスト">インストールのテスト</a></h3>
+<p>インストールをテストするには、<code>deno --version</code>を実行します。もしDenoバージョンがコンソールに出力されれば、インストールは成功しています。</p>
+<p><code>deno help</code>を使用すると、Denoのオプションのフラグと利用方法を確認できます。
+CLIの詳細については、<a href="getting_started/./command_line_interface.html">こちら</a>をご確認ください。</p>
+<h3><a class="header" href="#アップデート" id="アップデート">アップデート</a></h3>
+<p>以前にインストールされたバージョンのDenoを更新するには、次のコマンドを実行します:</p>
 <pre><code class="language-shell">deno upgrade
 </code></pre>
-<p>这会从 <a href="https://github.com/denoland/deno/releases">github.com/denoland/deno/releases</a> 获取最新的发布版本，然后解压并替换现有的版本。</p>
-<p>您也可以用此来安装一个特定的版本：</p>
+<p>これにより、<a href="https://github.com/denoland/deno/releases">github.com/denoland/deno/releases</a>から、最新のリリースを取得し、解凍され、現在の実行ファイルと置き換えられます。</p>
+<p>次のユーティリティを使用して、特定のバージョンのDenoをインストールすることもできます:</p>
 <pre><code class="language-shell">deno upgrade --version 1.0.1
 </code></pre>
-<h3><a class="header" href="#从源码构建" id="从源码构建">从源码构建</a></h3>
-<p>关于构建步骤的信息请查阅 <a href="getting_started/../contributing.html">贡献</a> 章节。</p>
+<h3><a class="header" href="#ソースからビルドする" id="ソースからビルドする">ソースからビルドする</a></h3>
+<p>ソースからビルドする方法についての情報は、<code>貢献</code>の章にあります。</p>
 <h2><a class="header" href="#设置您的环境" id="设置您的环境">设置您的环境</a></h2>
 <p>要高效地使用 Deno，您需要设置环境，比如命令行自动补全、环境变量、编辑器或 IDE。</p>
 <h3><a class="header" href="#环境变量" id="环境变量">环境变量</a></h3>
@@ -1865,7 +1866,7 @@ export const FOO = &quot;foo&quot;;
 </code></pre>
 <p>更多信息位于 <a href="https://jsdoc.app/">https://jsdoc.app/</a></p>
 <p>TODO</p>
-<h2><a class="header" href="#从源码构建-1" id="从源码构建-1">从源码构建</a></h2>
+<h2><a class="header" href="#从源码构建" id="从源码构建">从源码构建</a></h2>
 <p>以下是从源码构建 Deno 的操作步骤。如果您只是想使用 Deno，您可以下载一个预构建的可执行文件，参考 <code>入门</code> 章节。</p>
 <h3><a class="header" href="#克隆-deno-仓库" id="克隆-deno-仓库">克隆 Deno 仓库</a></h3>
 <p>Linux 或 Mac 系统：</p>

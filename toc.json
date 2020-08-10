@@ -3,79 +3,79 @@
     "name": "前書き"
   },
   "getting_started": {
-    "name": "入门",
+    "name": "入門",
     "children": {
-      "installation": "安装",
-      "setup_your_environment": "设置环境",
-      "first_steps": "第一步",
-      "command_line_interface": "命令行界面",
-      "permissions": "权限",
-      "typescript": "使用 TypeScript",
-      "webassembly": "使用 WebAssembly"
+      "installation": "インストール方法",
+      "setup_your_environment": "環境セットアップ",
+      "first_steps": "ファーストステップ",
+      "command_line_interface": "コマンドラインインターフェース(CLI)",
+      "permissions": "権限",
+      "typescript": "TypeScript",
+      "webassembly": "WebAssembly"
     }
   },
   "runtime": {
-    "name": "运行时",
+    "name": "ランタイム",
     "children": {
-      "stability": "稳定性",
-      "program_lifecycle": "程序生命周期",
-      "compiler_apis": "编译器 API",
-      "workers": "Worker"
+      "stability": "安定性",
+      "program_lifecycle": "ライフサイクル",
+      "compiler_apis": "コンパイラAPI",
+      "workers": "Workers"
     }
   },
   "linking_to_external_code": {
-    "name": "与外部代码连接",
+    "name": "外部コードへのリンク",
     "children": {
-      "reloading_modules": "重新加载模块",
-      "integrity_checking": "完整性检查",
-      "proxies": "代理",
-      "import_maps": "导入映射"
+      "reloading_modules": "モジュールの再読み込み",
+      "integrity_checking": "整合性チェック",
+      "proxies": "プロキシ",
+      "import_maps": "Importt maps"
     }
   },
   "standard_library": {
-    "name": "标准库"
+    "name": "標準ライブラリ"
   },
   "testing": {
-    "name": "测试",
+    "name": "テスト",
     "children": {
-      "assertions": "断言"
+      "assertions": "アサーション"
     }
   },
   "tools": {
-    "name": "工具",
+    "name": "ツール",
     "children": {
-      "debugger": "调试器",
-      "script_installer": "脚本安装器",
-      "formatter": "格式化工具",
-      "bundler": "打包器",
-      "documentation_generator": "文档生成器",
-      "dependency_inspector": "依赖检查器",
-      "linter": "Linter"
+      "debugger": "デバッガ",
+      "script_installer": "スクリプトインストーラー",
+      "formatter": "フォーマッター",
+      "bundler": "バンドラー",
+      "documentation_generator": "ドキュメントジェネレータ",
+      "dependency_inspector": "依存関係",
+      "linter": "リンター"
     }
   },
   "embedding_deno": {
-    "name": "嵌入 Deno"
+    "name": "組み込みDeno"
   },
   "contributing": {
-    "name": "贡献",
+    "name": "貢献",
     "children": {
-      "building_from_source": "从源码构建",
-      "development_tools": "开发工具",
-      "style_guide": "风格指南",
-      "architecture": "架构"
+      "building_from_source": "ソースコードのビルド",
+      "development_tools": "開発ツール",
+      "style_guide": "スタイルガイド",
+      "architecture": "アーキテクチャ"
     }
   },
   "examples": {
-    "name": "示例",
+    "name": "例",
     "children": {
       "unix_cat": "Unix cat",
-      "file_server": "文件服务",
+      "file_server": "ファイルサーバー",
       "tcp_echo": "TCP echo",
-      "subprocess": "创建子进程",
-      "permissions": "检查与放弃权限",
-      "os_signals": "系统信号",
-      "file_system_events": "文件系统事件",
-      "testing_if_main": "测试当前文件是否为主程序"
+      "subprocess": "サブプロセス",
+      "permissions": "権限付与",
+      "os_signals": "OSシグナル",
+      "file_system_events": "ファイルシステムイベント",
+      "testing_if_main": "メインファイルでのテスト"
     }
   }
 }
