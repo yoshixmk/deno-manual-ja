@@ -9,7 +9,7 @@
       "setup_your_environment": "環境セットアップ",
       "first_steps": "ファーストステップ",
       "command_line_interface": "コマンドラインインターフェース(CLI)",
-      "permissions": "権限",
+      "permissions": "パーミッション",
       "typescript": "TypeScriptの使用",
       "webassembly": "WebAssemblyの使用"
     }
@@ -72,7 +72,7 @@
       "file_server": "ファイルサーバー",
       "tcp_echo": "TCP echo",
       "subprocess": "サブプロセス",
-      "permissions": "権限付与",
+      "permissions": "パーミッション付与",
       "os_signals": "OSシグナル",
       "file_system_events": "ファイルシステムイベント",
       "testing_if_main": "メインファイルでのテスト"
