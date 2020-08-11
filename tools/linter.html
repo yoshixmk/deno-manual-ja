@@ -160,14 +160,15 @@
                 <div id="content" class="content">
                     <main>
                         <h2><a class="header" href="#linter" id="linter">Linter</a></h2>
-<p>Deno 附带了 JavaScript 和 TypeScript 的内置 linter。</p>
-<p><strong>注意：linter 是一个新功能，仍然不稳定，因此需要 <code>--unstable</code> 选项</strong></p>
-<pre><code class="language-shell"># 检查当前目录树内所有 JS/TS 文件
+<p>Deno ships with a built in code linter for JavaScript and TypeScript.</p>
+<p><strong>Note: linter is a new feature and still unstable thus it requires <code>--unstable</code>
+flag</strong></p>
+<pre><code class="language-shell"># lint all JS/TS files in the current directory and subdirectories
 deno lint --unstable
-# 检查特定文件
+# lint specific files
 deno lint --unstable myfile1.ts myfile2.ts
 </code></pre>
-<h3><a class="header" href="#可用规则" id="可用规则">可用规则</a></h3>
+<h3><a class="header" href="#available-rules" id="available-rules">Available rules</a></h3>
 <ul>
 <li><code>ban-ts-comment</code></li>
 <li><code>ban-untagged-ignore</code></li>
@@ -212,16 +213,17 @@ deno lint --unstable myfile1.ts myfile2.ts
 <li><code>use-isnan</code></li>
 <li><code>valid-typeof</code></li>
 </ul>
-<h3><a class="header" href="#忽略指令" id="忽略指令">忽略指令</a></h3>
-<h4><a class="header" href="#文件" id="文件">文件</a></h4>
-<p>要忽略整个文件，<code>// deno-lint-ignore-file</code> 指令应该置于文件顶部。</p>
+<h3><a class="header" href="#ignore-directives" id="ignore-directives">Ignore directives</a></h3>
+<h4><a class="header" href="#files" id="files">Files</a></h4>
+<p>To ignore whole file <code>// deno-lint-ignore-file</code> directive should placed at the
+top of the file.</p>
 <pre><code class="language-ts">// deno-lint-ignore-file
 
 function foo(): any {
   // ...
 }
 </code></pre>
-<p>必须在第一个语句或声明之前放置忽略指令：</p>
+<p>Ignore directive must be placed before first stament or declaration:</p>
 <pre><code class="language-ts">// Copyright 2020 the Deno authors. All rights reserved. MIT license.
 
 /**
@@ -236,8 +238,9 @@ function foo(): any {
   // ...
 }
 </code></pre>
-<h4><a class="header" href="#诊断-diagnostics" id="诊断-diagnostics">诊断 (Diagnostics)</a></h4>
-<p>要忽略某些诊断，<code>// deno-lint-ignore &lt;codes ...&gt;</code> 指令应该置于违规行之前。必须指定要忽略的规则名称。</p>
+<h4><a class="header" href="#diagnostics" id="diagnostics">Diagnostics</a></h4>
+<p>To ignore certain diagnostic <code>// deno-lint-ignore &lt;codes...&gt;</code> directive should
+be placed before offending line. Specifying ignored rule name is required.</p>
 <pre><code class="language-ts">// deno-lint-ignore no-explicit-any
 function foo(): any {
   // ...
@@ -248,7 +251,9 @@ function bar(a: any) {
   // ...
 }
 </code></pre>
-<p>为了与 ESLint 兼容，<code>deno lint</code> 也支持 <code>// eslint-ignore-next-line</code> 指令。像 <code>// deno-lint-ignore</code> 一样，这也需要指定忽略的规则名称。</p>
+<p>To provide some compatibility with ESLint <code>deno lint</code> also supports
+<code>// eslint-ignore-next-line</code> directive. Just like in <code>// deno-lint-ignore</code> it's
+required to specify ignored rule name is required.</p>
 <pre><code class="language-ts">// eslint-ignore-next-line no-empty
 while (true) {}
 

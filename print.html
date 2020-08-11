@@ -1409,52 +1409,75 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
   assertEquals(1, 2, &quot;Values Don't Match!&quot;);
 });
 </code></pre>
-<h1><a class="header" href="#内置工具" id="内置工具">内置工具</a></h1>
-<p>Deno 提供了一些内置的工具，在处理 JavaScript 和 TypeScript 时很有用。</p>
+<h1><a class="header" href="#ビルトインツール" id="ビルトインツール">ビルトインツール</a></h1>
+<p>Denoは、JavaScriptおよびTypeScriptを操作するときに役立つ組み込みツールをいくつか提供しています。</p>
 <ul>
-<li><a href="./tools/bundler.html">打包器 (<code>deno bundle</code>)</a></li>
-<li><a href="./tools/debugger.html">调试器 (<code>--inspect, --inspect-brk</code>)</a></li>
-<li><a href="./tools/dependency_inspector.html">依赖检查器 (<code>deno info</code>)</a></li>
-<li><a href="./tools/documentation_generator.html">文档生成器 (<code>deno doc</code>)</a></li>
-<li><a href="./tools/formatter.html">代码格式化 (<code>deno fmt</code>)</a></li>
-<li><a href="./testing.html">测试 (<code>deno test</code>)</a></li>
-<li><a href="./tools/linter.html">linter (<code>deno lint</code>)</a></li>
+<li><a href="./tools/bundler.html"><code>deno bundle</code></a></li>
+<li><a href="./tools/debugger.html"><code>--inspect, --inspect-brk</code></a></li>
+<li><a href="./tools/dependency_inspector.html"><code>deno info</code></a></li>
+<li><a href="./tools/documentation_generator.html"><code>deno doc</code></a></li>
+<li><a href="./tools/formatter.html"><code>deno fmt</code></a></li>
+<li><a href="./testing.html"><code>deno test</code></a></li>
+<li><a href="./tools/linter.html"><code>deno lint</code></a></li>
 </ul>
-<h2><a class="header" href="#调试器-debugger" id="调试器-debugger">调试器 (debugger)</a></h2>
-<p>Deno 支持 <a href="https://v8.dev/docs/inspector">V8 Inspector Protocol</a>.</p>
-<p>使用 Chrome Devtools 或其他支持该协议的客户端（比如 VSCode）能够调试 Deno 程序。</p>
-<p>要启用调试功能，用 <code>--inspect</code> 或 <code>--inspect-brk</code> 选项运行 Deno。</p>
-<p><code>--inspect</code> 选项允许在任何时间点连接调试器，而 <code>--inspect-brk</code> 选项会等待调试器连接，在第一行代码处暂停执行。</p>
+<h2><a class="header" href="#debugger" id="debugger">Debugger</a></h2>
+<p>Deno supports the <a href="https://v8.dev/docs/inspector">V8 Inspector Protocol</a>.</p>
+<p>It's possible to debug Deno programs using Chrome Devtools or other clients that
+support the protocol (eg. VSCode).</p>
+<p>To activate debugging capabilities run Deno with the <code>--inspect</code> or
+<code>--inspect-brk</code> flags.</p>
+<p>The <code>--inspect</code> flag allows attaching the debugger at any point in time, while
+<code>--inspect-brk</code> will wait for the debugger to attach and will pause execution on
+the first line of code.</p>
 <h3><a class="header" href="#chrome-devtools" id="chrome-devtools">Chrome Devtools</a></h3>
-<p>让我们用 Chrome 开发者工具来调试一个程序，我们将使用来自 <code>std</code> 的 <a href="https://deno.land/std@v0.50.0/http/file_server.ts">file_server.ts</a>，这是一个静态文件服务。</p>
-<p>使用 <code>--inspect-brk</code> 选项，在第一行代码处暂停执行。</p>
+<p>Let's try debugging a program using Chrome Devtools. For this, we'll use
+<a href="https://deno.land/std@v0.50.0/http/file_server.ts">file_server.ts</a> from <code>std</code>,
+a static file server.</p>
+<p>Use the <code>--inspect-brk</code> flag to break execution on the first line:</p>
 <pre><code class="language-shell">$ deno run --inspect-brk --allow-read --allow-net https://deno.land/std@v0.50.0/http/file_server.ts
 Debugger listening on ws://127.0.0.1:9229/ws/1e82c406-85a9-44ab-86b6-7341583480b1
 Download https://deno.land/std@v0.50.0/http/file_server.ts
 Compile https://deno.land/std@v0.50.0/http/file_server.ts
 ...
 </code></pre>
-<p>打开 <code>chrome://inspect</code>，点击 target 旁边的 <code>Inspect</code>。</p>
+<p>Open <code>chrome://inspect</code> and click <code>Inspect</code> next to target:</p>
 <p><img src="tools/../images/debugger1.jpg" alt="chrome://inspect" /></p>
-<p>开发者工具加载所有模块时可能会等待几秒。</p>
+<p>It might take a few seconds after opening the devtools to load all modules.</p>
 <p><img src="tools/../images/debugger2.jpg" alt="Devtools opened" /></p>
-<p>您可能注意到开发者工具暂停执行的地方不是 <code>file_server.ts</code>，而是 <code>_constants.ts</code> 的第一行。这是符合预期的行为，ES 模块在 V8 中执行的顺序如此。<code>_constants.ts</code> 是 <code>file_server.ts</code> 最深、最先的依赖，因此它会最先执行。</p>
-<p>在这时，所有源码在开发者工具中都可用。打开 <code>file_server.ts</code>，加一处断点，然后打开 &quot;Sources&quot; 面板，展开树：</p>
+<p>You might notice that Devtools paused execution on the first line of
+<code>_constants.ts</code> instead of <code>file_server.ts</code>. This is expected behavior and is
+caused by the way ES modules are evaluated by V8 (<code>_constants.ts</code> is left-most,
+bottom-most dependency of <code>file_server.ts</code> so it is evaluated first).</p>
+<p>At this point all source code is available in the Devtools, so let's open up
+<code>file_server.ts</code> and add a breakpoint there; go to &quot;Sources&quot; pane and expand the
+tree:</p>
 <p><img src="tools/../images/debugger3.jpg" alt="Open file_server.ts" /></p>
-<p><em>仔细观察，您会发现每个文件都有重复的条目，一个是正常字体，另一个是斜体。前者是编译后的源文件（所以 <code>.ts</code> 文件会生成 JavaScript 源代码），后者是该文件的源映射 (source map)。</em></p>
-<p>下一步，在 <code>listenAndServe</code> 方法处加一个断点。</p>
+<p><em>Looking closely you'll find duplicate entries for each file; one written
+regularly and one in italics. The former is compiled source file (so in the case
+of <code>.ts</code> files it will be emitted JavaScript source), while the latter is a
+source map for the file.</em></p>
+<p>Next, add a breakpoint in the <code>listenAndServe</code> method:</p>
 <p><img src="tools/../images/debugger4.jpg" alt="Break in file_server.ts" /></p>
-<p>添加断点后，开发者工具会自动打开源映射文件，让我们能在包含类型的实际源码中步进。</p>
-<p>现在我们已经设置了断点，在触发断点时，我们可以检查传入的请求，也可以继续执行脚本。点击恢复脚本执行的按钮即可，您可能需要点两次。</p>
-<p>当脚本继续运行时，让我们发送一个请求，看看开发者工具中发生了什么。</p>
+<p>As soon as we've added the breakpoint Devtools automatically opened up the
+source map file, which allows us step through the actual source code that
+includes types.</p>
+<p>Now that we have our breakpoints set, we can resume the execution of our script
+so that we might inspect an incoming request. Hit the Resume script execution
+button to do so. You might even need to hit it twice!</p>
+<p>Once our script is running again, let's send a request and inspect it in
+Devtools:</p>
 <pre><code>$ curl http://0.0.0.0:4500/
 </code></pre>
 <p><img src="tools/../images/debugger5.jpg" alt="Break in request handling" /></p>
-<p>在这时，我们可以检查请求的内容，逐步调试代码。</p>
+<p>At this point we can introspect the contents of the request and go step-by-step
+to debug the code.</p>
 <h3><a class="header" href="#vscode" id="vscode">VSCode</a></h3>
-<p>Deno 可以在 VSCode 中调试。</p>
-<p>插件的官方支持正在开发中 <a href="https://github.com/denoland/vscode_deno/issues/12">https://github.com/denoland/vscode_deno/issues/12</a></p>
-<p>我们也可以通过手动提供 <a href="https://code.visualstudio.com/docs/editor/debugging#_launch-configurations"><code>launch.json</code></a> 配置，来连接调试器：</p>
+<p>Deno can be debugged using VSCode.</p>
+<p>Official support via the plugin is being worked on -
+https://github.com/denoland/vscode_deno/issues/12</p>
+<p>We can still attach the debugger by manually providing a
+<a href="https://code.visualstudio.com/docs/editor/debugging#_launch-configurations"><code>launch.json</code></a>
+config:</p>
 <pre><code class="language-json">{
   &quot;version&quot;: &quot;0.2.0&quot;,
   &quot;configurations&quot;: [
@@ -1470,8 +1493,9 @@ Compile https://deno.land/std@v0.50.0/http/file_server.ts
   ]
 }
 </code></pre>
-<p><strong>注意</strong>：这将使用您打开的文件作为入口点；如果需要固定的入口点，请用脚本名称替换 <code>${file}</code>。</p>
-<p>让我们尝试一下本地源文件，创建 <code>server.ts</code>：</p>
+<p><strong>NOTE</strong>: This uses the file you have open as the entry point; replace <code>${file}</code>
+with a script name if you want a fixed entry point.</p>
+<p>Let's try out debugging a local source file. Create <code>server.ts</code>:</p>
 <pre><code class="language-ts">import { serve } from &quot;https://deno.land/std@v0.50.0/http/server.ts&quot;;
 const server = serve({ port: 8000 });
 console.log(&quot;http://localhost:8000/&quot;);
@@ -1480,59 +1504,70 @@ for await (const req of server) {
   req.respond({ body: &quot;Hello World\n&quot; });
 }
 </code></pre>
-<p>然后我们可以设置断点，运行已创建的配置：</p>
+<p>Then we can set a breakpoint, and run the created configuration:</p>
 <p><img src="tools/../images/debugger7.jpg" alt="VSCode debugger" /></p>
-<h3><a class="header" href="#jetbrains-ide-1" id="jetbrains-ide-1">JetBrains IDE</a></h3>
-<p>您可以使用 JetBrains IDE 来调试 Deno，右击您想要调试的文件，选择 <code>Debug 'Deno: &lt;file name&gt;'</code>。这会创建一个没有权限设置的 运行/调试 配置，您可能需要更改 <code>Arguments</code> 字段来提供所需权限。</p>
-<h3><a class="header" href="#其他" id="其他">其他</a></h3>
-<p>实现 Devtools 协议的任何客户端都能连接 Deno 进程。</p>
-<h3><a class="header" href="#限制" id="限制">限制</a></h3>
-<p>开发者工具的支持仍不成熟，有一些功能是缺失的，或是有 bug 的：</p>
+<h3><a class="header" href="#jetbrains-ides" id="jetbrains-ides">JetBrains IDEs</a></h3>
+<p>You can debug Deno using your JetBrains IDE by right-clicking the file you want
+to debug and selecting the <code>Debug 'Deno: &lt;file name&gt;'</code> option. This will create
+a run/debug configuration with no permission flags set. To configure these flags
+edit the run/debug configuration and modify the <code>Arguments</code> field with the
+required flags.</p>
+<h3><a class="header" href="#other" id="other">Other</a></h3>
+<p>Any client that implements the Devtools protocol should be able to connect to a
+Deno process.</p>
+<h3><a class="header" href="#limitations" id="limitations">Limitations</a></h3>
+<p>Devtools support is still immature. There is some functionality that is known to
+be missing or buggy:</p>
 <ul>
-<li>开发者工具控制台中的自动补全会让 Deno 进程退出。</li>
-<li>性能分析 (profiling) 和内存转储 (memory dump) 可能不正确。</li>
+<li>autocomplete in Devtools' console causes the Deno process to exit</li>
+<li>profiling and memory dumps might not work correctly</li>
 </ul>
-<h2><a class="header" href="#脚本安装器" id="脚本安装器">脚本安装器</a></h2>
-<p>Deno 提供 <code>deno install</code> 来安装和分发可执行代码。</p>
-<p><code>deno install [OPTIONS...] [URL] [SCRIPT_ARGS...]</code> 将把位于 <code>URL</code> 的脚本安装到名称 <code>EXE_NAME</code> 下。</p>
-<p>这个命令将会创建一个轻薄的 shell 脚本来调用 <code>deno</code>，其中写入了特定的命令行参数。它位于 <code>deno</code> 安装目录的 <code>bin</code> 子目录下。</p>
-<p>示例：</p>
+<h2><a class="header" href="#script-installer" id="script-installer">Script installer</a></h2>
+<p>Deno provides <code>deno install</code> to easily install and distribute executable code.</p>
+<p><code>deno install [OPTIONS...] [URL] [SCRIPT_ARGS...]</code> will install the script
+available at <code>URL</code> under the name <code>EXE_NAME</code>.</p>
+<p>This command creates a thin, executable shell script which invokes <code>deno</code> using
+the specified CLI flags and main module. It is placed in the installation root's
+<code>bin</code> directory.</p>
+<p>Example:</p>
 <pre><code class="language-shell">$ deno install --allow-net --allow-read https://deno.land/std/http/file_server.ts
 [1/1] Compiling https://deno.land/std/http/file_server.ts
 
 ✅ Successfully installed file_server.
 /Users/deno/.deno/bin/file_server
 </code></pre>
-<p>要改变命令名称，使用 <code>-n</code>/<code>--name</code> 参数：</p>
+<p>To change the executable name, use <code>-n</code>/<code>--name</code>:</p>
 <pre><code class="language-shell">deno install --allow-net --allow-read -n serve https://deno.land/std/http/file_server.ts
 </code></pre>
-<p>默认情况下，Deno 会自动推导命令名称。</p>
+<p>The executable name is inferred by default:</p>
 <ul>
-<li>
-<p>尝试获取文件名称 (file stem)，以上示例将推导为 &quot;file_server&quot;</p>
-</li>
-<li>
-<p>如果文件名称是通用的，比如 &quot;main&quot;、&quot;mod&quot;、&quot;index&quot; 或 &quot;cli&quot;，并且它的路径没有父级，那么取父级路径的文件名，否则设置为原通用名称。</p>
-</li>
+<li>Attempt to take the file stem of the URL path. The above example would become
+'file_server'.</li>
+<li>If the file stem is something generic like 'main', 'mod', 'index' or 'cli',
+and the path has no parent, take the file name of the parent path. Otherwise
+settle with the generic name.</li>
 </ul>
-<p>要改变安装路径，使用 <code>--root</code> 选项：</p>
+<p>To change the installation root, use <code>--root</code>:</p>
 <pre><code class="language-shell">deno install --allow-net --allow-read --root /usr/local https://deno.land/std/http/file_server.ts
 </code></pre>
-<p>按照优先顺序确定安装根目录：</p>
+<p>The installation root is determined, in order of precedence:</p>
 <ul>
-<li><code>--root</code> 选项</li>
-<li><code>DENO_INSTALL_ROOT</code> 环境变量</li>
+<li><code>--root</code> option</li>
+<li><code>DENO_INSTALL_ROOT</code> environment variable</li>
 <li><code>$HOME/.deno</code></li>
 </ul>
-<p>如果需要，它们必须被添加进 <code>PATH</code> 环境变量。</p>
+<p>These must be added to the path manually if required.</p>
 <pre><code class="language-shell">echo 'export PATH=&quot;$HOME/.deno/bin:$PATH&quot;' &gt;&gt; ~/.bashrc
 </code></pre>
-<p>在安装时，您必须指定脚本会用到的权限。</p>
-<pre><code class="language-shell">deno install --allow-net --allow-read https://deno.land/std/http/file_server.ts 8080
+<p>You must specify permissions that will be used to run the script at installation
+time.</p>
+<pre><code class="language-shell">deno install --allow-net --allow-read https://deno.land/std/http/file_server.ts -p 8080
 </code></pre>
-<p>以上命令会创建一个名叫 <code>file_server</code> 的命令，运行时需要读取权限和网络权限，绑定到 8080 端口。</p>
-<p>我们建议使用 <a href="tools/../examples/testing_if_main.html">import.meta.main</a> 来指定作为可执行脚本时的入口点。</p>
-<p>示例：</p>
+<p>The above command creates an executable called <code>file_server</code> that runs with
+network and read permissions and binds to port 8080.</p>
+<p>For good practice, use the <a href="tools/../examples/testing_if_main.html"><code>import.meta.main</code></a>
+idiom to specify the entry point in an executable script.</p>
+<p>Example:</p>
 <!-- dprint-ignore -->
 <pre><code class="language-ts">// https://example.com/awesome/cli.ts
 async function myAwesomeCli(): Promise&lt;void&gt; {
@@ -1543,23 +1578,25 @@ if (import.meta.main) {
   myAwesomeCli();
 }
 </code></pre>
-<p>当您创建一个可执行脚本时，最好在仓库中告诉用户如何安装，让用户看到一个示例安装命令。</p>
-<pre><code class="language-shell"># 使用 deno install 安装
+<p>When you create an executable script make sure to let users know by adding an
+example installation command to your repository:</p>
+<pre><code class="language-shell"># Install using deno install
 
 $ deno install -n awesome_cli https://example.com/awesome/cli.ts
 </code></pre>
-<h2><a class="header" href="#代码格式化" id="代码格式化">代码格式化</a></h2>
-<p>Deno 有着内置的格式化工具，能够格式化 TypeScript 和 JavaScript 代码。</p>
-<pre><code class="language-shell"># 格式化当前目录和子目录下的所有 JS/TS 文件
+<h2><a class="header" href="#code-formatter" id="code-formatter">Code formatter</a></h2>
+<p>Deno ships with a built in code formatter that auto-formats TypeScript and
+JavaScript code.</p>
+<pre><code class="language-shell"># format all JS/TS files in the current directory and subdirectories
 deno fmt
-# 格式化特定的文件
+# format specific files
 deno fmt myfile1.ts myfile2.ts
-# 检查当前目录和子目录下的所有 JS/TS 文件是否都已被格式化
+# check if all the JS/TS files in the current directory and subdirectories are formatted
 deno fmt --check
-# 将标准输入流格式化并写入标准输出流
+# format stdin and write to stdout
 cat file.ts | deno fmt -
 </code></pre>
-<p>通过加上一句 <code>// deno-fmt-ignore</code> 注释来忽略格式化。</p>
+<p>Ignore formatting code by preceding it with a <code>// deno-fmt-ignore</code> comment:</p>
 <pre><code class="language-ts">// deno-fmt-ignore
 export const identity = [
     1, 0, 0,
@@ -1567,45 +1604,45 @@ export const identity = [
     0, 0, 1,
 ];
 </code></pre>
-<p>在文件头部加上一句 <code>// deno-fmt-ignore-file</code> 注释可以忽略整个文件。</p>
-<h2><a class="header" href="#打包" id="打包">打包</a></h2>
-<p><code>deno bundle [URL]</code> 将输出一个单独的 JavaScript 文件，其中包含了它的所有依赖。</p>
-<p>示例：</p>
+<p>Or ignore an entire file by adding a <code>// deno-fmt-ignore-file</code> comment at the
+top of the file.</p>
+<h2><a class="header" href="#bundling" id="bundling">Bundling</a></h2>
+<p><code>deno bundle [URL]</code> will output a single JavaScript file, which includes all
+dependencies of the specified input. For example:</p>
 <pre><code>&gt; deno bundle https://deno.land/std/examples/colors.ts colors.bundle.js
 Bundling &quot;colors.bundle.js&quot;
 Emitting bundle to &quot;colors.bundle.js&quot;
 9.2 kB emitted.
 </code></pre>
-<p>如果您忽略了输出文件参数，打包文件将输出到 stdout。</p>
-<p>这个打包文件能够像其他任何模块一样在 Deno 中运行。</p>
+<p>If you omit the out file, the bundle will be sent to <code>stdout</code>.</p>
+<p>The bundle can just be run as any other module in Deno would:</p>
 <pre><code>deno run colors.bundle.js
 </code></pre>
-<p>打包文件是一个自包含 (self contained) 的 ES 模块，其中的任何导出仍然可用。</p>
-<p>举个例子，如果主模块是这样的：</p>
+<p>The output is a self contained ES Module, where any exports from the main module
+supplied on the command line will be available. For example, if the main module
+looked something like this:</p>
 <pre><code class="language-ts">export { foo } from &quot;./foo.js&quot;;
 
 export const bar = &quot;bar&quot;;
 </code></pre>
-<p>它可以像这样被导入：</p>
+<p>It could be imported like this:</p>
 <pre><code class="language-ts">import { foo, bar } from &quot;./lib.bundle.js&quot;;
 </code></pre>
-<p>打包文件也可以在浏览器中被加载，它是一个自包含的 ES 模块，因此 <code>type</code> 属性 (attribute) 必须设置为 <code>&quot;module&quot;</code>。</p>
-<p>示例：</p>
+<p>Bundles can also be loaded in the web browser. The bundle is a self-contained ES
+module, and so the attribute of <code>type</code> must be set to <code>&quot;module&quot;</code>. For example:</p>
 <pre><code class="language-html">&lt;script type=&quot;module&quot; src=&quot;website.bundle.js&quot;&gt;&lt;/script&gt;
 </code></pre>
-<p>除了直接加载，它也可以从其他模块导入。</p>
+<p>Or you could import it into another ES module to consume:</p>
 <pre><code class="language-html">&lt;script type=&quot;module&quot;&gt;
   import * as website from &quot;website.bundle.js&quot;;
 &lt;/script&gt;
 </code></pre>
-<h2><a class="header" href="#文档生成器" id="文档生成器">文档生成器</a></h2>
-<p><code>deno doc</code> 将处理一个或一组源文件，为每个模块的<strong>导出</strong>成员打印出 JSDoc 文档。</p>
-<p>目前只支持两种导出声明：</p>
-<ul>
-<li><code>export &lt;declaration&gt;</code></li>
-<li><code>export ... from ...</code></li>
-</ul>
-<p>例如，对于这样的一个文件 <code>add.ts</code>：</p>
+<h2><a class="header" href="#documentation-generator" id="documentation-generator">Documentation Generator</a></h2>
+<p><code>deno doc</code> followed by a list of one or more source files will print the JSDoc
+documentation for each of the module's <strong>exported</strong> members. Currently, only
+exports in the style <code>export &lt;declaration&gt;</code> and <code>export ... from ...</code> are
+supported.</p>
+<p>For example, given a file <code>add.ts</code> with the contents:</p>
 <pre><code class="language-ts">/**
  * Adds x and y.
  * @param {number} x
@@ -1616,14 +1653,17 @@ export function add(x: number, y: number): number {
   return x + y;
 }
 </code></pre>
-<p>运行 Deno <code>doc</code> 命令，把该函数的 JSDoc 注释打印到 <code>stdout</code>：</p>
+<p>Running the Deno <code>doc</code> command, prints the function's JSDoc comment to <code>stdout</code>:</p>
 <pre><code class="language-shell">deno doc add.ts
 function add(x: number, y: number): number
   Adds x and y. @param {number} x @param {number} y @returns {number} Sum of x and y
 </code></pre>
-<p>使用 <code>--json</code> 选项，用 JSON 格式输出文档。该格式在 <a href="https://github.com/denoland/doc_website">deno doc website</a> 使用，用以生成模块文档。</p>
-<h2><a class="header" href="#依赖检查器" id="依赖检查器">依赖检查器</a></h2>
-<p><code>deno info [URL]</code> 会列出 ES 模块和它的所有依赖。</p>
+<p>Use the <code>--json</code> flag to output the documentation in JSON format. This JSON
+format is consumed by the
+<a href="https://github.com/denoland/doc_website">deno doc website</a> and used to generate
+module documentation.</p>
+<h2><a class="header" href="#dependency-inspector" id="dependency-inspector">Dependency Inspector</a></h2>
+<p><code>deno info [URL]</code> will inspect ES module and all of its dependencies.</p>
 <pre><code class="language-shell">deno info https://deno.land/std@0.52.0/http/file_server.ts
 Download https://deno.land/std@0.52.0/http/file_server.ts
 ...
@@ -1681,23 +1721,24 @@ https://deno.land/std@0.52.0/http/file_server.ts
   │ └── https://deno.land/std@0.52.0/testing/asserts.ts
   └── https://deno.land/std@0.52.0/testing/asserts.ts
 </code></pre>
-<p>依赖检查器对本地或远程的任意 ES 模块都有效。</p>
-<h2><a class="header" href="#缓存位置" id="缓存位置">缓存位置</a></h2>
-<p><code>deno info</code> 可以用来显示与缓存位置有关的信息：</p>
+<p>Dependency inspector works with any local or remote ES modules.</p>
+<h2><a class="header" href="#cache-location" id="cache-location">Cache location</a></h2>
+<p><code>deno info</code> can be used to display information about cache location:</p>
 <pre><code class="language-shell">deno info
 DENO_DIR location: &quot;/Users/deno/Library/Caches/deno&quot;
 Remote modules cache: &quot;/Users/deno/Library/Caches/deno/deps&quot;
 TypeScript compiler cache: &quot;/Users/deno/Library/Caches/deno/gen&quot;
 </code></pre>
 <h2><a class="header" href="#linter" id="linter">Linter</a></h2>
-<p>Deno 附带了 JavaScript 和 TypeScript 的内置 linter。</p>
-<p><strong>注意：linter 是一个新功能，仍然不稳定，因此需要 <code>--unstable</code> 选项</strong></p>
-<pre><code class="language-shell"># 检查当前目录树内所有 JS/TS 文件
+<p>Deno ships with a built in code linter for JavaScript and TypeScript.</p>
+<p><strong>Note: linter is a new feature and still unstable thus it requires <code>--unstable</code>
+flag</strong></p>
+<pre><code class="language-shell"># lint all JS/TS files in the current directory and subdirectories
 deno lint --unstable
-# 检查特定文件
+# lint specific files
 deno lint --unstable myfile1.ts myfile2.ts
 </code></pre>
-<h3><a class="header" href="#可用规则" id="可用规则">可用规则</a></h3>
+<h3><a class="header" href="#available-rules" id="available-rules">Available rules</a></h3>
 <ul>
 <li><code>ban-ts-comment</code></li>
 <li><code>ban-untagged-ignore</code></li>
@@ -1742,16 +1783,17 @@ deno lint --unstable myfile1.ts myfile2.ts
 <li><code>use-isnan</code></li>
 <li><code>valid-typeof</code></li>
 </ul>
-<h3><a class="header" href="#忽略指令" id="忽略指令">忽略指令</a></h3>
-<h4><a class="header" href="#文件" id="文件">文件</a></h4>
-<p>要忽略整个文件，<code>// deno-lint-ignore-file</code> 指令应该置于文件顶部。</p>
+<h3><a class="header" href="#ignore-directives" id="ignore-directives">Ignore directives</a></h3>
+<h4><a class="header" href="#files" id="files">Files</a></h4>
+<p>To ignore whole file <code>// deno-lint-ignore-file</code> directive should placed at the
+top of the file.</p>
 <pre><code class="language-ts">// deno-lint-ignore-file
 
 function foo(): any {
   // ...
 }
 </code></pre>
-<p>必须在第一个语句或声明之前放置忽略指令：</p>
+<p>Ignore directive must be placed before first stament or declaration:</p>
 <pre><code class="language-ts">// Copyright 2020 the Deno authors. All rights reserved. MIT license.
 
 /**
@@ -1766,8 +1808,9 @@ function foo(): any {
   // ...
 }
 </code></pre>
-<h4><a class="header" href="#诊断-diagnostics" id="诊断-diagnostics">诊断 (Diagnostics)</a></h4>
-<p>要忽略某些诊断，<code>// deno-lint-ignore &lt;codes ...&gt;</code> 指令应该置于违规行之前。必须指定要忽略的规则名称。</p>
+<h4><a class="header" href="#diagnostics" id="diagnostics">Diagnostics</a></h4>
+<p>To ignore certain diagnostic <code>// deno-lint-ignore &lt;codes...&gt;</code> directive should
+be placed before offending line. Specifying ignored rule name is required.</p>
 <pre><code class="language-ts">// deno-lint-ignore no-explicit-any
 function foo(): any {
   // ...
@@ -1778,7 +1821,9 @@ function bar(a: any) {
   // ...
 }
 </code></pre>
-<p>为了与 ESLint 兼容，<code>deno lint</code> 也支持 <code>// eslint-ignore-next-line</code> 指令。像 <code>// deno-lint-ignore</code> 一样，这也需要指定忽略的规则名称。</p>
+<p>To provide some compatibility with ESLint <code>deno lint</code> also supports
+<code>// eslint-ignore-next-line</code> directive. Just like in <code>// deno-lint-ignore</code> it's
+required to specify ignored rule name is required.</p>
 <pre><code class="language-ts">// eslint-ignore-next-line no-empty
 while (true) {}
 
@@ -1787,12 +1832,10 @@ function bar(a: any) {
   // ...
 }
 </code></pre>
-<h1><a class="header" href="#嵌入式-deno" id="嵌入式-deno">嵌入式 Deno</a></h1>
-<p>Deno 由多个部分组成，其中之一是 <code>deno_core</code>。这是一个 rust
-crate，可以用作 Rust 应用中的嵌入式 JavaScript 运行时。</p>
-<p>Deno 建立在 <code>deno_core</code> 的基础上。</p>
-<p>Deno crate 发布于 <a href="https://crates.io/crates/deno_core">crates.io</a>。</p>
-<p>您可以通过 <a href="https://docs.rs/deno_core">docs.rs</a> 查阅其 API。</p>
+<h1><a class="header" href="#組み込みdeno" id="組み込みdeno">組み込みDeno</a></h1>
+<p>Denoは複数の部分で構成されており、そのうちの1つは<code>deno_core</code>です。これは、JavaScriptランタイムをRustアプリケーションに埋め込むために使用できるRust Crateです。 Denoは<code>deno_core</code>の上に構築されています。</p>
+<p>Denoクレートは、<a href="https://crates.io/crates/deno_core">crates.io</a>でホストされています。 </p>
+<p>APIは<a href="https://docs.rs/deno_core">docs.rs</a>で確認できます。</p>
 <!-- TODO(lucacasonato): better docs -->
 <h1><a class="header" href="#贡献" id="贡献">贡献</a></h1>
 <ul>

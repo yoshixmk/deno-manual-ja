@@ -159,32 +159,33 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2><a class="header" href="#打包" id="打包">打包</a></h2>
-<p><code>deno bundle [URL]</code> 将输出一个单独的 JavaScript 文件，其中包含了它的所有依赖。</p>
-<p>示例：</p>
+                        <h2><a class="header" href="#bundling" id="bundling">Bundling</a></h2>
+<p><code>deno bundle [URL]</code> will output a single JavaScript file, which includes all
+dependencies of the specified input. For example:</p>
 <pre><code>&gt; deno bundle https://deno.land/std/examples/colors.ts colors.bundle.js
 Bundling &quot;colors.bundle.js&quot;
 Emitting bundle to &quot;colors.bundle.js&quot;
 9.2 kB emitted.
 </code></pre>
-<p>如果您忽略了输出文件参数，打包文件将输出到 stdout。</p>
-<p>这个打包文件能够像其他任何模块一样在 Deno 中运行。</p>
+<p>If you omit the out file, the bundle will be sent to <code>stdout</code>.</p>
+<p>The bundle can just be run as any other module in Deno would:</p>
 <pre><code>deno run colors.bundle.js
 </code></pre>
-<p>打包文件是一个自包含 (self contained) 的 ES 模块，其中的任何导出仍然可用。</p>
-<p>举个例子，如果主模块是这样的：</p>
+<p>The output is a self contained ES Module, where any exports from the main module
+supplied on the command line will be available. For example, if the main module
+looked something like this:</p>
 <pre><code class="language-ts">export { foo } from &quot;./foo.js&quot;;
 
 export const bar = &quot;bar&quot;;
 </code></pre>
-<p>它可以像这样被导入：</p>
+<p>It could be imported like this:</p>
 <pre><code class="language-ts">import { foo, bar } from &quot;./lib.bundle.js&quot;;
 </code></pre>
-<p>打包文件也可以在浏览器中被加载，它是一个自包含的 ES 模块，因此 <code>type</code> 属性 (attribute) 必须设置为 <code>&quot;module&quot;</code>。</p>
-<p>示例：</p>
+<p>Bundles can also be loaded in the web browser. The bundle is a self-contained ES
+module, and so the attribute of <code>type</code> must be set to <code>&quot;module&quot;</code>. For example:</p>
 <pre><code class="language-html">&lt;script type=&quot;module&quot; src=&quot;website.bundle.js&quot;&gt;&lt;/script&gt;
 </code></pre>
-<p>除了直接加载，它也可以从其他模块导入。</p>
+<p>Or you could import it into another ES module to consume:</p>
 <pre><code class="language-html">&lt;script type=&quot;module&quot;&gt;
   import * as website from &quot;website.bundle.js&quot;;
 &lt;/script&gt;

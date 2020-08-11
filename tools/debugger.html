@@ -159,41 +159,64 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2><a class="header" href="#调试器-debugger" id="调试器-debugger">调试器 (debugger)</a></h2>
-<p>Deno 支持 <a href="https://v8.dev/docs/inspector">V8 Inspector Protocol</a>.</p>
-<p>使用 Chrome Devtools 或其他支持该协议的客户端（比如 VSCode）能够调试 Deno 程序。</p>
-<p>要启用调试功能，用 <code>--inspect</code> 或 <code>--inspect-brk</code> 选项运行 Deno。</p>
-<p><code>--inspect</code> 选项允许在任何时间点连接调试器，而 <code>--inspect-brk</code> 选项会等待调试器连接，在第一行代码处暂停执行。</p>
+                        <h2><a class="header" href="#debugger" id="debugger">Debugger</a></h2>
+<p>Deno supports the <a href="https://v8.dev/docs/inspector">V8 Inspector Protocol</a>.</p>
+<p>It's possible to debug Deno programs using Chrome Devtools or other clients that
+support the protocol (eg. VSCode).</p>
+<p>To activate debugging capabilities run Deno with the <code>--inspect</code> or
+<code>--inspect-brk</code> flags.</p>
+<p>The <code>--inspect</code> flag allows attaching the debugger at any point in time, while
+<code>--inspect-brk</code> will wait for the debugger to attach and will pause execution on
+the first line of code.</p>
 <h3><a class="header" href="#chrome-devtools" id="chrome-devtools">Chrome Devtools</a></h3>
-<p>让我们用 Chrome 开发者工具来调试一个程序，我们将使用来自 <code>std</code> 的 <a href="https://deno.land/std@v0.50.0/http/file_server.ts">file_server.ts</a>，这是一个静态文件服务。</p>
-<p>使用 <code>--inspect-brk</code> 选项，在第一行代码处暂停执行。</p>
+<p>Let's try debugging a program using Chrome Devtools. For this, we'll use
+<a href="https://deno.land/std@v0.50.0/http/file_server.ts">file_server.ts</a> from <code>std</code>,
+a static file server.</p>
+<p>Use the <code>--inspect-brk</code> flag to break execution on the first line:</p>
 <pre><code class="language-shell">$ deno run --inspect-brk --allow-read --allow-net https://deno.land/std@v0.50.0/http/file_server.ts
 Debugger listening on ws://127.0.0.1:9229/ws/1e82c406-85a9-44ab-86b6-7341583480b1
 Download https://deno.land/std@v0.50.0/http/file_server.ts
 Compile https://deno.land/std@v0.50.0/http/file_server.ts
 ...
 </code></pre>
-<p>打开 <code>chrome://inspect</code>，点击 target 旁边的 <code>Inspect</code>。</p>
+<p>Open <code>chrome://inspect</code> and click <code>Inspect</code> next to target:</p>
 <p><img src="../images/debugger1.jpg" alt="chrome://inspect" /></p>
-<p>开发者工具加载所有模块时可能会等待几秒。</p>
+<p>It might take a few seconds after opening the devtools to load all modules.</p>
 <p><img src="../images/debugger2.jpg" alt="Devtools opened" /></p>
-<p>您可能注意到开发者工具暂停执行的地方不是 <code>file_server.ts</code>，而是 <code>_constants.ts</code> 的第一行。这是符合预期的行为，ES 模块在 V8 中执行的顺序如此。<code>_constants.ts</code> 是 <code>file_server.ts</code> 最深、最先的依赖，因此它会最先执行。</p>
-<p>在这时，所有源码在开发者工具中都可用。打开 <code>file_server.ts</code>，加一处断点，然后打开 &quot;Sources&quot; 面板，展开树：</p>
+<p>You might notice that Devtools paused execution on the first line of
+<code>_constants.ts</code> instead of <code>file_server.ts</code>. This is expected behavior and is
+caused by the way ES modules are evaluated by V8 (<code>_constants.ts</code> is left-most,
+bottom-most dependency of <code>file_server.ts</code> so it is evaluated first).</p>
+<p>At this point all source code is available in the Devtools, so let's open up
+<code>file_server.ts</code> and add a breakpoint there; go to &quot;Sources&quot; pane and expand the
+tree:</p>
 <p><img src="../images/debugger3.jpg" alt="Open file_server.ts" /></p>
-<p><em>仔细观察，您会发现每个文件都有重复的条目，一个是正常字体，另一个是斜体。前者是编译后的源文件（所以 <code>.ts</code> 文件会生成 JavaScript 源代码），后者是该文件的源映射 (source map)。</em></p>
-<p>下一步，在 <code>listenAndServe</code> 方法处加一个断点。</p>
+<p><em>Looking closely you'll find duplicate entries for each file; one written
+regularly and one in italics. The former is compiled source file (so in the case
+of <code>.ts</code> files it will be emitted JavaScript source), while the latter is a
+source map for the file.</em></p>
+<p>Next, add a breakpoint in the <code>listenAndServe</code> method:</p>
 <p><img src="../images/debugger4.jpg" alt="Break in file_server.ts" /></p>
-<p>添加断点后，开发者工具会自动打开源映射文件，让我们能在包含类型的实际源码中步进。</p>
-<p>现在我们已经设置了断点，在触发断点时，我们可以检查传入的请求，也可以继续执行脚本。点击恢复脚本执行的按钮即可，您可能需要点两次。</p>
-<p>当脚本继续运行时，让我们发送一个请求，看看开发者工具中发生了什么。</p>
+<p>As soon as we've added the breakpoint Devtools automatically opened up the
+source map file, which allows us step through the actual source code that
+includes types.</p>
+<p>Now that we have our breakpoints set, we can resume the execution of our script
+so that we might inspect an incoming request. Hit the Resume script execution
+button to do so. You might even need to hit it twice!</p>
+<p>Once our script is running again, let's send a request and inspect it in
+Devtools:</p>
 <pre><code>$ curl http://0.0.0.0:4500/
 </code></pre>
 <p><img src="../images/debugger5.jpg" alt="Break in request handling" /></p>
-<p>在这时，我们可以检查请求的内容，逐步调试代码。</p>
+<p>At this point we can introspect the contents of the request and go step-by-step
+to debug the code.</p>
 <h3><a class="header" href="#vscode" id="vscode">VSCode</a></h3>
-<p>Deno 可以在 VSCode 中调试。</p>
-<p>插件的官方支持正在开发中 <a href="https://github.com/denoland/vscode_deno/issues/12">https://github.com/denoland/vscode_deno/issues/12</a></p>
-<p>我们也可以通过手动提供 <a href="https://code.visualstudio.com/docs/editor/debugging#_launch-configurations"><code>launch.json</code></a> 配置，来连接调试器：</p>
+<p>Deno can be debugged using VSCode.</p>
+<p>Official support via the plugin is being worked on -
+https://github.com/denoland/vscode_deno/issues/12</p>
+<p>We can still attach the debugger by manually providing a
+<a href="https://code.visualstudio.com/docs/editor/debugging#_launch-configurations"><code>launch.json</code></a>
+config:</p>
 <pre><code class="language-json">{
   &quot;version&quot;: &quot;0.2.0&quot;,
   &quot;configurations&quot;: [
@@ -209,8 +232,9 @@ Compile https://deno.land/std@v0.50.0/http/file_server.ts
   ]
 }
 </code></pre>
-<p><strong>注意</strong>：这将使用您打开的文件作为入口点；如果需要固定的入口点，请用脚本名称替换 <code>${file}</code>。</p>
-<p>让我们尝试一下本地源文件，创建 <code>server.ts</code>：</p>
+<p><strong>NOTE</strong>: This uses the file you have open as the entry point; replace <code>${file}</code>
+with a script name if you want a fixed entry point.</p>
+<p>Let's try out debugging a local source file. Create <code>server.ts</code>:</p>
 <pre><code class="language-ts">import { serve } from &quot;https://deno.land/std@v0.50.0/http/server.ts&quot;;
 const server = serve({ port: 8000 });
 console.log(&quot;http://localhost:8000/&quot;);
@@ -219,17 +243,23 @@ for await (const req of server) {
   req.respond({ body: &quot;Hello World\n&quot; });
 }
 </code></pre>
-<p>然后我们可以设置断点，运行已创建的配置：</p>
+<p>Then we can set a breakpoint, and run the created configuration:</p>
 <p><img src="../images/debugger7.jpg" alt="VSCode debugger" /></p>
-<h3><a class="header" href="#jetbrains-ide" id="jetbrains-ide">JetBrains IDE</a></h3>
-<p>您可以使用 JetBrains IDE 来调试 Deno，右击您想要调试的文件，选择 <code>Debug 'Deno: &lt;file name&gt;'</code>。这会创建一个没有权限设置的 运行/调试 配置，您可能需要更改 <code>Arguments</code> 字段来提供所需权限。</p>
-<h3><a class="header" href="#其他" id="其他">其他</a></h3>
-<p>实现 Devtools 协议的任何客户端都能连接 Deno 进程。</p>
-<h3><a class="header" href="#限制" id="限制">限制</a></h3>
-<p>开发者工具的支持仍不成熟，有一些功能是缺失的，或是有 bug 的：</p>
+<h3><a class="header" href="#jetbrains-ides" id="jetbrains-ides">JetBrains IDEs</a></h3>
+<p>You can debug Deno using your JetBrains IDE by right-clicking the file you want
+to debug and selecting the <code>Debug 'Deno: &lt;file name&gt;'</code> option. This will create
+a run/debug configuration with no permission flags set. To configure these flags
+edit the run/debug configuration and modify the <code>Arguments</code> field with the
+required flags.</p>
+<h3><a class="header" href="#other" id="other">Other</a></h3>
+<p>Any client that implements the Devtools protocol should be able to connect to a
+Deno process.</p>
+<h3><a class="header" href="#limitations" id="limitations">Limitations</a></h3>
+<p>Devtools support is still immature. There is some functionality that is known to
+be missing or buggy:</p>
 <ul>
-<li>开发者工具控制台中的自动补全会让 Deno 进程退出。</li>
-<li>性能分析 (profiling) 和内存转储 (memory dump) 可能不正确。</li>
+<li>autocomplete in Devtools' console causes the Deno process to exit</li>
+<li>profiling and memory dumps might not work correctly</li>
 </ul>
 
                     </main>
