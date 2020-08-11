@@ -159,40 +159,33 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2><a class="header" href="#编译器-api" id="编译器-api">编译器 API</a></h2>
+                        <h2><a class="header" href="#コンパイラapi" id="コンパイラapi">コンパイラAPI</a></h2>
 <blockquote>
-<p>这是一个不稳定的 Deno 特性。
-更多信息请查阅 <a href="stability.html">稳定性</a></p>
+<p>これは不安定なDeno機能です。<a href="stability.html">不安定な機能の詳細</a>をご覧ください。</p>
 </blockquote>
-<p>Deno 支持对内置 TypeScript 编译器的运行时访问。<code>Deno</code> 命名空间中有三种方法提供此访问。</p>
+<p>Denoは、組み込みのTypeScriptコンパイラへのランタイムアクセスをサポートしています。 <code>Deno</code>名前空間には、このアクセスを提供する3つのメソッドがあります。</p>
 <h3><a class="header" href="#denocompile" id="denocompile"><code>Deno.compile()</code></a></h3>
-<p>这类似于 <code>deno cache</code>，因为它可以获取代码、缓存代码、编译代码，但不运行代码。它最多接受三个参数，<code>rootName</code>、可选的 <code>sources</code> 和可选的 <code>options</code>。</p>
-<p><code>rootName</code> 是用于生成目标程序的根模块。这类似于在 <code>deno run --reload example.ts</code> 中在命令行上传递的模块名。</p>
-<p><code>sources</code> 是一个哈希表，其中键是完全限定的模块名称，值是模块的文本源。如果传递了 <code>sources</code>，Deno 将从该哈希表中解析所有模块，而不会尝试在 Deno 之外解析它们。如果没有提供 <code>sources</code>，Deno 将解析模块，就像根模块已经在命令行上传递了一样。Deno 还将缓存所有的这些资源。所有已解析的资源都会被当成动态导入对待，导入行为是否需要读取和网络权限取决于目标在本地还是远程。</p>
-<p><code>options</code> 参数是一组 <code>Deno.CompilerOptions</code> 类型的选项，它是包含 Deno 支持选项的 TypeScript 编译器选项的子集。</p>
-<p>该方法返回元组。第一个参数包含与代码相关的任何诊断信息（语法或类型错误）。第二个参数是一个映射，其中键是输出文件名，值是内容。</p>
-<p>提供 <code>sources</code> 的一个例子:</p>
+<p>これは<code>deno cacheと</code>同様に機能し、コードのフェッチ、キャッシュ、コンパイルはできますが、実行はできません。これは、最大3つの引数で、<code>rootName</code>と、オプションで<code>sources</code>、<code>options</code>を取ります。 <code>rootName</code>は、結果のプログラムを生成するために使用されるルートモジュールです。これは、<code>deno run --reload example.ts</code>のコマンドラインで渡すモジュール名に似ています。<code>sources</code>はハッシュであり、キーは完全修飾モジュール名であり、値はモジュールのテキストソースです。<code>sources</code>が渡された場合、Denoはそのハッシュ内からすべてのモジュールを解決し、Denoの外部では解決を試みません。ソースが提供されない場合、Denoは、ルートモジュールがコマンドラインで渡されたかのようにモジュールを解決します。 Denoはこれらのリソースもキャッシュします。解決されたすべてのリソースは動的インポートとして扱われ、ローカルかリモートかに応じて読み取りまたはネット権限が必要です。 <code>options</code>引数は、<code>Deno.CompilerOptions</code>タイプのオプションのセットです。これは、Denoでサポートされているオプションを含むTypeScriptコンパイラオプションのサブセットです。</p>
+<p>メソッドはタプルで解決されます。最初の引数には、コードに関連するすべての診断（構文または型エラー）が含まれます。 2番目の引数は、キーが出力ファイル名で値がコンテンツであるマップです。</p>
+<p>ソースを提供する例：:</p>
 <pre><code class="language-ts">const [diagnostics, emitMap] = await Deno.compile(&quot;/foo.ts&quot;, {
   &quot;/foo.ts&quot;: `import * as bar from &quot;./bar.ts&quot;;\nconsole.log(bar);\n`,
   &quot;/bar.ts&quot;: `export const bar = &quot;bar&quot;;\n`,
 });
 
-assert(diagnostics == null); // 确保没有返回诊断信息
+assert(diagnostics == null); // ensuring no diagnostics are returned
 console.log(emitMap);
 </code></pre>
-<p>我们希望 map 包含 4 个 “文件（files）” ，分别命名为 <code>/foo.js.map</code>，<code>/foo.js</code>，<code>/bar.js.map</code>，和 <code>/bar.js</code>。</p>
-<p>当不提供资源时，您可以使用本地或远程模块，就像在命令行上做的那样。所以您可以这样做:</p>
+<p>mapには、<code>/foo.js.map</code>、<code>/foo.js</code>、<code>/bar.js.map</code>、<code>/bar.js</code>という名前の4つの「ファイル」が含まれていると予想されます。</p>
+<p>リソースを提供しない場合は、コマンドラインで行うのと同じように、ローカルモジュールまたはリモートモジュールを使用できます。だからあなたはこのようなことをすることができます：</p>
 <pre><code class="language-ts">const [diagnostics, emitMap] = await Deno.compile(
   &quot;https://deno.land/std/examples/welcome.ts&quot;,
 );
 </code></pre>
-<p>在这种情况下，<code>emitMap</code> 将包含一个 <code>console.log()</code> 语句。</p>
+<p>この場合、<code>emitMap</code>には<code>console.log()</code>ステートメントが含まれます。</p>
 <h3><a class="header" href="#denobundle" id="denobundle"><code>Deno.bundle()</code></a></h3>
-<p>这与 <code>deno bundle</code> 在命令行上的工作非常相似。 它也与 <code>Deno.compile()</code> 类似，只是它不返回文件映射，而是只返回一个字符串，这是一个自包含的 JavaScript ES 模块，它将包含提供或解析的所有代码，以及提供的根模块的所有导出。它最多接受三个参数，<code>rootName</code>、可选的 <code>sources</code> 和可选的 <code>options</code>。</p>
-<p><code>rootName</code> 是用于生成目标程序的根模块。这类似于在 <code>deno bundle example.ts</code> 中在命令行上传递的模块名。</p>
-<p><code>sources</code> 是一个哈希表，其中键是完全限定的模块名称，值是模块的文本源。如果传递了 <code>sources</code>，Deno 将从该哈希表中解析所有模块，而不会尝试在 Deno 之外解析它们。如果没有提供 <code>sources</code>，Deno 将解析模块，就像根模块已经在命令行上传递了一样。Deno 还将缓存所有的这些资源。所有已解析的资源都会被当成动态导入对待，导入行为是否需要读取和网络权限取决于目标在本地还是远程。</p>
-<p><code>options</code> 参数是一组 <code>Deno.CompilerOptions</code> 类型的选项，它是包含 Deno 支持选项的 TypeScript 编译器选项的子集。</p>
-<p>提供 <code>sources</code> 的一个例子:</p>
+<p>これは、コマンドラインで<code>deno bundle</code>が行うのとよく似ています。これも<code>Deno.compile()</code>に似ていますが、ファイルのマップを返す代わりに、提供または解決されたすべてのコードとエクスポートを含む自己完結型のJavaScript ESモジュールである単一の文字列を返します。提供されたルートモジュールのすべてのエクスポートのこれは、最大3つの引数で、<code>rootName</code>、オプションで<code>sources</code>、<code>options</code>を取ります。 <code>rootName</code>は、結果のプログラムを生成するために使用されるルートモジュールです。これは、<code>deno bundle example.ts</code>のコマンドラインで渡すモジュール名に似ています。<code>sources</code>はハッシュであり、キーは完全修飾モジュール名であり、値はモジュールのテキストソースです。<code>sources</code>が渡された場合、Denoはそのハッシュ内からすべてのモジュールを解決し、Denoの外部では解決を試みません。<code>sources</code>が提供されない場合、Denoは、ルートモジュールがコマンドラインで渡されたかのようにモジュールを解決します。解決されたすべてのリソースは動的インポートとして扱われ、ローカルかリモートかに応じて読み取りまたはネット権限が必要です。 Denoはこれらのリソースもキャッシュします。 <code>options</code>引数は、<code>Deno.CompilerOptions</code>タイプのオプションのセットです。これは、Denoでサポートされているオプションを含むTypeScriptコンパイラオプションのサブセットです。</p>
+<p>ソースを提供する例:</p>
 <pre><code class="language-ts">const [diagnostics, emit] = await Deno.bundle(&quot;/foo.ts&quot;, {
   &quot;/foo.ts&quot;: `import * as bar from &quot;./bar.ts&quot;;\nconsole.log(bar);\n`,
   &quot;/bar.ts&quot;: `export const bar = &quot;bar&quot;;\n`,
@@ -201,16 +194,16 @@ console.log(emitMap);
 assert(diagnostics == null); // 确保没有返回诊断信息
 console.log(emit);
 </code></pre>
-<p>我们希望 <code>emit</code> 是一个 ES 模块的文本，它将包含两个模块的输出源。</p>
-<p>当不提供资源时，您可以使用本地或远程模块，就像在命令行上做的那样。所以您可以这样做:</p>
+<p>両方のモジュールの出力ソースを含む、ESモジュールのテキストが<code>出力</code>されることを期待します。</p>
+<p>リソースを提供しない場合は、コマンドラインで行うのと同じように、ローカルモジュールまたはリモートモジュールを使用できます。だからあなたはこのようなことをすることができます:</p>
 <pre><code class="language-ts">const [diagnostics, emit] = await Deno.bundle(
   &quot;https://deno.land/std/http/server.ts&quot;,
 );
 </code></pre>
 <p>在这种情况下，<code>emit</code> 将是一个自包含的 JavaScript ES 模块，并解析了所有依赖项，导出与源模块相同的导出。</p>
 <h3><a class="header" href="#denotranspileonly" id="denotranspileonly"><code>Deno.transpileOnly()</code></a></h3>
-<p>这是基于 TypeScript 函数 <code>transpileModule()</code> 的。所有这些操作都会“擦除”模块中的任何类型并释放 JavaScript。没有类型检查和依赖关系的解析。它最多接受两个参数，第一个参数是哈希表，其中键是模块名称，值是内容。模块名称的唯一用途是在将信息放入源映射时，显示源文件名称是什么。第二个参数包含 <code>Deno.CompilerOptions</code> 类型的可选 <code>options</code>。函数通过映射解析，其中键是提供的源模块名称，值是具有 <code>source</code> 属性和可选 <code>map</code> 属性的对象。第一个是模块的输出内容。 <code>map</code> 属性是源映射。源映射是默认提供的，但可以通过 <code>options</code> 参数关闭。</p>
-<p>举个例子：</p>
+<p>これは、TypeScript関数<code>transpileModule()</code>に基づいています。これが行うことは、モジュールからすべてのタイプを「消去」し、JavaScriptを発行することだけです。型チェックや依存関係の解決はありません。最大2つの引数を受け入れます。最初の引数は、キーがモジュール名で値がコンテンツであるハッシュです。モジュール名の唯一の目的は、ソースファイル名とは何か、ソースマップに情報を入れるときです。 2番目の引数には、<code>Deno.CompilerOptions</code>タイプの<code>options</code>オプションが含まれます。関数はマップで解決されます。キーは指定されたソースモジュール名であり、値は<code>source</code>のプロパティを持つオブジェクトで、オプションで<code>map</code>されます。 1つ目は、モジュールの出力内容です。 <code>map</code>プロパティはソースマップです。ソースマップはデフォルトで提供されますが、<code>options</code>引数を介してオフにすることができます。</p>
+<p>例：</p>
 <pre><code class="language-ts">const result = await Deno.transpileOnly({
   &quot;/foo.ts&quot;: `enum Foo { Foo, Bar, Baz };\n`,
 });
@@ -218,10 +211,10 @@ console.log(emit);
 console.log(result[&quot;/foo.ts&quot;].source);
 console.log(result[&quot;/foo.ts&quot;].map);
 </code></pre>
-<p>我们期望 <code>enum</code> 被重写成一个构造可枚举的 IIFE，并且映射被定义。</p>
-<h3><a class="header" href="#引用-typescript-库文件" id="引用-typescript-库文件">引用 TypeScript 库文件</a></h3>
-<p>当您使用 <code>deno run</code> 或其他 TypeScript 类型的 Deno 命令时，该代码将根据描述 Deno 支持的环境的自定义库进行评估。默认情况下，TypeScript 类型的编译器运行时 API 也使用这些库（<code>Deno.compile()</code> 和 <code>Deno.bundle()</code>）。</p>
-<p>但是，如果您希望为其他运行时编译或捆绑 TypeScript，则您可能希望重载默认库。为此，运行时 API 支持编译器选项中的 <code>lib</code> 属性。例如，如果你的 TypeScript 代码是为浏览器准备的，您可以使用 TypeScript 的 <code>&quot;dom&quot;</code> 库:</p>
+<p><code>enum</code>は、enumerableを構成するIIFEに書き換えられ、マップが定義されることを期待します。</p>
+<h3><a class="header" href="#typescriptライブラリファイルの参照" id="typescriptライブラリファイルの参照">TypeScriptライブラリファイルの参照</a></h3>
+<p><code>deno run</code>、またはTypeScriptを型チェックする他のDenoコマンドを使用すると、そのコードは、Denoがサポートする環境を記述するカスタムライブラリに対して評価されます。デフォルトでは、TypeScriptを型チェックするコンパイラランタイムAPIもこれらのライブラリ（<code>Deno.compile()</code>および<code>Deno.bundle()</code>）を使用します。</p>
+<p>ただし、他のランタイム用にTypeScriptをコンパイルまたはバンドルする場合は、デフォルトのライブラリをオーバーライドすることができます。これを行うために、ランタイムAPIはコンパイラオプションの<code>lib</code>プロパティをサポートしています。たとえば、ブラウザを宛先とするTypeScriptコードがある場合、TypeScriptの<code>&quot;dom&quot;</code>ライブラリを使用します。:</p>
 <pre><code class="language-ts">const [errors, emitted] = await Deno.compile(
   &quot;main.ts&quot;,
   {
@@ -232,18 +225,18 @@ console.log(result[&quot;/foo.ts&quot;].map);
   },
 );
 </code></pre>
-<p>有关 TypeScript 支持的所有库的列表，请参见 <a href="https://www.typescriptlang.org/docs/handbook/compiler-options.html"><code>lib</code> 编译器选项</a>。
-<strong>不要忘记包含 JavaScript 库</strong></p>
+<p>TypeScriptがサポートするすべてのライブラリのリストについては、<a href="https://www.typescriptlang.org/docs/handbook/compiler-options.html"><code>lib</code> コンパイラオプション</a>のドキュメントを参照してください。</p>
+<p><strong>JavaScriptライブラリを含めることを忘れないでください</strong></p>
 <p>就像 <code>tsc</code> 一样，当您提供一个 <code>lib</code> 编译器选项时，它会覆盖默认的选项，这意味着基本的 JavaScript 库不会被包含，而您应该包含最能代表您的目标运行时的选项（例如 <code>es5</code>，<code>es2015</code>，<code>es2016</code>，<code>es2017</code>，<code>es2018</code>，<code>es2019</code>，<code>es2020</code> 或 <code>esnext</code>）。</p>
-<h4><a class="header" href="#包含-deno-命名空间" id="包含-deno-命名空间">包含 Deno 命名空间</a></h4>
-<p>除了 TypeScript 提供的库之外，还有四个内置在 Deno 中的库可以引用:</p>
+<h4><a class="header" href="#deno名前空間を含める" id="deno名前空間を含める">Deno名前空間を含める</a></h4>
+<p>TypeScriptによって提供されるライブラリーに加えて、参照可能なDenoに組み込まれている4つのライブラリーがあります:</p>
 <ul>
-<li><code>deno.ns</code> - 提供 <code>Deno</code> 命名空间</li>
-<li><code>deno.shared_globals</code> - 提供 Deno 运行时支持的全局接口和变量，然后由最终运行时库公开</li>
-<li><code>deno.window</code> - 公开全局变量和 Deno 主工作进程中可用的 Deno 命名空间，是运行时编译器的默认 API</li>
-<li><code>deno.worker</code> - 公开在 Deno 下的工作进程中可用的全局变量。</li>
+<li><code>deno.ns</code> - <code>Deno</code>の名前空間を提供します</li>
+<li><code>deno.shared_globals</code> - Denoが使用するグローバルインターフェイスと変数を提供します</li>
+<li><code>deno.window</code> - グローバル変数とDeno名前空間を公開します。</li>
+<li><code>deno.worker</code> - Denoの下のワーカーで使用可能なグローバル変数を公開します。</li>
 </ul>
-<p>因此，要将 Deno 命名空间添加到编译中，需要在数组中包含 <code>deno.ns</code> 库，例如：</p>
+<p>したがって、Deno名前空間をコンパイルに追加するには、<code>deno.ns</code> libを配列に含めます。例えば：</p>
 <pre><code class="language-ts">const [errors, emitted] = await Deno.compile(
   &quot;main.ts&quot;,
   {
@@ -254,19 +247,19 @@ console.log(result[&quot;/foo.ts&quot;].map);
   },
 );
 </code></pre>
-<p><strong>注意</strong>，Deno 命名空间需要一个 ES2018 或更新的运行时环境。这意味着，如果您使用的库“低于” ES2018，那么您将得到编译过程中输出的错误。</p>
-<h4><a class="header" href="#使用三斜杠引用triple-slash-reference" id="使用三斜杠引用triple-slash-reference">使用三斜杠引用（triple-slash reference）</a></h4>
-<p>您不必在编译器选项中指定 <code>lib</code>。Deno 支持<a href="https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html#-reference-lib-">对库的三斜杠引用</a>，并可以嵌入到文件的内容中。举个例子，如果你有一个 <code>main.ts</code>：</p>
+<p><strong>注意</strong> Deno名前空間は、少なくともES2018以降のランタイム環境を想定していること。つまり、ES2018より「低い」libを使用すると、コンパイルの一部としてエラーがログに記録されます。</p>
+<h4><a class="header" href="#トリプルスラッシュリファレンスの使用" id="トリプルスラッシュリファレンスの使用">トリプルスラッシュリファレンスの使用</a></h4>
+<p>コンパイラオプションで<code>lib</code>を指定する必要はありません。 Denoは、<a href="https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html#-reference-lib-">libへのトリプルスラッシュ参照</a>もサポートしています。ファイルのコンテンツに埋め込むことができます。たとえば、次のような<code>main.ts</code>があるとします。</p>
 <pre><code class="language-ts">/// &lt;reference lib=&quot;dom&quot; /&gt;
 
 document.getElementById(&quot;foo&quot;);
 </code></pre>
-<p>它可以编译，且不会出现下面这样的错误：</p>
+<p>次のようなエラーなしでコンパイルされます:</p>
 <pre><code class="language-ts">const [errors, emitted] = await Deno.compile(&quot;./main.ts&quot;, undefined, {
   lib: [&quot;esnext&quot;],
 });
 </code></pre>
-<p><strong>注意</strong>，<code>dom</code> 库与 Deno 的默认类型库中定义的一些默认全局变量有冲突。为了避免这种情况，需要在编译器选项中为运行时编译器 API 指定一个 <code>lib</code> 选项。</p>
+<p><strong>注意</strong>，<code>dom</code>ライブラリは、Denoのデフォルトタイプライブラリで定義されているデフォルトグローバルの一部と競合することに注意してください。これを回避するには、ランタイムコンパイラAPIのコンパイラオプションで<code>lib</code>オプションを指定する必要があります。</p>
 
                     </main>
 

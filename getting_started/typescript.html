@@ -159,63 +159,46 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2><a class="header" href="#使用-typescript" id="使用-typescript">使用 TypeScript</a></h2>
+                        <h2><a class="header" href="#typescriptの使用" id="typescriptの使用">TypeScriptの使用</a></h2>
 <!-- TODO(lucacasonato): text on 'just import .ts' -->
-<p>Deno 同时支持 JavaScript 和 TypeScript，它们是 Deno 的第一等语言。
-这意味着它需要标准的模块名称，包括
-扩展名（或提供正确媒体类型的服务器）。此外，Deno 还拥有“平凡”的模块解析算法。导入模块指定为文件（包括扩展名）或全限定 URL (fully qualified URL)。TypeScript 模块可以被直接导入，例如：</p>
+<p>Denoは、実行時にファーストクラス言語としてJavaScriptとTypeScriptの両方をサポートします。つまり、拡張子（または正しいメディアタイプを提供するサーバー）を含む完全修飾モジュール名が必要です。さらに、Denoには「魔法の」モジュール解決策がありません。代わりに、インポートされたモジュールは、ファイル（拡張子を含む）または完全修飾URLインポートとして指定されます。 Typescriptモジュールは直接インポートできます。例えば：</p>
 <pre><code class="language-ts">import { Response } from &quot;https://deno.land/std@0.64.0/http/server.ts&quot;;
 import { queue } from &quot;./collections.ts&quot;;
 </code></pre>
-<h3><a class="header" href="#--no-check-选项" id="--no-check-选项"><code>--no-check</code> 选项</a></h3>
-<p>当使用 <code>deno run</code>、<code>deno test</code>、<code>deno cache</code>、<code>deno info</code> 或 <code>deno bundle</code> 时，您可以指定 <code>--no-check</code> 选项来禁用 TypeScript 的类型检查。这会大大减少程序的启动时间。当您的编辑器提供了类型检查并且您想要程序启动得尽可能快时（比如当文件变化时自动重启），这个选项将非常有用。</p>
-<p>由于 <code>--no-check</code> 不执行 TypeScript 类型检查，我们不能自动删除类型导入导出，这需要类型信息。为此 TypeScript 提供了 <a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-8.html#type-only-imports-and-exports"><code>import type</code> 和 <code>export type</code> 语法</a></p>
-<p>从一个不同的文件</p>
-<ul>
-<li>导出类型：<code>export type { AnInterface } from &quot;./mod.ts&quot;;</code>，</li>
-<li>导入类型：<code>import type { AnInterface } from &quot;./mod.ts&quot;;</code></li>
-</ul>
-<p>您可以通过将 TypeScript 编译选项 <code>importsNotUsedAsValues</code> 设置为 <code>&quot;error&quot;</code> 来检查此类导入导出的必要性。</p>
-<p>您可以在标准库中看到这一选项的示例：<a href="https://github.com/denoland/deno/blob/master/std/tsconfig_test.json"><code>tsconfig_test.json</code></a>。</p>
-<p>由于使用 <code>--no-check</code> 时没有类型信息，<code>const enum</code> 是不支持的。</p>
-<p><code>--no-check</code> 也不支持遗留的 <code>import =</code> 和 <code>export =</code> 语法。</p>
-<h3><a class="header" href="#使用外部类型定义" id="使用外部类型定义">使用外部类型定义</a></h3>
-<p>开箱即用的 TypeScript 编译器依赖于两种无扩展名
-模块和 Node.js 模块解析逻辑，以将类型应用于 JavaScript
-模块。</p>
-<p>为了弥合这种差距，Deno 支持三种引用类型定义文件的方法，而不必求助于“魔法”的模块解析。</p>
-<h4><a class="header" href="#编译提示" id="编译提示">编译提示</a></h4>
-<p>如果您要导入 JavaScript 模块，并且知道该模块的类型定义在哪里，您可以在导入时指定类型定义。这采用编译器提示的形式。编译提示告诉 Deno <code>.d.ts</code> 文件的位置和与之相关的导入的 JavaScript 代码。编译提示指令是 <code>@deno-types</code>，当指定时，该值将在编译器中使用，而不是 JavaScript 模块。</p>
-<p>例如，如果您有 <code>foo.js</code>，但您知道旁边的 <code>foo.d.ts</code> 是该模块的类型定义，代码将像这样：</p>
+<h3><a class="header" href="#--no-check-オプション" id="--no-check-オプション"><code>--no-check</code> オプション</a></h3>
+<p><code>deno run</code>、<code>deno test</code>、<code>deno cache</code>、<code>deno info</code>、<code>deno bundle</code>を使用する場合、<code>--no-check</code>フラグを指定してTypeScriptタイプのチェックを無効にすることができます。これにより、プログラムの起動にかかる時間を大幅に短縮できます。これは、エディターによって型チェックが提供され、起動時間をできるだけ速くしたい場合（ファイルウォッチャーでプログラムを自動的に再起動する場合など）に非常に役立ちます。</p>
+<p><code>--no-check</code>はTypeScriptの型チェックを行わないため、型情報が必要になるため、型のみのインポートとエクスポートを自動的に削除することはできません。この目的のために、TypeScriptは<a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-8.html#type-only-imports-and-exports"><code>importタイプとexportタイプの構文</code></a>を提供します。タイプを別のファイルにエクスポートするには、<code>export type {AnInterface} from &quot;./mod.ts&quot;;</code>を使用します。タイプをインポートするには、 <code>import type { AnInterface } from &quot;./mod.ts&quot;;</code>を使用します。 <code>importsNotUsedAsValues</code> TypeScriptコンパイラオプションを<code>&quot;error&quot;</code>に設定することで、必要に応じてインポートタイプとエクスポートタイプを使用していることを確認できます。このオプションを使用した<a href="https://github.com/denoland/deno/blob/master/std/tsconfig_test.json"><code>tsconfig_test.json</code></a>の例は、標準ライブラリ内にあります。</p>
+<h3><a class="header" href="#外部型定義の使用" id="外部型定義の使用">外部型定義の使用</a></h3>
+<p>ただし、標準のTypeScriptコンパイラは、JavaScriptモジュールにタイプを適用するために、拡張機能のないモジュールとNode.jsモジュール解決ロジックの両方に依存しています。</p>
+<p>このギャップを埋めるために、Denoは「魔法の」解決に頼ることなくタイプ定義ファイルを参照する3つの方法をサポートしています。</p>
+<h4><a class="header" href="#コンパイラーのヒント" id="コンパイラーのヒント">コンパイラーのヒント</a></h4>
+<p>JavaScriptモジュールをインポートしていて、そのモジュールの型定義の場所がわかっている場合は、インポート時に型定義を指定できます。これはコンパイラのヒントの形をとります。コンパイラーのヒントは、<code>.d.ts</code>ファイルの場所と、それらが関連付けられているインポートされたJavaScriptコードをDenoに通知します。ヒントは<code>@deno-types</code>であり、指定すると、JavaScriptモジュールの代わりにコンパイラで値が使用されます。</p>
+<p>たとえば、<code>foo.js</code>があったが、それに加えてファイルのタイプであるfoo.d.tsであることがわかっている場合、コードは次のようになります:</p>
 <pre><code class="language-ts">// @deno-types=&quot;./foo.d.ts&quot;
 import * as foo from &quot;./foo.js&quot;;
 </code></pre>
-<p>该值遵循与导入模块相同的解析逻辑，这意味着它需要具有扩展名，并且是相对于当前模块的。远程模块也可以使用该说明符。</p>
-<p>此编译提示影响下一个 <code>import</code> 语句，或是 <code>export ... from</code> 语句，在编译时，该值将替换模块。像上面的示例一样，Deno 编译器将加载 <code>./foo.d.ts</code>，而不是 <code>./foo.js</code>。Deno 在运行时仍然会加载 <code>./foo.js</code>。</p>
-<h4><a class="header" href="#javascript-文件中的三斜杠引用指令" id="javascript-文件中的三斜杠引用指令">JavaScript 文件中的三斜杠引用指令</a></h4>
-<p>如果您要发布由 Deno 使用的模块，并且想要告诉 Deno 类型定义的位置，您可以使用实际代码中的三斜杠指令。</p>
-<p>例如，如果您有一个 JavaScript 模块，想为 Deno 提供类型定义的位置，您的 <code>foo.js</code> 可能看起来像这样：</p>
+<p>値は、モジュールのインポートと同じ解決ロジックに従います。つまり、ファイルには拡張子が必要であり、現在のモジュールに対して相対的です。リモート指定子も使用できます。</p>
+<p>ヒントは、<code>@deno-types</code>の値が、指定されたモジュールの代わりにコンパイル時に置換される次の<code>import</code>ステートメント（または<code>export ... from</code>ステートメント）に影響します。上記の例のように、Denoコンパイラは<code>./foo.js</code>ではなく<code>./foo.d.ts</code>をロードします。 Denoはプログラムの実行時に<code>./foo.js</code>を引き続きロードします。</p>
+<h4><a class="header" href="#javascriptファイルのトリプルスラッシュ参照ディレクティブ" id="javascriptファイルのトリプルスラッシュ参照ディレクティブ">JavaScriptファイルのトリプルスラッシュ参照ディレクティブ</a></h4>
+<p>Denoで使用するモジュールをホストしていて、型定義の場所についてDenoに通知する場合は、実際のコードでトリプルスラッシュディレクティブを使用できます。たとえば、JavaScriptモジュールがあり、そのファイルの横にある型定義の場所をDenoに提供する場合、<code>foo.js</code>という名前のJavaScriptモジュールは次のようになります。：</p>
 <pre><code class="language-js">/// &lt;reference types=&quot;./foo.d.ts&quot; /&gt;
 export const foo = &quot;foo&quot;;
 </code></pre>
-<p>Deno 会看到这一点，并且在检查类型时，编译器将使用 <code>foo.d.ts</code> 文件，尽管 <code>foo.js</code> 将在运行时加载。</p>
-<p>该值遵循与导入模块相同的解析逻辑，这意味着它需要具有扩展名，并且是相对于当前模块的。远程模块也可以使用该说明符。</p>
-<h4><a class="header" href="#x-typescript-types-自定义-header" id="x-typescript-types-自定义-header">X-TypeScript-Types 自定义 Header</a></h4>
-<p>如果您要发布由 Deno 使用的模块，并且想要告诉 Deno 类型定义的位置，您可以使用自定义 HTTP 头 <code>X-TypeScript-Types</code>，来告诉 Deno 文件位置。</p>
-<p>标头的工作方式与上述三斜杠参考相同，这只是意味着 JavaScript 文件本身的内容不需要修改后，并且类型定义的位置可以通过服务器本身确定。</p>
-<p><strong>不是所有类型定义都受支持</strong></p>
-<p>Deno 将使用编译提示来加载指示的 <code>.d.ts</code> 文件，但有些 <code>.d.ts</code> 文件包含不受支持的功能。具体来说，有些 <code>.d.ts</code> 文件期望能够从其他包中加载或引用类型定义，它们使用模块解析逻辑。</p>
-<p>例如，一个包含 <code>node</code> 的类型引用指令，希望解析为像 <code>./node_modules/@types/node/index.d.ts</code> 的某些路径。由于这取决于非相对性的模块解析算法，Deno 无法处理这种情况。</p>
-<p><strong>为什么不在 TypeScript 文件中使用三斜杠类型引用？</strong></p>
-<p>TypeScript 编译器支持三斜杠指令，包括类型
-参考指令。如果 Deno 使用此功能，则会干扰
-TypeScript 编译器。Deno 仅在 JavaScript （包括 JSX）文件中查找指令。</p>
-<h3><a class="header" href="#自定义-typescript-编译器选项" id="自定义-typescript-编译器选项">自定义 TypeScript 编译器选项</a></h3>
-<p>在 Deno 生态系统中，所有严格标志都被默认启用，以符合 TypeScript 的理想状态。Deno 也支持自定义配置文件，例如 <code>tsconfig.json</code>。</p>
-<p>您需要通过显式设置 <code>-c</code> 或 <code>--config</code> 选项，来明确告诉 Deno 在哪里寻找此配置。</p>
+<p>Denoはこれを確認し、コンパイラはファイルの型チェック時に<code>foo.d.ts</code>を使用しますが、<code>foo.js</code>は実行時にロードされます。ディレクティブの値の解決は、モジュールのインポートと同じ解決ロジックに従います。</p>
+<p>つまり、ファイルには拡張子が必要であり、現在のファイルに対して相対的です。リモート指定子も使用できます。</p>
+<h4><a class="header" href="#x-typescript-types-カスタムヘッダー" id="x-typescript-types-カスタムヘッダー">X-TypeScript-Types カスタムヘッダー</a></h4>
+<p>Denoによって使用されるモジュールをホストしていて、Denoに型定義の場所を通知する場合は、<code>X-TypeScript-Types</code>のカスタムHTTPヘッダーを使用して、そのファイルの場所をDenoに通知できます。</p>
+<p>ヘッダーは、前述のトリプルスラッシュリファレンスと同じように機能します。つまり、JavaScriptファイル自体のコンテンツを変更する必要がなく、型定義の場所をサーバー自体が決定できることを意味します。</p>
+<p><strong>すべての型定義がサポートされているわけではありません。</strong></p>
+<p>Denoはコンパイラヒントを使用して、指定された<code>.d.ts</code>ファイルをロードしますが、一部の<code>.d.ts</code>ファイルにはサポートされていない機能が含まれています。具体的には、一部の<code>.d.ts</code>ファイルは、モジュール解決ロジックを使用して、他のパッケージからタイプ定義をロードまたは参照できると想定しています。たとえば、<code>node</code>を含めるタイプ参照ディレクティブは、。<code>./node_modules/@types/node/index.d.ts</code>のようなパスに解決されることを期待しています。これは相対的でない「魔法の」解像度に依存するため、Denoはこれを解決できません。</p>
+<p><strong>TypeScriptファイルでトリプルスラッシュタイプの参照を使用しないのはなぜですか？</strong></p>
+<p>TypeScriptコンパイラは、タイプ参照ディレクティブを含むトリプルスラッシュディレクティブをサポートします。 Denoがこれを使用した場合、TypeScriptコンパイラの動作に干渉します。 DenoはJavaScript（およびJSX）ファイルでディレクティブを検索するだけです。</p>
+<h3><a class="header" href="#カスタムtypescriptコンパイラオプション" id="カスタムtypescriptコンパイラオプション">カスタムTypeScriptコンパイラオプション</a></h3>
+<p>Denoエコシステムでは、デフォルトで<code>厳格</code>であるというTypeScriptの理想に準拠するために、すべての厳格なフラグが有効になっています。ただし、カスタマイズをサポートする方法を提供するために、プログラムの実行時に<code>tsconfig.json</code>などの構成ファイルがDenoに提供される場合があります。 </p>
+<p>アプリケーションを実行するときに<code>-C</code>（または<code>--config</code>）引数を設定して、この構成を探す場所をDenoに明示的に指示する必要があります。</p>
 <pre><code class="language-shell">deno run -c tsconfig.json mod.ts
 </code></pre>
-<p>以下是 Deno 当前允许的设置及其默认值：</p>
+<p>以下は、現在Denoで許可されている設定とそのデフォルト値です：</p>
 <pre><code class="language-json">{
   &quot;compilerOptions&quot;: {
     &quot;allowJs&quot;: false,
@@ -252,8 +235,8 @@ TypeScript 编译器。Deno 仅在 JavaScript （包括 JSX）文件中查找指
   }
 }
 </code></pre>
-<p>有关上述选项和用例的文档，请访问 <a href="https://www.typescriptlang.org/docs/handbook/compiler-options.html">typescript docs</a>.</p>
-<p><strong>注意</strong>：以上列表中不包含 Deno 不支持的选项，或者 TypeScript 文档中已经标记为废弃的/实验性的选项。</p>
+<p>許可される値と使用例に関するドキュメントについては、<a href="https://www.typescriptlang.org/docs/handbook/compiler-options.html">typescript docs</a>をご覧ください。.</p>
+<p><strong>注意</strong>：上記にリストされていないオプションは、Denoでサポートされていないか、TypeScriptドキュメントで非推奨/実験的としてリストされています。</p>
 
                     </main>
 
