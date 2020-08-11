@@ -159,19 +159,17 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#导入和导出模块" id="导入和导出模块">导入和导出模块</a></h1>
-<p>默认情况下，Deno标准化了在 JavaScript 和 TypeScript 中导入模块的方式。</p>
-<p>它遵循 ECMAScript 6 <code>import/export</code> 标准，但有一个警告，文件类型（后缀名）必须包含在 import 语句的末尾。</p>
+                        <h1><a class="header" href="#モジュールのインポートとエクスポート" id="モジュールのインポートとエクスポート">モジュールのインポートとエクスポート</a></h1>
+<p>Denoはデフォルトで、JavaScriptとTypeScriptの両方でモジュールをインポートする方法を標準化しています。 ECMAScript 6の<code>インポート/エクスポート</code>標準に従いますが、注意点が1つあります。ファイルタイプはインポートステートメントの最後に含める必要があります。</p>
 <pre><code class="language-js">import {
   add,
   multiply,
 } from &quot;./arithmetic.ts&quot;;
 </code></pre>
-<p>依赖项也直接导入，没有包管理开销。本地模块的导入方式与远程模块完全相同。</p>
-<p>如下面的示例所示，可以使用本地或远程模块以相同的方式产生相同的功能。</p>
-<h2><a class="header" href="#本地导入" id="本地导入">本地导入</a></h2>
-<p>在这个例子中，<code>add</code> 和 <code>multiply</code> 函数是从本地的 <code>arithmetic.ts</code> 模块导入的。</p>
-<p><strong>命令：</strong> <code>deno run local.ts</code></p>
+<p>依存関係も直接インポートされ、パッケージ管理のオーバーヘッドはありません。ローカルモジュールは、リモートモジュールとまったく同じ方法でインポートされます。以下の例に示すように、同じ機能をローカルモジュールまたはリモートモジュールを使用して同じ方法で作成できます。</p>
+<h2><a class="header" href="#ローカルインポート" id="ローカルインポート">ローカルインポート</a></h2>
+<p>この例では、<code>add</code>関数と<code>multiply</code>関数がローカルの<code>arithmetic.ts</code>モジュールからインポートされています。</p>
+<p><strong>Command：</strong> <code>deno run local.ts</code></p>
 <pre><code class="language-ts">import { add, multiply } from &quot;./arithmetic.ts&quot;;
 
 function totalCost(outbound: number, inbound: number, tax: number): number {
@@ -182,15 +180,15 @@ console.log(totalCost(19, 31, 1.2));
 console.log(totalCost(45, 27, 1.15));
 
 /**
- * 输出：
+ * Output
  *
  * 60
  * 82.8
  */
 </code></pre>
-<h2><a class="header" href="#导出" id="导出">导出</a></h2>
-<p>在上面的示例中，<code>add</code> 和 <code>multiply</code> 函数是从本地存储的算术模块导入的。为此，必须导出存储在运算模块中的功能。</p>
-<p>只需将关键字 <code>export</code> 添加到函数签名的开头，如下所示。</p>
+<h2><a class="header" href="#エクスポート" id="エクスポート">エクスポート</a></h2>
+<p>上記の例では、<code>add</code>関数と<code>multiply</code>関数はローカルに保存された算術モジュールからインポートされます。これを可能にするには、算術モジュールに保存されている関数をエクスポートする必要があります。</p>
+<p>これを行うには、以下に示すように、関数シグネチャの先頭に<code>export</code>のキーワードを追加します。</p>
 <pre><code class="language-ts">export function add(a: number, b: number): number {
   return a + b;
 }
@@ -199,12 +197,12 @@ export function multiply(a: number, b: number): number {
   return a * b;
 }
 </code></pre>
-<p>需要在外部模块中访问的所有函数、类、常量和变量都必须导出。可以在它们的前面加上 <code>export</code> 关键字，也可以将它们包括在文件底部的 export 语句中。</p>
-<p>要了解有关 ECMAScript 导出功能的更多信息，请阅读 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/export">MDN 文档</a>.</p>
-<h2><a class="header" href="#远程导入" id="远程导入">远程导入</a></h2>
-<p>在上面的本地导入示例中，从本地存储的算术模块中导入了 <code>add</code> 和 <code>multiply</code> 方法。 也可以通过从远程模块导入 <code>add</code> 和 <code>multiply</code> 方法来实现相同的功能。</p>
-<p>在这种情况下，可以导入 Ramda 模块，包括版本号。Deno 可以处理 JavaScript 模块直接导入到 TypeSript 模块的情况。</p>
-<p><strong>命令：</strong> <code>deno run ./remote.ts</code></p>
+<p>外部モジュール内でアクセスできる必要があるすべての関数、クラス、定数、変数はエクスポートする必要があります。それらに<code>export</code>キーワードを前に付けるか、ファイルの下部にあるexportステートメントに含めます。</p>
+<p>ECMAScriptエクスポート機能の詳細については、<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/export">MDNドキュメント</a>をご覧ください。</p>
+<h2><a class="header" href="#リモートインポート" id="リモートインポート">リモートインポート</a></h2>
+<p>上記のローカルインポートの例では、<code>add</code>および<code>multiply</code>メソッドがローカルに保存された算術モジュールからインポートされます。同じ機能は、リモートモジュールから<code>add</code>メソッドと<code>multiply</code>メソッドをインポートすることによっても作成できます。 </p>
+<p>この場合、バージョン番号を含むRamdaモジュールが参照されます。また、JavaScriptモジュールがTypeSriptモジュールに直接インポートされることにも注意してください。Denoはこれを問題なく処理します。</p>
+<p><strong>Command：</strong> <code>deno run ./remote.ts</code></p>
 <pre><code class="language-ts">import {
   add,
   multiply,
@@ -218,7 +216,7 @@ console.log(totalCost(19, 31, 1.2));
 console.log(totalCost(45, 27, 1.15));
 
 /**
- * 输出：
+ * Output
  *
  * 60
  * 82.8
