@@ -1,11 +1,11 @@
-## 处理系统信号
+## OSシグナル
 
-> 这个程序使用了不稳定的 Deno 特性。更多信息请查阅
-> [稳定性](../runtime/stability.md)
+> このプログラムは、不安定なDeno機能を利用しています。
+> [不安定な機能の詳細](../runtime/stability.md)をご覧ください。
 
-[API 参考手册](https://doc.deno.land/https/raw.githubusercontent.com/denoland/deno/master/cli/dts/lib.deno.unstable.d.ts#Deno.signal)
+[API リファレンス](https://doc.deno.land/https/raw.githubusercontent.com/denoland/deno/master/cli/dts/lib.deno.unstable.d.ts#Deno.signal)
 
-您可以使用 `Deno.signal()` 函数来处理系统信号。
+`Deno.signal()`を使用して、OSシグナルを処理できます。
 
 ```ts
 for await (const _ of Deno.signal(Deno.Signal.SIGINT)) {
@@ -13,14 +13,14 @@ for await (const _ of Deno.signal(Deno.Signal.SIGINT)) {
 }
 ```
 
-`Deno.signal()` 也是一个 promise。
+`Deno.signal()` もpromiseとして機能します。
 
 ```ts
 await Deno.signal(Deno.Signal.SIGINT);
 console.log("interrupted!");
 ```
 
-如果您想要停止监控信号，可以使用信号对象的 `dispose()` 方法。
+シグナルの監視を停止したい場合は、シグナルオブジェクトの`dispose()`メソッドを使用できます。
 
 ```ts
 const sig = Deno.signal(Deno.Signal.SIGINT);
@@ -33,4 +33,4 @@ for await (const _ of sig) {
 }
 ```
 
-以上 for-await 循环将在 sig.dispose() 被调用时退出，运行时间为 5 秒。
+上記のfor-awaitループは、`sig.dispose()`が呼び出されると5秒後に終了します。

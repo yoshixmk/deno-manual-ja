@@ -1,12 +1,12 @@
-## 检查与放弃权限
+## パーミッションの調査と取り消し
 
-> 这个程序使用了不稳定的 Deno 特性。更多信息请查阅
-> [稳定性](../runtime/stability.md)
+> このプログラムは、不安定なDeno機能を利用しています。
+> [不安定な機能の詳細](../runtime/stability.md)をご覧ください。
 
-有时一个程序会放弃之前获得的权限，在此之后，需要该权限的操作将失败。
+プログラムによっては、以前に付与されたアクセス許可を取り消すことが必要な場合があります。後の段階でプログラムがこれらの権限を必要とする場合、プログラムは失敗します。
 
 ```ts
-// 查找一个权限
+// lookup a permission
 const status = await Deno.permissions.query({ name: "write" });
 if (status.state !== "granted") {
   throw new Error("need write permission");
@@ -14,14 +14,14 @@ if (status.state !== "granted") {
 
 const log = await Deno.open("request.log", { write: true, append: true });
 
-// 放弃一些权限
+// revoke some permissions
 await Deno.permissions.revoke({ name: "read" });
 await Deno.permissions.revoke({ name: "write" });
 
-// 使用日志文件
+// use the log file
 const encoder = new TextEncoder();
 await log.write(encoder.encode("hello\n"));
 
-// 这将会失败
+// this will fail.
 await Deno.remove("request.log");
 ```
