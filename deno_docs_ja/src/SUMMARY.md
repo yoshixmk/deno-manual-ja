@@ -13,7 +13,7 @@
   - [安定性](runtime/stability.md)
   - [ライフサイクル](runtime/program_lifecycle.md)
   - [コンパイラAPI](runtime/compiler_apis.md)
-  - [Worker](runtime/workers.md)
+  - [Workers](runtime/workers.md)
 - [外部コードへのリンク](linking_to_external_code.md)
   - [モジュールの再読み込み](linking_to_external_code/reloading_modules.md)
   - [整合性チェック](linking_to_external_code/integrity_checking.md)

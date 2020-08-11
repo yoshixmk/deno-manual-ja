@@ -1,4 +1,4 @@
-## Worker
+## Workers
 
 Denoは[Web Worker API](https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/Worker)をサポートしています。
 
@@ -72,9 +72,9 @@ hello world
 
 > これは不安定なDeno機能です。[不安定な機能の詳細](stability.md)をご覧ください。
 
-デフォルトでは、`Deno`名前空間はワーカースコープでは使用できません。 
+デフォルトでは、`Deno`名前空間はWorkerスコープでは使用できません。 
 
-新しいワーカーを作成するときに`Deno`名前空間パス`deno：true`オプションを追加するには：
+新しいWorkerを作成するときに`Deno`名前空間パス`deno：true`オプションを追加するには：
 
 **main.js**
 
@@ -107,4 +107,4 @@ hello world
 $ deno run --allow-read --unstable main.js
 hello world
 ```
-`Deno`名前空間がワーカースコープで使用可能な場合、ワーカーは親プロセスの権限（`--allow-*`フラグを使用して指定されたもの）を継承します。 パーミッションをワーカーに対して構成可能にする予定です。
+`Deno`名前空間がWorkerスコープで使用可能な場合、Workerは親プロセスの権限（`--allow-*`フラグを使用して指定されたもの）を継承します。 パーミッションをWorkerに対して構成可能にする予定です。
