@@ -204,7 +204,7 @@ await Deno.stdout.write(body);
 <p>たとえばファイルシステムAPIにはWeb標準形式がないため、Denoは独自のAPIを提供します。</p>
 <p>このプログラムでは、各コマンドライン引数はファイル名であると想定され、ファイルが開かれ、標準出力に出力されます。</p>
 <p>例：<a href="../examples/unix_cat.html">Unix cat</a></p>
-<p>在这个程序中，每个命令行参数都是一个文件名，参数对应的文件将被依次打开，打印到标准输出流。</p>
+<p>このプログラムでは、各コマンドライン引数はファイル名であると想定され、ファイルが開かれ、標準出力に出力されます。</p>
 <pre><code class="language-ts">const filenames = Deno.args;
 for (const filename of filenames) {
   const file = await Deno.open(filename);
@@ -212,8 +212,8 @@ for (const filename of filenames) {
   file.close();
 }
 </code></pre>
-<p>除了内核到用户空间再到内核的必要拷贝，这里的 <code>copy()</code> 函数不会产生额外的昂贵操作，从文件中读到的数据会原样写入标准输出流。这反映了 Deno I/O 流的通用设计目标。</p>
-<p>尝试一下：</p>
+<p>ここの<code>copy()</code>関数は、実際には必要なカーネル-&gt;ユーザースペース-&gt;カーネルのコピーしか作成しません。つまり、データがファイルから読み取られるのと同じメモリがstdoutに書き込まれます。これは、DenoのI / Oストリームの一般的な設計目標を示しています。</p>
+<p>プログラムを試してください：</p>
 <pre><code class="language-shell">deno run --allow-read https://deno.land/std@$STD_VERSION/examples/cat.ts /etc/passwd
 </code></pre>
 <h3><a class="header" href="#tcp-サーバー" id="tcp-サーバー">TCP サーバー</a></h3>
