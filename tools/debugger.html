@@ -170,13 +170,13 @@ support the protocol (eg. VSCode).</p>
 the first line of code.</p>
 <h3><a class="header" href="#chrome-devtools" id="chrome-devtools">Chrome Devtools</a></h3>
 <p>Let's try debugging a program using Chrome Devtools. For this, we'll use
-<a href="https://deno.land/std@v0.50.0/http/file_server.ts">file_server.ts</a> from <code>std</code>,
+<a href="https://deno.land/std@v0.64.0/http/file_server.ts">file_server.ts</a> from <code>std</code>,
 a static file server.</p>
 <p>Use the <code>--inspect-brk</code> flag to break execution on the first line:</p>
-<pre><code class="language-shell">$ deno run --inspect-brk --allow-read --allow-net https://deno.land/std@v0.50.0/http/file_server.ts
+<pre><code class="language-shell">$ deno run --inspect-brk --allow-read --allow-net https://deno.land/std@v0.64.0/http/file_server.ts
 Debugger listening on ws://127.0.0.1:9229/ws/1e82c406-85a9-44ab-86b6-7341583480b1
-Download https://deno.land/std@v0.50.0/http/file_server.ts
-Compile https://deno.land/std@v0.50.0/http/file_server.ts
+Download https://deno.land/std@v0.64.0/http/file_server.ts
+Compile https://deno.land/std@v0.64.0/http/file_server.ts
 ...
 </code></pre>
 <p>Open <code>chrome://inspect</code> and click <code>Inspect</code> next to target:</p>
@@ -235,7 +235,7 @@ config:</p>
 <p><strong>NOTE</strong>: This uses the file you have open as the entry point; replace <code>${file}</code>
 with a script name if you want a fixed entry point.</p>
 <p>Let's try out debugging a local source file. Create <code>server.ts</code>:</p>
-<pre><code class="language-ts">import { serve } from &quot;https://deno.land/std@v0.50.0/http/server.ts&quot;;
+<pre><code class="language-ts">import { serve } from &quot;https://deno.land/std@v0.64.0/http/server.ts&quot;;
 const server = serve({ port: 8000 });
 console.log(&quot;http://localhost:8000/&quot;);
 

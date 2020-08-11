@@ -568,7 +568,7 @@ error: Uncaught PermissionDenied: read access to &quot;/etc/passwd&quot;, run ag
 <p>Deno 同时支持 JavaScript 和 TypeScript，它们是 Deno 的第一等语言。
 这意味着它需要标准的模块名称，包括
 扩展名（或提供正确媒体类型的服务器）。此外，Deno 还拥有“平凡”的模块解析算法。导入模块指定为文件（包括扩展名）或全限定 URL (fully qualified URL)。TypeScript 模块可以被直接导入，例如：</p>
-<pre><code class="language-ts">import { Response } from &quot;https://deno.land/std@0.53.0/http/server.ts&quot;;
+<pre><code class="language-ts">import { Response } from &quot;https://deno.land/std@0.64.0/http/server.ts&quot;;
 import { queue } from &quot;./collections.ts&quot;;
 </code></pre>
 <h3><a class="header" href="#--no-check-选项" id="--no-check-选项"><code>--no-check</code> 选项</a></h3>
@@ -1079,7 +1079,7 @@ deno test --allow-read src
 <p><strong>import_map.json</strong></p>
 <pre><code class="language-js">{
    &quot;imports&quot;: {
-      &quot;fmt/&quot;: &quot;https://deno.land/std@0.55.0/fmt/&quot;
+      &quot;fmt/&quot;: &quot;https://deno.land/std@0.64.0/fmt/&quot;
    }
 }
 </code></pre>
@@ -1429,13 +1429,13 @@ support the protocol (eg. VSCode).</p>
 the first line of code.</p>
 <h3><a class="header" href="#chrome-devtools" id="chrome-devtools">Chrome Devtools</a></h3>
 <p>Let's try debugging a program using Chrome Devtools. For this, we'll use
-<a href="https://deno.land/std@v0.50.0/http/file_server.ts">file_server.ts</a> from <code>std</code>,
+<a href="https://deno.land/std@v0.64.0/http/file_server.ts">file_server.ts</a> from <code>std</code>,
 a static file server.</p>
 <p>Use the <code>--inspect-brk</code> flag to break execution on the first line:</p>
-<pre><code class="language-shell">$ deno run --inspect-brk --allow-read --allow-net https://deno.land/std@v0.50.0/http/file_server.ts
+<pre><code class="language-shell">$ deno run --inspect-brk --allow-read --allow-net https://deno.land/std@v0.64.0/http/file_server.ts
 Debugger listening on ws://127.0.0.1:9229/ws/1e82c406-85a9-44ab-86b6-7341583480b1
-Download https://deno.land/std@v0.50.0/http/file_server.ts
-Compile https://deno.land/std@v0.50.0/http/file_server.ts
+Download https://deno.land/std@v0.64.0/http/file_server.ts
+Compile https://deno.land/std@v0.64.0/http/file_server.ts
 ...
 </code></pre>
 <p>Open <code>chrome://inspect</code> and click <code>Inspect</code> next to target:</p>
@@ -1494,7 +1494,7 @@ config:</p>
 <p><strong>NOTE</strong>: This uses the file you have open as the entry point; replace <code>${file}</code>
 with a script name if you want a fixed entry point.</p>
 <p>Let's try out debugging a local source file. Create <code>server.ts</code>:</p>
-<pre><code class="language-ts">import { serve } from &quot;https://deno.land/std@v0.50.0/http/server.ts&quot;;
+<pre><code class="language-ts">import { serve } from &quot;https://deno.land/std@v0.64.0/http/server.ts&quot;;
 const server = serve({ port: 8000 });
 console.log(&quot;http://localhost:8000/&quot;);
 
@@ -3564,23 +3564,23 @@ hello world
 hello world
 </code></pre>
 <p><code>cat.ts</code>の例と同様に、ここでの<code>copy()</code>関数も不要なメモリコピーを作成しません。それはカーネルからパケットを受信し、さらに複雑にすることなく送り返します。</p>
-<h2><a class="header" href="#运行子进程" id="运行子进程">运行子进程</a></h2>
-<p><a href="https://doc.deno.land/https/github.com/denoland/deno/releases/latest/download/lib.deno.d.ts#Deno.run">API 参考手册</a></p>
-<p>示例：</p>
-<pre><code class="language-ts">// 创建子进程
+<h2><a class="header" href="#サブプロセスを実行する" id="サブプロセスを実行する">サブプロセスを実行する</a></h2>
+<p><a href="https://doc.deno.land/https/github.com/denoland/deno/releases/latest/download/lib.deno.d.ts#Deno.run">API リファレンス</a></p>
+<p>例：</p>
+<pre><code class="language-ts">// create subprocess
 const p = Deno.run({
   cmd: [&quot;echo&quot;, &quot;hello&quot;],
 });
 
-// 等待完成
+// await its completion
 await p.status();
 </code></pre>
-<p>运行</p>
+<p>実行:</p>
 <pre><code class="language-shell">$ deno run --allow-run ./subprocess_simple.ts
 hello
 </code></pre>
-<p><code>window.onload</code> 被赋值为一个函数，它将会在主脚本加载后被调用，和浏览器的 <a href="https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onload">onload</a> 一样，可以用于主入口点。</p>
-<p>默认情况下，当您调用 <code>Deno.run()</code> 时，子进程将继承父进程的标准流。如果您想要和子进程通信，可以使用 <code>&quot;piped&quot;</code> 选项。</p>
+<p>ここでは、<code>window.onload</code>に関数が割り当てられています。この関数は、メインスクリプトが読み込まれた後に呼び出されます。これはブラウザの<a href="https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onload">onload</a>と同じであり、メインのエントリポイントとして使用できます。</p>
+<p>デフォルトでは、<code>Deno.run()</code>を使用すると、サブプロセスは親プロセスのstdin、stdout、およびstderrを継承します。開始されたサブプロセスと通信したい場合は、<code>&quot;piped&quot;</code>オプションを使用できます。</p>
 <pre><code class="language-ts">const fileNames = Deno.args;
 
 const p = Deno.run({
@@ -3608,7 +3608,7 @@ if (code === 0) {
 
 Deno.exit(code);
 </code></pre>
-<p>运行</p>
+<p>実行:</p>
 <pre><code class="language-shell">$ deno run --allow-run ./subprocess.ts &lt;somefile&gt;
 [file content]
 
