@@ -1,6 +1,6 @@
 ## WebAssembly 支持
 
-Deno 能够运行 [WebAssembly](https://webassembly.org/) 二进制文件。
+Denoは[WebAssembly](https://webassembly.org/)バイナリを実行できます。
 
 <!-- dprint-ignore -->
 
