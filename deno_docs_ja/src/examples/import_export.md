@@ -1,8 +1,6 @@
-# 导入和导出模块
+# モジュールのインポートとエクスポート
 
-默认情况下，Deno标准化了在 JavaScript 和 TypeScript 中导入模块的方式。
-
-它遵循 ECMAScript 6 `import/export` 标准，但有一个警告，文件类型（后缀名）必须包含在 import 语句的末尾。
+Denoはデフォルトで、JavaScriptとTypeScriptの両方でモジュールをインポートする方法を標準化しています。 ECMAScript 6の`インポート/エクスポート`標準に従いますが、注意点が1つあります。ファイルタイプはインポートステートメントの最後に含める必要があります。
 
 ```js
 import {
@@ -11,15 +9,13 @@ import {
 } from "./arithmetic.ts";
 ```
 
-依赖项也直接导入，没有包管理开销。本地模块的导入方式与远程模块完全相同。
+依存関係も直接インポートされ、パッケージ管理のオーバーヘッドはありません。ローカルモジュールは、リモートモジュールとまったく同じ方法でインポートされます。以下の例に示すように、同じ機能をローカルモジュールまたはリモートモジュールを使用して同じ方法で作成できます。
 
-如下面的示例所示，可以使用本地或远程模块以相同的方式产生相同的功能。
+## ローカルインポート
 
-## 本地导入
+この例では、`add`関数と`multiply`関数がローカルの`arithmetic.ts`モジュールからインポートされています。
 
-在这个例子中，`add` 和 `multiply` 函数是从本地的 `arithmetic.ts` 模块导入的。
-
-**命令：** `deno run local.ts`
+**Command：** `deno run local.ts`
 
 ```ts
 import { add, multiply } from "./arithmetic.ts";
@@ -32,18 +28,18 @@ console.log(totalCost(19, 31, 1.2));
 console.log(totalCost(45, 27, 1.15));
 
 /**
- * 输出：
+ * Output
  *
  * 60
  * 82.8
  */
 ```
 
-## 导出
+## エクスポート
 
-在上面的示例中，`add` 和 `multiply` 函数是从本地存储的算术模块导入的。为此，必须导出存储在运算模块中的功能。
+上記の例では、`add`関数と`multiply`関数はローカルに保存された算術モジュールからインポートされます。これを可能にするには、算術モジュールに保存されている関数をエクスポートする必要があります。
 
-只需将关键字 `export` 添加到函数签名的开头，如下所示。
+これを行うには、以下に示すように、関数シグネチャの先頭に`export`のキーワードを追加します。
 
 ```ts
 export function add(a: number, b: number): number {
@@ -55,17 +51,17 @@ export function multiply(a: number, b: number): number {
 }
 ```
 
-需要在外部模块中访问的所有函数、类、常量和变量都必须导出。可以在它们的前面加上 `export` 关键字，也可以将它们包括在文件底部的 export 语句中。
+外部モジュール内でアクセスできる必要があるすべての関数、クラス、定数、変数はエクスポートする必要があります。それらに`export`キーワードを前に付けるか、ファイルの下部にあるexportステートメントに含めます。
 
-要了解有关 ECMAScript 导出功能的更多信息，请阅读 [MDN 文档](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/export).
+ECMAScriptエクスポート機能の詳細については、[MDNドキュメント](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/export)をご覧ください。
 
-## 远程导入
+## リモートインポート
 
-在上面的本地导入示例中，从本地存储的算术模块中导入了 `add` 和 `multiply` 方法。 也可以通过从远程模块导入 `add` 和 `multiply` 方法来实现相同的功能。
+上記のローカルインポートの例では、`add`および`multiply`メソッドがローカルに保存された算術モジュールからインポートされます。同じ機能は、リモートモジュールから`add`メソッドと`multiply`メソッドをインポートすることによっても作成できます。 
 
-在这种情况下，可以导入 Ramda 模块，包括版本号。Deno 可以处理 JavaScript 模块直接导入到 TypeSript 模块的情况。
+この場合、バージョン番号を含むRamdaモジュールが参照されます。また、JavaScriptモジュールがTypeSriptモジュールに直接インポートされることにも注意してください。Denoはこれを問題なく処理します。
 
-**命令：** `deno run ./remote.ts`
+**Command：** `deno run ./remote.ts`
 
 ```ts
 import {
@@ -81,7 +77,7 @@ console.log(totalCost(19, 31, 1.2));
 console.log(totalCost(45, 27, 1.15));
 
 /**
- * 输出：
+ * Output
  *
  * 60
  * 82.8
