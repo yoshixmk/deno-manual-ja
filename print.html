@@ -1031,25 +1031,24 @@ deno test --allow-read src
 </code></pre>
 <p>まだキャッシュされていないmod.tsの依存関係ツリーに依存関係がある場合、これは失敗します。</p>
 <!-- TODO - Add detail on dynamic imports -->
-<h2><a class="header" href="#代理proxies" id="代理proxies">代理（Proxies）</a></h2>
-<p>Deno 支持模块下载和 Web 标准 <code>fetch</code> API 的代理。</p>
-<p>代理配置从环境变量中读取: <code>HTTP_PROXY</code> 和 <code>HTTPS_PROXY</code>。</p>
-<p>在 Windows 的环境下，如果没有发现环境变量，Deno 会从注册表中读取代理。</p>
-<h2><a class="header" href="#导入映射import-maps" id="导入映射import-maps">导入映射（Import maps）</a></h2>
+<h2><a class="header" href="#プロキシ" id="プロキシ">プロキシ</a></h2>
+<p>Denoは、モジュールダウンロードのプロキシとWeb標準<code>fetch</code>APIをサポートしています。</p>
+<p>プロキシ構成は、環境変数<code>HTTP_PROXY</code>および<code>HTTPS_PROXY</code>から読み取られます。 </p>
+<p>Windowsの場合、環境変数が見つからない場合、Denoはレジストリからプロキシを読み取ることにフォールバックします。</p>
+<h2><a class="header" href="#import-maps" id="import-maps">Import maps</a></h2>
 <blockquote>
-<p>这是一个不稳定的特性。
-更多信息请查阅 <a href="linking_to_external_code/../runtime/stability.html">稳定性</a></p>
+<p>これは不安定な機能です。<a href="linking_to_external_code/../runtime/stability.html">不安定な機能の詳細</a>をご覧ください。</p>
 </blockquote>
-<p>Deno 支持 <a href="https://github.com/WICG/import-maps">导入映射</a>。</p>
-<p>您可以通过 <code>--importmap=&lt;FILE&gt;</code> 的命令行选项使用导入映射。</p>
-<p>目前的限制:</p>
+<p>Denoは<a href="https://github.com/WICG/import-maps">import maps</a>をサポートしています。
+<code>--importmap=&lt;FILE&gt;</code>のCLIフラグでimport mapsを使用できます。</p>
+<p>現在の制限：</p>
 <ul>
-<li>只支持单个导入映射</li>
-<li>没有 fallback URL</li>
-<li>Deno 不支持 <code>std:</code> 命名空间</li>
-<li>仅支持 <code>file:</code>，<code>http:</code> 和 <code>https:</code> 协议</li>
+<li>単一のインポートマップ</li>
+<li>フォールバックURLなし</li>
+<li>Deno<code>std:</code>名前空間をサポートしていません</li>
+<li><code>file:</code>、<code>http:</code>、<code>https:</code> スキームのみをサポート</li>
 </ul>
-<p>示例：</p>
+<p>例：</p>
 <p><strong>import_map.json</strong></p>
 <pre><code class="language-js">{
    &quot;imports&quot;: {
@@ -1062,10 +1061,10 @@ deno test --allow-read src
 
 console.log(red(&quot;hello world&quot;));
 </code></pre>
-<p>运行：</p>
+<p>それから：</p>
 <pre><code class="language-shell">$ deno run --importmap=import_map.json --unstable color.ts
 </code></pre>
-<p>为绝对导入使用起始目录：</p>
+<p>ディレクトリを絶対パスでインポートを使用するには：</p>
 <pre><code class="language-json">// import_map.json
 
 {
@@ -1078,7 +1077,7 @@ console.log(red(&quot;hello world&quot;));
 
 import { MyUtil } from &quot;/util.ts&quot;;
 </code></pre>
-<p>您可以映射一个不同的目录（比如 src）：</p>
+<p>別のディレクトリをマッピングすることができます（例：src）：</p>
 <pre><code class="language-json">// import_map.json
 
 {
