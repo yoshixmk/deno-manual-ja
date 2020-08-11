@@ -3619,13 +3619,13 @@ Uncaught NotFound: No such file or directory (os error 2)
     at maybeError (deno/js/errors.ts:41:12)
     at handleAsyncMsgFromRust (deno/js/dispatch.ts:27:17)
 </code></pre>
-<h2><a class="header" href="#检查与放弃权限" id="检查与放弃权限">检查与放弃权限</a></h2>
+<h2><a class="header" href="#パーミッションの調査と取り消し" id="パーミッションの調査と取り消し">パーミッションの調査と取り消し</a></h2>
 <blockquote>
-<p>这个程序使用了不稳定的 Deno 特性。更多信息请查阅
-<a href="examples/../runtime/stability.html">稳定性</a></p>
+<p>このプログラムは、不安定なDeno機能を利用しています。
+<a href="examples/../runtime/stability.html">不安定な機能の詳細</a>をご覧ください。</p>
 </blockquote>
-<p>有时一个程序会放弃之前获得的权限，在此之后，需要该权限的操作将失败。</p>
-<pre><code class="language-ts">// 查找一个权限
+<p>プログラムによっては、以前に付与されたアクセス許可を取り消すことが必要な場合があります。後の段階でプログラムがこれらの権限を必要とする場合、プログラムは失敗します。</p>
+<pre><code class="language-ts">// lookup a permission
 const status = await Deno.permissions.query({ name: &quot;write&quot; });
 if (status.state !== &quot;granted&quot;) {
   throw new Error(&quot;need write permission&quot;);
@@ -3633,33 +3633,33 @@ if (status.state !== &quot;granted&quot;) {
 
 const log = await Deno.open(&quot;request.log&quot;, { write: true, append: true });
 
-// 放弃一些权限
+// revoke some permissions
 await Deno.permissions.revoke({ name: &quot;read&quot; });
 await Deno.permissions.revoke({ name: &quot;write&quot; });
 
-// 使用日志文件
+// use the log file
 const encoder = new TextEncoder();
 await log.write(encoder.encode(&quot;hello\n&quot;));
 
-// 这将会失败
+// this will fail.
 await Deno.remove(&quot;request.log&quot;);
 </code></pre>
-<h2><a class="header" href="#处理系统信号" id="处理系统信号">处理系统信号</a></h2>
+<h2><a class="header" href="#osシグナル" id="osシグナル">OSシグナル</a></h2>
 <blockquote>
-<p>这个程序使用了不稳定的 Deno 特性。更多信息请查阅
-<a href="examples/../runtime/stability.html">稳定性</a></p>
+<p>このプログラムは、不安定なDeno機能を利用しています。
+<a href="examples/../runtime/stability.html">不安定な機能の詳細</a>をご覧ください。</p>
 </blockquote>
-<p><a href="https://doc.deno.land/https/raw.githubusercontent.com/denoland/deno/master/cli/dts/lib.deno.unstable.d.ts#Deno.signal">API 参考手册</a></p>
-<p>您可以使用 <code>Deno.signal()</code> 函数来处理系统信号。</p>
+<p><a href="https://doc.deno.land/https/raw.githubusercontent.com/denoland/deno/master/cli/dts/lib.deno.unstable.d.ts#Deno.signal">API リファレンス</a></p>
+<p><code>Deno.signal()</code>を使用して、OSシグナルを処理できます。</p>
 <pre><code class="language-ts">for await (const _ of Deno.signal(Deno.Signal.SIGINT)) {
   console.log(&quot;interrupted!&quot;);
 }
 </code></pre>
-<p><code>Deno.signal()</code> 也是一个 promise。</p>
+<p><code>Deno.signal()</code> もpromiseとして機能します。</p>
 <pre><code class="language-ts">await Deno.signal(Deno.Signal.SIGINT);
 console.log(&quot;interrupted!&quot;);
 </code></pre>
-<p>如果您想要停止监控信号，可以使用信号对象的 <code>dispose()</code> 方法。</p>
+<p>シグナルの監視を停止したい場合は、シグナルオブジェクトの<code>dispose()</code>メソッドを使用できます。</p>
 <pre><code class="language-ts">const sig = Deno.signal(Deno.Signal.SIGINT);
 setTimeout(() =&gt; {
   sig.dispose();
@@ -3669,7 +3669,7 @@ for await (const _ of sig) {
   console.log(&quot;interrupted&quot;);
 }
 </code></pre>
-<p>以上 for-await 循环将在 sig.dispose() 被调用时退出，运行时间为 5 秒。</p>
+<p>上記のfor-awaitループは、<code>sig.dispose()</code>が呼び出されると5秒後に終了します。</p>
 <h3><a class="header" href="#文件系统事件" id="文件系统事件">文件系统事件</a></h3>
 <p>轮询文件系统事件：</p>
 <pre><code class="language-ts">const watcher = Deno.watchFs(&quot;/&quot;);

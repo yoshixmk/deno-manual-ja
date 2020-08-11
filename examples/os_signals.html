@@ -159,22 +159,22 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2><a class="header" href="#处理系统信号" id="处理系统信号">处理系统信号</a></h2>
+                        <h2><a class="header" href="#osシグナル" id="osシグナル">OSシグナル</a></h2>
 <blockquote>
-<p>这个程序使用了不稳定的 Deno 特性。更多信息请查阅
-<a href="../runtime/stability.html">稳定性</a></p>
+<p>このプログラムは、不安定なDeno機能を利用しています。
+<a href="../runtime/stability.html">不安定な機能の詳細</a>をご覧ください。</p>
 </blockquote>
-<p><a href="https://doc.deno.land/https/raw.githubusercontent.com/denoland/deno/master/cli/dts/lib.deno.unstable.d.ts#Deno.signal">API 参考手册</a></p>
-<p>您可以使用 <code>Deno.signal()</code> 函数来处理系统信号。</p>
+<p><a href="https://doc.deno.land/https/raw.githubusercontent.com/denoland/deno/master/cli/dts/lib.deno.unstable.d.ts#Deno.signal">API リファレンス</a></p>
+<p><code>Deno.signal()</code>を使用して、OSシグナルを処理できます。</p>
 <pre><code class="language-ts">for await (const _ of Deno.signal(Deno.Signal.SIGINT)) {
   console.log(&quot;interrupted!&quot;);
 }
 </code></pre>
-<p><code>Deno.signal()</code> 也是一个 promise。</p>
+<p><code>Deno.signal()</code> もpromiseとして機能します。</p>
 <pre><code class="language-ts">await Deno.signal(Deno.Signal.SIGINT);
 console.log(&quot;interrupted!&quot;);
 </code></pre>
-<p>如果您想要停止监控信号，可以使用信号对象的 <code>dispose()</code> 方法。</p>
+<p>シグナルの監視を停止したい場合は、シグナルオブジェクトの<code>dispose()</code>メソッドを使用できます。</p>
 <pre><code class="language-ts">const sig = Deno.signal(Deno.Signal.SIGINT);
 setTimeout(() =&gt; {
   sig.dispose();
@@ -184,7 +184,7 @@ for await (const _ of sig) {
   console.log(&quot;interrupted&quot;);
 }
 </code></pre>
-<p>以上 for-await 循环将在 sig.dispose() 被调用时退出，运行时间为 5 秒。</p>
+<p>上記のfor-awaitループは、<code>sig.dispose()</code>が呼び出されると5秒後に終了します。</p>
 
                     </main>
 
