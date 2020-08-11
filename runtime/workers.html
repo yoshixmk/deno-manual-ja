@@ -160,10 +160,10 @@
                 <div id="content" class="content">
                     <main>
                         <h2><a class="header" href="#worker" id="worker">Worker</a></h2>
-<p>Deno 支持 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/Worker">Web Worker API</a>.</p>
-<p>Worker 能够用来在多个线程中运行代码，<code>Worker</code> 的每个实例都会在一个单独的线程中运行，这个线程专属于它。</p>
-<p>目前，Deno 只支持 <code>module</code> 类型的 worker，因此在创建新的 worker 时必须传递 <code>type: &quot;module&quot;</code> 选项。</p>
-<p>目前，相对模块说明符 (Relative module specifiers) <a href="https://github.com/denoland/deno/issues/5216">尚不支持</a>。作为代替，您可以用 <code>URL</code> 构造函数和 <code>import.meta.url</code> 来为附近的脚本创建说明符。</p>
+<p>Denoは<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/Worker">Web Worker API</a>をサポートしています。</p>
+<p>Workerを使用して、複数のスレッドでコードを実行できます。 <code>Worker</code>の各インスタンスは、そのWorker専用の個別のスレッドで実行されます。</p>
+<p>現在、Denoは<code>モジュール</code>タイプのWorkerのみをサポートしています。したがって、新しいWorkerを作成するときは、<code>type： &quot;module&quot;</code>オプションを渡すことが不可欠です。</p>
+<p>現在のところ、相対モジュール指定子は<a href="https://github.com/denoland/deno/issues/5216">サポートされていません</a>。代わりに、<code>URL</code>コンストラクターと<code>import.meta.url</code>を使用して、近くにあるスクリプトの指定子を簡単に作成できます。</p>
 <pre><code class="language-ts">// Good
 new Worker(new URL(&quot;worker.js&quot;, import.meta.url).href, { type: &quot;module&quot; });
 
@@ -172,9 +172,9 @@ new Worker(new URL(&quot;worker.js&quot;, import.meta.url).href);
 new Worker(new URL(&quot;worker.js&quot;, import.meta.url).href, { type: &quot;classic&quot; });
 new Worker(&quot;./worker.js&quot;, { type: &quot;module&quot; });
 </code></pre>
-<h3><a class="header" href="#权限" id="权限">权限</a></h3>
-<p>创建一个新的 <code>Worker</code> 实例的行为与动态导入类似，因此 Deno 需要适当的权限来做这个操作。</p>
-<p>对于使用本地模块的 worker，Deno 需要读取 (<code>--allow-read</code>) 权限：</p>
+<h3><a class="header" href="#パーミッション" id="パーミッション">パーミッション</a></h3>
+<p>新しい<code>Worker</code>インスタンスの作成は、動的インポートに似ています。したがって、Denoはこのアクションに適切な許可を必要とします。</p>
+<p>ローカルモジュールを使用するWorker向け。 <code>--allow-read</code>パーミッションが必要です。</p>
 <p><strong>main.ts</strong></p>
 <pre><code class="language-ts">new Worker(new URL(&quot;worker.ts&quot;, import.meta.url).href, { type: &quot;module&quot; });
 </code></pre>
@@ -188,7 +188,7 @@ error: Uncaught PermissionDenied: read access to &quot;./worker.ts&quot;, run ag
 $ deno run --allow-read main.ts
 hello world
 </code></pre>
-<p>对于使用远程模块的 worker，Deno 需要网络 (<code>--allow-net</code>) 权限：</p>
+<p>リモートモジュールを使用するWorker向け。 --allow-netパーミッションが必要です:</p>
 <p><strong>main.ts</strong></p>
 <pre><code class="language-ts">new Worker(&quot;https://example.com/worker.ts&quot;, { type: &quot;module&quot; });
 </code></pre>
@@ -202,13 +202,12 @@ error: Uncaught PermissionDenied: net access to &quot;https://example.com/worker
 $ deno run --allow-net main.ts
 hello world
 </code></pre>
-<h3><a class="header" href="#在-worker-中使用-deno" id="在-worker-中使用-deno">在 Worker 中使用 Deno</a></h3>
+<h3><a class="header" href="#workerでのdenoの使用" id="workerでのdenoの使用">WorkerでのDenoの使用</a></h3>
 <blockquote>
-<p>这是一个不稳定的 Deno 特性。
-更多信息请查阅 <a href="stability.html">稳定性</a></p>
+<p>これは不安定なDeno機能です。<a href="stability.html">不安定な機能の詳細</a>をご覧ください。</p>
 </blockquote>
-<p>默认情况下，<code>Deno</code> 命名空间在 worker 作用域中不可用。</p>
-<p>要想启用 <code>Deno</code> 命名空间，在创建新的 worker 时传递 <code>deno: true</code> 选项：</p>
+<p>デフォルトでは、<code>Deno</code>名前空間はワーカースコープでは使用できません。 </p>
+<p>新しいワーカーを作成するときに<code>Deno</code>名前空間パス<code>deno：true</code>オプションを追加するには：</p>
 <p><strong>main.js</strong></p>
 <pre><code class="language-ts">const worker = new Worker(new URL(&quot;worker.js&quot;, import.meta.url).href, {
   type: &quot;module&quot;,
@@ -230,8 +229,7 @@ worker.postMessage({ filename: &quot;./log.txt&quot; });
 <pre><code class="language-shell">$ deno run --allow-read --unstable main.js
 hello world
 </code></pre>
-<p>当 <code>Deno</code> 命名空间在 worker 作用域中启用时，此 worker 继承创建者的权限（使用类似 <code>--allow-*</code> 的选项指定的权限）。</p>
-<p>我们计划提供 worker 权限的配置方法。</p>
+<p><code>Deno</code>名前空間がワーカースコープで使用可能な場合、ワーカーは親プロセスの権限（<code>--allow-*</code>フラグを使用して指定されたもの）を継承します。 パーミッションをワーカーに対して構成可能にする予定です。</p>
 
                     </main>
 
