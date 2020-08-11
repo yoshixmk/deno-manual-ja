@@ -675,44 +675,38 @@ const wasmModule = new WebAssembly.Module(wasmCode);
 const wasmInstance = new WebAssembly.Instance(wasmModule);
 console.log(wasmInstance.exports.main().toString());
 </code></pre>
-<h1><a class="header" href="#运行时" id="运行时">运行时</a></h1>
-<p>包含所有运行时函数（Web API 与全局空间 <code>Deno</code>）的文档可以在 <a href="https://doc.deno.land/https/github.com/denoland/deno/releases/latest/download/lib.deno.d.ts">doc.deno.land</a> 找到。</p>
+<h1><a class="header" href="#ランタイム" id="ランタイム">ランタイム</a></h1>
+<p>すべてのランタイム関数（Web API + Denoグローバル）の ドキュメントは、<a href="https://doc.deno.land/https/github.com/denoland/deno/releases/latest/download/lib.deno.d.ts">doc.deno.land</a>にあります。</p>
 <h2><a class="header" href="#web-api" id="web-api">Web API</a></h2>
-<p>对于 web 标准中存在的 API，比如 <code>fetch</code>，Deno 使用它们，而不是自己发明新的。</p>
-<p>已实现的 Web API 文档：<a href="https://doc.deno.land/https/raw.githubusercontent.com/denoland/deno/master/cli/dts/lib.deno.shared_globals.d.ts">doc.deno.land</a></p>
-<p>已实现的 Web API 的列表在 <a href="https://github.com/denoland/deno/blob/master/cli/rt/README.md">这里</a>。</p>
-<p>已实现的 web API 的 TypeScript 定义：</p>
-<ul>
-<li>
-<p><a href="https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.shared_globals.d.ts">lib.deno.shared_globals.d.ts</a></p>
-</li>
-<li>
-<p><a href="https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.window.d.ts">lib.deno.window.d.ts</a></p>
-</li>
-</ul>
-<p>worker 特定的 API 定义：<a href="https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.worker.d.ts">lib.deno.worker.d.ts</a></p>
-<h2><a class="header" href="#全局空间-deno" id="全局空间-deno">全局空间 <code>Deno</code></a></h2>
-<p>所有非 web 标准的 API 位于全局命名空间 <code>Deno</code>。</p>
-<p>这其中包含文件读取、打开 TCP sockets、运行子进程等。</p>
-<p>Deno 命名空间 的 TypeScript 定义：<a href="https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.ns.d.ts">lib.deno.ns.d.ts</a></p>
-<p>Deno 特定的 API 定义：<a href="https://doc.deno.land/https/raw.githubusercontent.com/denoland/deno/master/cli/dts/lib.deno.ns.d.ts">doc.deno.land</a></p>
-<h2><a class="header" href="#稳定性" id="稳定性">稳定性</a></h2>
-<p>从 Deno 1.0.0 开始，<code>Deno</code> 命名空间内的 API 是稳定的。这意味着我们将尽力使 1.0.0 下的代码在未来的 Deno 版本上继续运行。</p>
-<p>但是在现阶段，并非所有的 Deno 功能都可以应用于生产环境。仍处于起草阶段的、还未准备完善的功能被锁定在 <code>--unstable</code> 命令行选项后。</p>
+<p><code>fetch</code> HTTPリクエストのように、Web標準がすでに存在するAPIの場合、Denoは新しい独自のAPIを発明するのではなく、これらを使用します。</p>
+<p>実装されたWeb APIの詳細なドキュメントは、<a href="https://doc.deno.land/https/raw.githubusercontent.com/denoland/deno/master/cli/dts/lib.deno.shared_globals.d.ts">doc.deno.land</a>にあります。さらに、Denoが実装するWeb APIの完全なリストは、<a href="https://github.com/denoland/deno/blob/master/cli/rt/README.md">リポジトリ</a>にもあります。</p>
+<p>実装されたWeb APIのTypeScript定義は、
+<a href="https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.shared_globals.d.ts">lib.deno.shared_globals.d.ts</a> および
+<a href="https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.window.d.ts">lib.deno.window.d.ts</a>ファイルにあります。</p>
+<p>ワーカーに固有の定義は<a href="https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.worker.d.ts">lib.deno.worker.d.ts</a>ファイルにあります。</p>
+<h2><a class="header" href="#deno-グローバル名前空間" id="deno-グローバル名前空間"><code>Deno</code> グローバル名前空間</a></h2>
+<p>Web標準ではないすべてのAPIは、グローバル<code>Deno</code>名前空間に含まれています。ファイルからの読み取り、TCPソケットのオープン、サブプロセスの実行などのためのAPIを備えています。</p>
+<p>Deno名前空間のTypeScript定義は
+<a href="https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.ns.d.ts">lib.deno.ns.d.ts</a>ファイルにあります。</p>
+<p>Deno固有のすべてのAPIのドキュメントは、
+<a href="https://doc.deno.land/https/raw.githubusercontent.com/denoland/deno/master/cli/dts/lib.deno.ns.d.ts">doc.deno.land</a>にあります。</p>
+<h2><a class="header" href="#安定" id="安定">安定</a></h2>
+<p>Deno 1.0.0以降、<code>Deno</code>名前空間APIは安定しています。つまり、1.0.0で動作するコードが今後のバージョンでも引き続き動作するように努めます。</p>
+<p>ただし、Denoの機能のすべてがまだプロダクションの準備ができているわけではありません。まだドラフト段階にあるため準備ができていない機能は、<code>--unstable</code>コマンドラインフラグの背後にロックされています。</p>
 <pre><code class="language-shell">deno run --unstable mod_which_uses_unstable_stuff.ts
 </code></pre>
-<p>传递这个选项可以有如下效果：</p>
+<p>このフラグを渡すと、いくつかのことが行われます。</p>
 <ul>
-<li>它将允许在运行时使用不稳定的 API。</li>
-<li>它将 <a href="https://doc.deno.land/https/raw.githubusercontent.com/denoland/deno/master/cli/dts/lib.deno.unstable.d.ts"><code>lib.deno.unstable.d.ts</code></a> 文件添加到用于类型检查的类型脚本定义列表中。这包括 <code>deno types</code> 的输出。</li>
+<li>実行時に不安定なAPIを使用できるようにします。</li>
+<li><a href="https://doc.deno.land/https/raw.githubusercontent.com/denoland/deno/master/cli/dts/lib.deno.unstable.d.ts"><code>lib.deno.unstable.d.ts</code></a>型チェックに使用されるTypeScript定義のリストにファイルを追加します。<code>deno types</code>にはこの出力が含まれます。</li>
 </ul>
-<p>请注意，不稳定的 API 可能<strong>没有经过安全检查</strong>，将来可能有<strong>破坏性改动</strong>，并且<strong>还没有准备投入生产</strong>。</p>
-<h3><a class="header" href="#标准模块" id="标准模块">标准模块</a></h3>
-<p>Deno 的 <a href="https://deno.land/std/">标准模块</a> 尚不稳定。为了体现这点，我们用与 CLI 不同的版本号标记标准模块。和 <code>Deno</code> 命名空间不同，使用标准模块不需要 <code>--unstable</code> 选项（除非该模块使用了不稳定的 Deno 功能）。</p>
-<h2><a class="header" href="#程序生命周期" id="程序生命周期">程序生命周期</a></h2>
-<p>Deno 支持浏览器兼容的生命周期事件 <code>load</code> 和 <code>unload</code>。您可以使用这些事件在程序中提供用于安装 (setup) 和清理 (cleanup) 的代码。</p>
-<p><code>load</code> 事件的侦听器 (listener) 可以是异步 (async) 的，将被等待 (await)。<code>unload</code> 事件的监听器需要是同步的。这两项事件都不能被取消。</p>
-<p>示例：</p>
+<p>多くの不安定なAPIは<strong>セキュリティレビューを受けておらず</strong>、将来APIに重大な変更が加えられる可能性が あり、<strong>本稼働の準備ができていない</strong>ことに注意してください。</p>
+<h3><a class="header" href="#標準モジュール" id="標準モジュール">標準モジュール</a></h3>
+<p>Denoの標準モジュール（<a href="https://deno.land/std/">https://deno.land/std/</a>）はまだ安定していません。現在、これを反映するために、CLIとは異なる方法で標準モジュールをバージョン管理しています。<code>Deno</code>名前空間とは異なり、標準モジュールの使用には<code>--unstable</code>フラグが不要であることに注意してください（標準モジュール自体が不安定なDeno機能を使用しない限り）。</p>
+<h2><a class="header" href="#ライフサイクル" id="ライフサイクル">ライフサイクル</a></h2>
+<p>Denoは、ブラウザの互換性のあるライフサイクルイベントをサポートしています<code>load</code>と<code>unload</code>。これらのイベントを使用して、プログラムにセットアップコードとクリーンアップコードを提供できます。</p>
+<p><code>load</code>イベントのリスナーは非同期であり、待機します。<code>unload</code>イベントのリスナーは同期している必要があります。どちらのイベントもキャンセルできません。</p>
+<p>例：</p>
 <p><strong>main.ts</strong></p>
 <pre><code class="language-ts">import &quot;./imported.ts&quot;;
 
@@ -752,7 +746,7 @@ window.onunload = (e: Event): void =&gt; {
 
 console.log(&quot;log from imported script&quot;);
 </code></pre>
-<p>注意，您可以同时使用 <code>window.addEventListener</code> 和 <code>window.onload</code> / <code>window.onunload</code> 来定义事件的处理程序。它们之间有一个主要的区别，让我们运行示例：</p>
+<p>注意: <code>window.addEventListener</code>と<code>window.onload</code> / <code>window.onunload</code>の両方を使用して、イベントのハンドラーを定義できることに注意してください。それらの間には大きな違いがあります。例を実行してみましょう:</p>
 <pre><code class="language-shell">$ deno run main.ts
 log from imported script
 log from main script
@@ -763,9 +757,8 @@ got unload event in onunload function (main)
 got unload event in event handler (imported)
 got unload event in event handler (main)
 </code></pre>
-<p>所有通过 <code>window.addEventListener</code> 添加的侦听器都被运行，但是在 <code>main.ts</code> 中定义的 <code>window.onload</code> 和 <code>window.onunload</code> 覆盖了 <code>imported.ts</code> 中定义的处理程序。</p>
-<p>换句话说，您可以注册多个 <code>window.addEventListener</code> <code>&quot;load&quot;</code> 或
-<code>&quot;unload&quot;</code> 事件，但只有最后加载的 <code>window.onload</code> 或 <code>window.onunload</code> 事件将被执行。</p>
+<p><code>window.addEventListener</code>を使用して追加されたすべてのリスナーが実行されましたが、<code>main.ts</code>で定義された<code>window.onload</code>および<code>window.onunload</code>は、<code>imported.ts</code>で定義されたハンドラーをオーバーライドしました。</p>
+<p>つまり、複数の<code>window.addEventListener</code> <code>&quot;load&quot;</code>または <code>&quot;unload&quot;</code>イベントを登録できますが、最後に読み込まれた<code>window.onload</code>または<code>window.onunload</code>イベントのみが実行されます。</p>
 <h2><a class="header" href="#编译器-api" id="编译器-api">编译器 API</a></h2>
 <blockquote>
 <p>这是一个不稳定的 Deno 特性。
@@ -947,9 +940,8 @@ hello world
 </code></pre>
 <p>当 <code>Deno</code> 命名空间在 worker 作用域中启用时，此 worker 继承创建者的权限（使用类似 <code>--allow-*</code> 的选项指定的权限）。</p>
 <p>我们计划提供 worker 权限的配置方法。</p>
-<h1><a class="header" href="#与外部代码连接" id="与外部代码连接">与外部代码连接</a></h1>
-<p>在 <a href="./getting_started.html">入门</a> 章节中，我们看到 Deno 能够从 URL 执行脚本。像浏览器中的 JavaScript 一样，Deno 可以从 URL 直接导入代码库。</p>
-<p>这个示例使用 URL 来导入一个断言库：</p>
+<h1><a class="header" href="#サードパーティのコードへのリンク" id="サードパーティのコードへのリンク">サードパーティのコードへのリンク</a></h1>
+<p>「<a href="(./getting_started.html">入門</a>」のセクションでは、DenoがURLからスクリプトを実行できることを確認しました。ブラウザのJavaScriptと同様に、DenoはURLから直接ライブラリをインポートできます。この例では、URLを使用してアサーションライブラリをインポートします。</p>
 <p><strong>test.ts</strong></p>
 <pre><code class="language-ts">import { assertEquals } from &quot;https://deno.land/std/testing/asserts.ts&quot;;
 
@@ -958,7 +950,7 @@ assertEquals(&quot;world&quot;, &quot;world&quot;);
 
 console.log(&quot;Asserted! ✓&quot;);
 </code></pre>
-<p>尝试运行一下：</p>
+<p>これを実行してみてください：</p>
 <pre><code class="language-shell">$ deno run test.ts
 Compile file:///mnt/f9/Projects/github.com/denoland/deno/docs/test.ts
 Download https://deno.land/std/testing/asserts.ts
@@ -966,27 +958,23 @@ Download https://deno.land/std/fmt/colors.ts
 Download https://deno.land/std/testing/diff.ts
 Asserted! ✓
 </code></pre>
-<p>对于这个程序，我们不需要提供 <code>--allow-net</code> 选项。当它访问网络时，Deno 运行时有着特殊权限来下载模块并缓存到磁盘。</p>
-<p>Deno 在一个特殊目录缓存了远程模块，该路径可以被 <code>DENO_DIR</code> 指定，如果没有指定，默认为系统缓存目录。下一次运行这个程序时无需下载。如果这个程序没有改动，它不会被再次编译。</p>
-<p>系统缓存目录默认为：</p>
+<p>このプログラムに<code>--allow-net</code>フラグを提供する必要はなかったが、ネットワークにアクセスしたことに注意してください。ランタイムには、インポートをダウンロードしてディスクにキャッシュするための特別なアクセス権があります。</p>
+<p>Denoは、<code>DENO_DIR</code>の環境変数で指定された特別なディレクトリにリモートインポートをキャッシュします。DENO_DIR が指定されていない場合、システムのキャッシュディレクトリがデフォルトになります。次にプログラムを実行するときには、ダウンロードは行われません。プログラムが変更されていなければ、再コンパイルもされません。デフォルトのディレクトリは次のとおりです。</p>
 <ul>
 <li>Linux/Redox: <code>$XDG_CACHE_HOME/deno</code> or <code>$HOME/.cache/deno</code></li>
 <li>Windows: <code>%LOCALAPPDATA%/deno</code> (<code>%LOCALAPPDATA%</code> = <code>FOLDERID_LocalAppData</code>)</li>
 <li>macOS: <code>$HOME/Library/Caches/deno</code></li>
+<li>何かが失敗した場合、<code>$HOME/.deno</code>にフォールバックします。</li>
 </ul>
-<p>如果失败，该路径设置为 <code>$HOME/.deno</code>。</p>
 <h2><a class="header" href="#faq" id="faq">FAQ</a></h2>
-<h3><a class="header" href="#如何导入特定版本" id="如何导入特定版本">如何导入特定版本？</a></h3>
-<p>只需在 URL 中指定版本。举个例子，这个 URL 指定了要运行的版本 <code>https://unpkg.com/liltest@0.0.5/dist/liltest.js</code>。</p>
-<h3><a class="header" href="#到处导入-url-似乎很麻烦" id="到处导入-url-似乎很麻烦">到处导入 URL 似乎很麻烦</a></h3>
+<h3><a class="header" href="#モジュールの特定のバージョンをインポートするにはどうすればよいですか" id="モジュールの特定のバージョンをインポートするにはどうすればよいですか">モジュールの特定のバージョンをインポートするにはどうすればよいですか？</a></h3>
+<p>URLでバージョンを指定します。たとえば、次のように実行中のコードで完全URLで指定します。 <code>https://unpkg.com/liltest@0.0.5/dist/liltest.js</code>。</p>
+<h3><a class="header" href="#どこにでもurlをインポートするのは扱いにくいようです" id="どこにでもurlをインポートするのは扱いにくいようです">どこにでもURLをインポートするのは扱いにくいようです。</a></h3>
 <blockquote>
-<p>如果其中一个 URL 链接到一个完全不同的库版本，该怎么办？</p>
+<p>URLの1つが微妙に異なるバージョンのライブラリにリンクしている場合はどうなりますか？<br />
+大規模なプロジェクトのどこにでもURLを保持するのは間違いやすいのではないでしょうか？</p>
 </blockquote>
-<blockquote>
-<p>在大型项目中到处维护 URL 是否容易出错？</p>
-</blockquote>
-<p>解决办法是在一个中心化的 <code>deps.ts</code> 中重新导出所依赖的外部库，它和 Node 的 <code>package.json</code> 具有相同的作用。</p>
-<p>举个例子，您正在一个大型项目中使用一个断言库，您可以创建一个 <code>deps.ts</code> 文件来导出第三方代码，而不是到处导入 <code>&quot;https://deno.land/std/testing/asserts.ts&quot;</code>。</p>
+<p>解決策は、外部のライブラリを<code>deps.ts</code>ファイル（Nodeの<code>package.json</code>ファイルと同じ目的で機能する）にインポートおよび再エクスポートすることです。たとえば、大規模なプロジェクト全体で上記のアサーションライブラリを使用していたとしましょう。 <code>&quot;https://deno.land/std@0.64.0/testing/asserts.ts&quot;</code>をどこにでもインポートするのではなく、サードパーティのコードをエクスポートする<code>deps.ts</code>ファイルを作成できます。</p>
 <p><strong>deps.ts</strong></p>
 <pre><code class="language-ts">export {
   assert,
@@ -994,82 +982,82 @@ Asserted! ✓
   assertStrContains,
 } from &quot;https://deno.land/std/testing/asserts.ts&quot;;
 </code></pre>
-<p>在这个项目中，您可以从 <code>deps.ts</code> 导入，避免对相同的 URL 产生过多引用。</p>
+<p>また、同じプロジェクト全体で、<code>deps.ts</code>からインポートして、同じURLへの多くの参照を避けることができます。</p>
 <pre><code class="language-ts">import { assertEquals, runTests, test } from &quot;./deps.ts&quot;;
 </code></pre>
-<p>这种设计避免了由包管理软件、集中的代码存储库和多余的文件格式所产生的大量复杂性。</p>
-<h3><a class="header" href="#如何信任可能更改的-url" id="如何信任可能更改的-url">如何信任可能更改的 URL？</a></h3>
-<p>使用 <code>--lock</code> 命令行选项，通过一个锁文件 (lock file)，您可以确保从一个 URL 下载的代码和初始开发时一样。更多信息请看 <a href="./linking_to_external_code/integrity_checking.html">这里</a>。</p>
-<h3><a class="header" href="#如果依赖宕机怎么办源代码将不再可用" id="如果依赖宕机怎么办源代码将不再可用">如果依赖宕机怎么办？源代码将不再可用。</a></h3>
-<p>像上面一样，这是 <em>任何</em> 远程依赖系统都要面对的问题。</p>
-<p>依赖外部服务在开发时很方便，但在生产环境很脆弱。生产级软件总是应该打包 (vendor) 所有依赖。</p>
-<p>在 Node 中，这需要将 <code>node_modules</code> 检入版本控制系统。</p>
-<p>在 Deno 中，这需要在运行时将 <code>$DENO_DIR</code> 指向项目内的目录，同样把依赖检入版本控制系统。</p>
-<pre><code class="language-shell"># 下载依赖
+<p>この設計により、パッケージ管理ソフトウェア、一元化されたコードリポジトリ、および余分なファイル形式によって生成される大量の複雑さが回避されます。</p>
+<h3><a class="header" href="#変更される可能性のあるurlを信頼するにはどうすればよいですか" id="変更される可能性のあるurlを信頼するにはどうすればよいですか">変更される可能性のあるURLを信頼するにはどうすればよいですか？</a></h3>
+<p>ロックファイル（<code>--lock</code>コマンドラインフラグを指定）を使用することで、URLから取得したコードが初期開発時のものと同じであることを確認できます。これについて詳しくは、<a href="./linking_to_external_code/integrity_checking.html">こちら</a>をご覧ください。</p>
+<h3><a class="header" href="#しかしurlのホストがダウンした場合はどうなりますかソースは利用できません" id="しかしurlのホストがダウンした場合はどうなりますかソースは利用できません">しかし、URLのホストがダウンした場合はどうなりますか？ソースは利用できません。</a></h3>
+<p>これは、上記と同様に、リモートの依存関係システムが直面する問題です。外部サーバーに依存することは、開発には便利ですが、本番環境では脆弱です。本番ソフトウェアは、常にその依存関係を提供する必要があります。 Nodeでは、これは<code>node_modules</code>をソース管理にチェックインすることで行われます。<br />
+Denoでは、実行時に<code>$DENO_DIR</code>をプロジェクトローカルディレクトリにポイントし、同様にそれをソース管理にチェックインすることでこれを行います。</p>
+<pre><code class="language-shell"># Download the dependencies.
 DENO_DIR=./deno_dir deno cache src/deps.ts
 
-# 确保需要缓存的任何命令都设置了 `DENO_DIR` 变量
+# Make sure the variable is set for any command which invokes the cache.
 DENO_DIR=./deno_dir deno test src
 
-# 将缓存目录检入版本控制
+# Check the directory into source control.
 git add -u deno_dir
 git commit
 </code></pre>
-<h2><a class="header" href="#重新加载特定的模块" id="重新加载特定的模块">重新加载特定的模块</a></h2>
-<p>默认情况下，缓存中的模块将被重用，而无需获取或重新编译它。有时这不是期望的行为，您可以强制 deno 重新下载模块并重新编译到缓存中。您可以使用 <code>deno cache</code> 子命令的<code>--reload</code> 选项来使本地 <code>DENO_DIR</code> 缓存无效。</p>
-<p>其用法描述如下：</p>
-<h3><a class="header" href="#重新加载所有内容" id="重新加载所有内容">重新加载所有内容</a></h3>
+<h2><a class="header" href="#モジュールの再読み込み" id="モジュールの再読み込み">モジュールの再読み込み</a></h2>
+<p>デフォルトでは、キャッシュ内のモジュールは、フェッチまたは再コンパイルせずに再利用されます。これは望ましくない場合があり、denoにモジュールを再フェッチしてキャッシュに再コンパイルさせることができます。 <code>deno cache</code>サブコマンドの<code>--reload</code>フラグを使用して、ローカルの<code>DENO_DIR</code>キャッシュを無効にすることができます。</p>
+<p>使い方は以下の通りです:</p>
+<h3><a class="header" href="#すべてをリロードする" id="すべてをリロードする">すべてをリロードする</a></h3>
 <pre><code class="language-ts">deno cache --reload my_module.ts
 </code></pre>
-<h3><a class="header" href="#重新加载指定模块" id="重新加载指定模块">重新加载指定模块</a></h3>
-<p>有时我们只想升级某些模块，可以通过将参数传递给 <code>--reload</code> 选项来控制它。</p>
-<p>重新加载所有 v0.55.0 的标准模块：</p>
-<pre><code class="language-ts">deno cache --reload=https://deno.land/std@v0.55.0 my_module.ts
+<h3><a class="header" href="#特定のモジュールをリロードする" id="特定のモジュールをリロードする">特定のモジュールをリロードする</a></h3>
+<p>一部のモジュールのみをアップグレードしたい場合があります。 <code>--reload</code>フラグに引数を渡すことで制御できます。</p>
+<p>全ての 0.64.0 標準モジュールをリロードする：</p>
+<pre><code class="language-ts">deno cache --reload=https://deno.land/std@v0.64.0 my_module.ts
 </code></pre>
-<p>为了重新加载特定的模块（在这个例子中是 colors 和 file system copy），需要使用逗号来分隔 URL：</p>
-<pre><code class="language-ts">deno cache --reload=https://deno.land/std/fs/copy.ts,https://deno.land/std/fmt/colors.ts my_module.ts
+<p>特定のモジュール（この例では、色とファイルシステムのコピー）を再ロードするには、コンマを使用してURLを区切ります：</p>
+<pre><code class="language-ts">deno cache --reload=https://deno.land/std@0.64.0/fs/copy.ts,https://deno.land/std@0.64.0/fmt/colors.ts my_module.ts
 </code></pre>
 <!-- Should this be part of examples? -->
-<h2><a class="header" href="#完整性检查与锁定文件" id="完整性检查与锁定文件">完整性检查与锁定文件</a></h2>
-<h3><a class="header" href="#介绍" id="介绍">介绍</a></h3>
-<p>假设您的模块依赖于远程模块 <code>https://some.url/a.ts</code>。当第一次编译您的模块时，<code>a.ts</code> 被下载、编译、缓存。它将保持这样，直到您在一个新的机器上运行您的模块（生产环境？）或是重新加载缓存（例如通过 <code>deno cache --reload</code>）。但当 <code>https://some.url/a.ts</code> 的内容变化时会发生什么？这将导致您的生产模块使用了和本地模块不同的依赖。Deno 的解决方法是使用完整性检查与锁定文件。</p>
-<h3><a class="header" href="#缓存与锁定文件" id="缓存与锁定文件">缓存与锁定文件</a></h3>
-<p>Deno 可以使用一个较小的 JSON 文件存储和检查模块的子资源完整性。</p>
-<p>使用 <code>--lock=lock.json</code> 启用和指定锁文件检查。</p>
-<p>要更新或创建锁，可以使用 <code>--lock=lock.json --lock-write</code>。<code>--lock=lock.json</code> 告诉 Deno 要使用哪个锁文件，<code>--lock-write</code> 用来向锁文件输出依赖的哈希值。 （<code>--lock-write</code> 必须和 <code>--lock</code> 一起使用）</p>
-<p>一个锁文件可能看起来像这样，针对依赖项存储文件的哈希值：</p>
+<h2><a class="header" href="#整合性チェックとファイルのロック" id="整合性チェックとファイルのロック">整合性チェックとファイルのロック</a></h2>
+<h3><a class="header" href="#イントロダクション" id="イントロダクション">イントロダクション</a></h3>
+<p>あなたのモジュールがリモートモジュール<code>https：//some.url/a.ts</code>に依存しているとしましょう。モジュールを初めてコンパイルするとき、<code>a.ts</code>が取得、コンパイル、およびキャッシュされます。これは、新しいマシンでモジュールを実行する（たとえば、本番環境で）か、キャッシュを再ロードする（たとえば、<code>deno cache --reload</code>を使用）まで、この方法のままです。しかし、リモートURL <code>https：//some.url/a.ts</code>のコンテンツが変更された場合はどうなりますか？これにより、ローカルモジュールとは異なる依存関係コードで運用モジュールが実行される可能性があります。これを回避するためのDenoのソリューションは、整合性チェックとロックファイルを使用することです。</p>
+<h3><a class="header" href="#ファイルのキャッシュとロック" id="ファイルのキャッシュとロック">ファイルのキャッシュとロック</a></h3>
+<p>Denoは、小さなJSONファイルを使用して、モジュールのサブリソースの整合性を保存およびチェックできます。</p>
+<p><code>--lock=lock.json</code>を使用して、ロックファイルのチェックを有効にして指定します。ロックを更新または作成するには、<code>--lock=lock.json --lock-write</code>を使用します。<code>--lock=lock.json</code>はDenoに使用するロックファイルを教えますが、<code>--lock-write</code>は依存関係ハッシュをロックファイルに出力するために使用されます（<code>--lock-write</code>は<code>--lock</code>と組み合わせて使用​​する必要があります） ）。 </p>
+<p><code>lock.json</code>は次のようになり、依存関係に対するファイルのハッシュを保存します。</p>
 <pre><code class="language-json">{
-  &quot;https://deno.land/std@v0.50.0/textproto/mod.ts&quot;: &quot;3118d7a42c03c242c5a49c2ad91c8396110e14acca1324e7aaefd31a999b71a4&quot;,
-  &quot;https://deno.land/std@v0.50.0/io/util.ts&quot;: &quot;ae133d310a0fdcf298cea7bc09a599c49acb616d34e148e263bcb02976f80dee&quot;,
-  &quot;https://deno.land/std@v0.50.0/async/delay.ts&quot;: &quot;35957d585a6e3dd87706858fb1d6b551cb278271b03f52c5a2cb70e65e00c26a&quot;,
+  &quot;https://deno.land/std@v0.64.0/textproto/mod.ts&quot;: &quot;3118d7a42c03c242c5a49c2ad91c8396110e14acca1324e7aaefd31a999b71a4&quot;,
+  &quot;https://deno.land/std@v0.64.0/io/util.ts&quot;: &quot;ae133d310a0fdcf298cea7bc09a599c49acb616d34e148e263bcb02976f80dee&quot;,
+  &quot;https://deno.land/std@v0.64.0/async/delay.ts&quot;: &quot;35957d585a6e3dd87706858fb1d6b551cb278271b03f52c5a2cb70e65e00c26a&quot;,
    ...
 }
 </code></pre>
-<p>一个典型的工作流看起来像这样：</p>
-<pre><code class="language-ts">// 向 &quot;src/deps.ts&quot; 添加一个新的依赖，在别处使用。
+<p>一般的なワークフローは次のようになります。：</p>
+<p><strong>src/deps.ts</strong></p>
+<pre><code class="language-ts">// Add a new dependency to &quot;src/deps.ts&quot;, used somewhere else.
 export { xyz } from &quot;https://unpkg.com/xyz-lib@v0.9.0/lib.ts&quot;;
 </code></pre>
-<pre><code class="language-shell"># 创建或更新锁文件 &quot;lock.json&quot;
+<p>それから:</p>
+<pre><code class="language-shell"># # Create/update the lock file &quot;lock.json&quot;.
 deno cache --lock=lock.json --lock-write src/deps.ts
 
-# 在提交时包含这一变化
+# Include it when committing to source control.
 git add -u lock.json
 git commit -m &quot;feat: Add support for xyz using xyz-lib&quot;
 git push
 </code></pre>
-<p>另一台机器上的合作者刚刚把项目克隆下来：</p>
-<pre><code class="language-shell"># 下载、缓存并检查项目的依赖
-deno cache -r --lock=lock.json src/deps.ts
+<p>別のマシンのコラボレーター-新しくクローンされたプロジェクトツリー内：</p>
+<pre><code class="language-shell"># Download the project's dependencies into the machine's cache, integrity
+# checking each resource.
+deno cache -reload --lock=lock.json src/deps.ts
 
-# 在这完成之后，您可以安心开发了
+# Done! You can proceed safely.
 deno test --allow-read src
 </code></pre>
-<h3><a class="header" href="#运行时验证" id="运行时验证">运行时验证</a></h3>
-<p>像上面的缓存一样，您也可以在使用 <code>deno run</code> 子命令时配合<code>--lock=lock.json</code> 选项，从而在运行期间验证所有被锁定的模块的完整性。请记住，这只会针对先前添加到 <code>lock.json</code> 文件中的依赖项进行验证。新的依赖项将被缓存，但不会被检验。</p>
-<p>您也可以通过使用 <code>--cached-only</code> 选项来要求远程依赖都已经被缓存。</p>
+<h3><a class="header" href="#ランタイム検証" id="ランタイム検証">ランタイム検証</a></h3>
+<p>上記のキャッシュと同様に、<code>deno run</code>サブコマンドの使用中に<code>--lock=lock.json</code>オプションを使用して、実行中にロックされたモジュールの整合性を検証することもできます。これは、以前に<code>lock.json</code>ファイルに追加された依存関係に対してのみ検証されることに注意してください。新しい依存関係はキャッシュされますが検証されません。</p>
+<p><code>--cached-only</code>フラグを使用してリモート依存関係がすでにキャッシュされていることを要求することで、これをさらに一歩進めることができます。</p>
 <pre><code class="language-shell">deno run --lock=lock.json --cached-only mod.ts
 </code></pre>
-<p>如果依赖树中有尚未缓存的 mod.ts 依赖项，此操作将失败。</p>
+<p>まだキャッシュされていないmod.tsの依存関係ツリーに依存関係がある場合、これは失敗します。</p>
 <!-- TODO - Add detail on dynamic imports -->
 <h2><a class="header" href="#代理proxies" id="代理proxies">代理（Proxies）</a></h2>
 <p>Deno 支持模块下载和 Web 标准 <code>fetch</code> API 的代理。</p>

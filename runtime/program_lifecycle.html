@@ -159,10 +159,10 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2><a class="header" href="#程序生命周期" id="程序生命周期">程序生命周期</a></h2>
-<p>Deno 支持浏览器兼容的生命周期事件 <code>load</code> 和 <code>unload</code>。您可以使用这些事件在程序中提供用于安装 (setup) 和清理 (cleanup) 的代码。</p>
-<p><code>load</code> 事件的侦听器 (listener) 可以是异步 (async) 的，将被等待 (await)。<code>unload</code> 事件的监听器需要是同步的。这两项事件都不能被取消。</p>
-<p>示例：</p>
+                        <h2><a class="header" href="#ライフサイクル" id="ライフサイクル">ライフサイクル</a></h2>
+<p>Denoは、ブラウザの互換性のあるライフサイクルイベントをサポートしています<code>load</code>と<code>unload</code>。これらのイベントを使用して、プログラムにセットアップコードとクリーンアップコードを提供できます。</p>
+<p><code>load</code>イベントのリスナーは非同期であり、待機します。<code>unload</code>イベントのリスナーは同期している必要があります。どちらのイベントもキャンセルできません。</p>
+<p>例：</p>
 <p><strong>main.ts</strong></p>
 <pre><code class="language-ts">import &quot;./imported.ts&quot;;
 
@@ -202,7 +202,7 @@ window.onunload = (e: Event): void =&gt; {
 
 console.log(&quot;log from imported script&quot;);
 </code></pre>
-<p>注意，您可以同时使用 <code>window.addEventListener</code> 和 <code>window.onload</code> / <code>window.onunload</code> 来定义事件的处理程序。它们之间有一个主要的区别，让我们运行示例：</p>
+<p>注意: <code>window.addEventListener</code>と<code>window.onload</code> / <code>window.onunload</code>の両方を使用して、イベントのハンドラーを定義できることに注意してください。それらの間には大きな違いがあります。例を実行してみましょう:</p>
 <pre><code class="language-shell">$ deno run main.ts
 log from imported script
 log from main script
@@ -213,9 +213,8 @@ got unload event in onunload function (main)
 got unload event in event handler (imported)
 got unload event in event handler (main)
 </code></pre>
-<p>所有通过 <code>window.addEventListener</code> 添加的侦听器都被运行，但是在 <code>main.ts</code> 中定义的 <code>window.onload</code> 和 <code>window.onunload</code> 覆盖了 <code>imported.ts</code> 中定义的处理程序。</p>
-<p>换句话说，您可以注册多个 <code>window.addEventListener</code> <code>&quot;load&quot;</code> 或
-<code>&quot;unload&quot;</code> 事件，但只有最后加载的 <code>window.onload</code> 或 <code>window.onunload</code> 事件将被执行。</p>
+<p><code>window.addEventListener</code>を使用して追加されたすべてのリスナーが実行されましたが、<code>main.ts</code>で定義された<code>window.onload</code>および<code>window.onunload</code>は、<code>imported.ts</code>で定義されたハンドラーをオーバーライドしました。</p>
+<p>つまり、複数の<code>window.addEventListener</code> <code>&quot;load&quot;</code>または <code>&quot;unload&quot;</code>イベントを登録できますが、最後に読み込まれた<code>window.onload</code>または<code>window.onunload</code>イベントのみが実行されます。</p>
 
                     </main>
 

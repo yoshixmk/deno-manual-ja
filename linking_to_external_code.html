@@ -159,9 +159,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#与外部代码连接" id="与外部代码连接">与外部代码连接</a></h1>
-<p>在 <a href="./getting_started.html">入门</a> 章节中，我们看到 Deno 能够从 URL 执行脚本。像浏览器中的 JavaScript 一样，Deno 可以从 URL 直接导入代码库。</p>
-<p>这个示例使用 URL 来导入一个断言库：</p>
+                        <h1><a class="header" href="#サードパーティのコードへのリンク" id="サードパーティのコードへのリンク">サードパーティのコードへのリンク</a></h1>
+<p>「<a href="(./getting_started.html">入門</a>」のセクションでは、DenoがURLからスクリプトを実行できることを確認しました。ブラウザのJavaScriptと同様に、DenoはURLから直接ライブラリをインポートできます。この例では、URLを使用してアサーションライブラリをインポートします。</p>
 <p><strong>test.ts</strong></p>
 <pre><code class="language-ts">import { assertEquals } from &quot;https://deno.land/std/testing/asserts.ts&quot;;
 
@@ -170,7 +169,7 @@ assertEquals(&quot;world&quot;, &quot;world&quot;);
 
 console.log(&quot;Asserted! ✓&quot;);
 </code></pre>
-<p>尝试运行一下：</p>
+<p>これを実行してみてください：</p>
 <pre><code class="language-shell">$ deno run test.ts
 Compile file:///mnt/f9/Projects/github.com/denoland/deno/docs/test.ts
 Download https://deno.land/std/testing/asserts.ts
@@ -178,27 +177,23 @@ Download https://deno.land/std/fmt/colors.ts
 Download https://deno.land/std/testing/diff.ts
 Asserted! ✓
 </code></pre>
-<p>对于这个程序，我们不需要提供 <code>--allow-net</code> 选项。当它访问网络时，Deno 运行时有着特殊权限来下载模块并缓存到磁盘。</p>
-<p>Deno 在一个特殊目录缓存了远程模块，该路径可以被 <code>DENO_DIR</code> 指定，如果没有指定，默认为系统缓存目录。下一次运行这个程序时无需下载。如果这个程序没有改动，它不会被再次编译。</p>
-<p>系统缓存目录默认为：</p>
+<p>このプログラムに<code>--allow-net</code>フラグを提供する必要はなかったが、ネットワークにアクセスしたことに注意してください。ランタイムには、インポートをダウンロードしてディスクにキャッシュするための特別なアクセス権があります。</p>
+<p>Denoは、<code>DENO_DIR</code>の環境変数で指定された特別なディレクトリにリモートインポートをキャッシュします。DENO_DIR が指定されていない場合、システムのキャッシュディレクトリがデフォルトになります。次にプログラムを実行するときには、ダウンロードは行われません。プログラムが変更されていなければ、再コンパイルもされません。デフォルトのディレクトリは次のとおりです。</p>
 <ul>
 <li>Linux/Redox: <code>$XDG_CACHE_HOME/deno</code> or <code>$HOME/.cache/deno</code></li>
 <li>Windows: <code>%LOCALAPPDATA%/deno</code> (<code>%LOCALAPPDATA%</code> = <code>FOLDERID_LocalAppData</code>)</li>
 <li>macOS: <code>$HOME/Library/Caches/deno</code></li>
+<li>何かが失敗した場合、<code>$HOME/.deno</code>にフォールバックします。</li>
 </ul>
-<p>如果失败，该路径设置为 <code>$HOME/.deno</code>。</p>
 <h2><a class="header" href="#faq" id="faq">FAQ</a></h2>
-<h3><a class="header" href="#如何导入特定版本" id="如何导入特定版本">如何导入特定版本？</a></h3>
-<p>只需在 URL 中指定版本。举个例子，这个 URL 指定了要运行的版本 <code>https://unpkg.com/liltest@0.0.5/dist/liltest.js</code>。</p>
-<h3><a class="header" href="#到处导入-url-似乎很麻烦" id="到处导入-url-似乎很麻烦">到处导入 URL 似乎很麻烦</a></h3>
+<h3><a class="header" href="#モジュールの特定のバージョンをインポートするにはどうすればよいですか" id="モジュールの特定のバージョンをインポートするにはどうすればよいですか">モジュールの特定のバージョンをインポートするにはどうすればよいですか？</a></h3>
+<p>URLでバージョンを指定します。たとえば、次のように実行中のコードで完全URLで指定します。 <code>https://unpkg.com/liltest@0.0.5/dist/liltest.js</code>。</p>
+<h3><a class="header" href="#どこにでもurlをインポートするのは扱いにくいようです" id="どこにでもurlをインポートするのは扱いにくいようです">どこにでもURLをインポートするのは扱いにくいようです。</a></h3>
 <blockquote>
-<p>如果其中一个 URL 链接到一个完全不同的库版本，该怎么办？</p>
+<p>URLの1つが微妙に異なるバージョンのライブラリにリンクしている場合はどうなりますか？<br />
+大規模なプロジェクトのどこにでもURLを保持するのは間違いやすいのではないでしょうか？</p>
 </blockquote>
-<blockquote>
-<p>在大型项目中到处维护 URL 是否容易出错？</p>
-</blockquote>
-<p>解决办法是在一个中心化的 <code>deps.ts</code> 中重新导出所依赖的外部库，它和 Node 的 <code>package.json</code> 具有相同的作用。</p>
-<p>举个例子，您正在一个大型项目中使用一个断言库，您可以创建一个 <code>deps.ts</code> 文件来导出第三方代码，而不是到处导入 <code>&quot;https://deno.land/std/testing/asserts.ts&quot;</code>。</p>
+<p>解決策は、外部のライブラリを<code>deps.ts</code>ファイル（Nodeの<code>package.json</code>ファイルと同じ目的で機能する）にインポートおよび再エクスポートすることです。たとえば、大規模なプロジェクト全体で上記のアサーションライブラリを使用していたとしましょう。 <code>&quot;https://deno.land/std@0.64.0/testing/asserts.ts&quot;</code>をどこにでもインポートするのではなく、サードパーティのコードをエクスポートする<code>deps.ts</code>ファイルを作成できます。</p>
 <p><strong>deps.ts</strong></p>
 <pre><code class="language-ts">export {
   assert,
@@ -206,24 +201,22 @@ Asserted! ✓
   assertStrContains,
 } from &quot;https://deno.land/std/testing/asserts.ts&quot;;
 </code></pre>
-<p>在这个项目中，您可以从 <code>deps.ts</code> 导入，避免对相同的 URL 产生过多引用。</p>
+<p>また、同じプロジェクト全体で、<code>deps.ts</code>からインポートして、同じURLへの多くの参照を避けることができます。</p>
 <pre><code class="language-ts">import { assertEquals, runTests, test } from &quot;./deps.ts&quot;;
 </code></pre>
-<p>这种设计避免了由包管理软件、集中的代码存储库和多余的文件格式所产生的大量复杂性。</p>
-<h3><a class="header" href="#如何信任可能更改的-url" id="如何信任可能更改的-url">如何信任可能更改的 URL？</a></h3>
-<p>使用 <code>--lock</code> 命令行选项，通过一个锁文件 (lock file)，您可以确保从一个 URL 下载的代码和初始开发时一样。更多信息请看 <a href="./linking_to_external_code/integrity_checking.html">这里</a>。</p>
-<h3><a class="header" href="#如果依赖宕机怎么办源代码将不再可用" id="如果依赖宕机怎么办源代码将不再可用">如果依赖宕机怎么办？源代码将不再可用。</a></h3>
-<p>像上面一样，这是 <em>任何</em> 远程依赖系统都要面对的问题。</p>
-<p>依赖外部服务在开发时很方便，但在生产环境很脆弱。生产级软件总是应该打包 (vendor) 所有依赖。</p>
-<p>在 Node 中，这需要将 <code>node_modules</code> 检入版本控制系统。</p>
-<p>在 Deno 中，这需要在运行时将 <code>$DENO_DIR</code> 指向项目内的目录，同样把依赖检入版本控制系统。</p>
-<pre><code class="language-shell"># 下载依赖
+<p>この設計により、パッケージ管理ソフトウェア、一元化されたコードリポジトリ、および余分なファイル形式によって生成される大量の複雑さが回避されます。</p>
+<h3><a class="header" href="#変更される可能性のあるurlを信頼するにはどうすればよいですか" id="変更される可能性のあるurlを信頼するにはどうすればよいですか">変更される可能性のあるURLを信頼するにはどうすればよいですか？</a></h3>
+<p>ロックファイル（<code>--lock</code>コマンドラインフラグを指定）を使用することで、URLから取得したコードが初期開発時のものと同じであることを確認できます。これについて詳しくは、<a href="./linking_to_external_code/integrity_checking.html">こちら</a>をご覧ください。</p>
+<h3><a class="header" href="#しかしurlのホストがダウンした場合はどうなりますかソースは利用できません" id="しかしurlのホストがダウンした場合はどうなりますかソースは利用できません">しかし、URLのホストがダウンした場合はどうなりますか？ソースは利用できません。</a></h3>
+<p>これは、上記と同様に、リモートの依存関係システムが直面する問題です。外部サーバーに依存することは、開発には便利ですが、本番環境では脆弱です。本番ソフトウェアは、常にその依存関係を提供する必要があります。 Nodeでは、これは<code>node_modules</code>をソース管理にチェックインすることで行われます。<br />
+Denoでは、実行時に<code>$DENO_DIR</code>をプロジェクトローカルディレクトリにポイントし、同様にそれをソース管理にチェックインすることでこれを行います。</p>
+<pre><code class="language-shell"># Download the dependencies.
 DENO_DIR=./deno_dir deno cache src/deps.ts
 
-# 确保需要缓存的任何命令都设置了 `DENO_DIR` 变量
+# Make sure the variable is set for any command which invokes the cache.
 DENO_DIR=./deno_dir deno test src
 
-# 将缓存目录检入版本控制
+# Check the directory into source control.
 git add -u deno_dir
 git commit
 </code></pre>
