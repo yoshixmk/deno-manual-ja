@@ -1,29 +1,29 @@
-## 重新加载特定的模块
+## モジュールの再読み込み
 
-默认情况下，缓存中的模块将被重用，而无需获取或重新编译它。有时这不是期望的行为，您可以强制 deno 重新下载模块并重新编译到缓存中。您可以使用 `deno cache` 子命令的`--reload` 选项来使本地 `DENO_DIR` 缓存无效。
+デフォルトでは、キャッシュ内のモジュールは、フェッチまたは再コンパイルせずに再利用されます。これは望ましくない場合があり、denoにモジュールを再フェッチしてキャッシュに再コンパイルさせることができます。 `deno cache`サブコマンドの`--reload`フラグを使用して、ローカルの`DENO_DIR`キャッシュを無効にすることができます。
 
-其用法描述如下：
+使い方は以下の通りです:
 
-### 重新加载所有内容
+### すべてをリロードする
 
 ```ts
 deno cache --reload my_module.ts
 ```
 
-### 重新加载指定模块
+### 特定のモジュールをリロードする
 
-有时我们只想升级某些模块，可以通过将参数传递给 `--reload` 选项来控制它。
+一部のモジュールのみをアップグレードしたい場合があります。 `--reload`フラグに引数を渡すことで制御できます。
 
-重新加载所有 v0.55.0 的标准模块：
+全ての 0.64.0 標準モジュールをリロードする：
 
 ```ts
-deno cache --reload=https://deno.land/std@v0.55.0 my_module.ts
+deno cache --reload=https://deno.land/std@v0.64.0 my_module.ts
 ```
 
-为了重新加载特定的模块（在这个例子中是 colors 和 file system copy），需要使用逗号来分隔 URL：
+特定のモジュール（この例では、色とファイルシステムのコピー）を再ロードするには、コンマを使用してURLを区切ります：
 
 ```ts
-deno cache --reload=https://deno.land/std/fs/copy.ts,https://deno.land/std/fmt/colors.ts my_module.ts
+deno cache --reload=https://deno.land/std@0.64.0/fs/copy.ts,https://deno.land/std@0.64.0/fmt/colors.ts my_module.ts
 ```
 
 <!-- Should this be part of examples? -->
