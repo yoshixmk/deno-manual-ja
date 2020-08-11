@@ -159,27 +159,30 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2><a class="header" href="#内部细节" id="内部细节">内部细节</a></h2>
-<h3><a class="header" href="#deno-和-linux-类比" id="deno-和-linux-类比">Deno 和 Linux 类比</a></h3>
+                        <h2><a class="header" href="#internal-details" id="internal-details">Internal details</a></h2>
+<h3><a class="header" href="#deno-and-linux-analogy" id="deno-and-linux-analogy">Deno and Linux analogy</a></h3>
 <table><thead><tr><th align="right"><strong>Linux</strong></th><th align="left"><strong>Deno</strong></th></tr></thead><tbody>
-<tr><td align="right">进程 (Processes)</td><td align="left">Web Workers</td></tr>
-<tr><td align="right">系统调用 (Syscalls)</td><td align="left">Ops</td></tr>
-<tr><td align="right">文件描述符 (fd)</td><td align="left"><a href="#%E8%B5%84%E6%BA%90-resources">Resource ids (rid)</a></td></tr>
-<tr><td align="right">调度器 (Scheduler)</td><td align="left">Tokio</td></tr>
-<tr><td align="right">用户空间: libc++ / glib / boost</td><td align="left">https://deno.land/std/</td></tr>
-<tr><td align="right">/proc/$$/stat</td><td align="left"><a href="#%E6%8C%87%E6%A0%87-metrics">Deno.metrics()</a></td></tr>
-<tr><td align="right">手册页 (man pages)</td><td align="left">deno types</td></tr>
+<tr><td align="right">Processes</td><td align="left">Web Workers</td></tr>
+<tr><td align="right">Syscalls</td><td align="left">Ops</td></tr>
+<tr><td align="right">File descriptors (fd)</td><td align="left"><a href="architecture#resources">Resource ids (rid)</a></td></tr>
+<tr><td align="right">Scheduler</td><td align="left">Tokio</td></tr>
+<tr><td align="right">Userland: libc++ / glib / boost</td><td align="left">https://deno.land/std/</td></tr>
+<tr><td align="right">/proc/$$/stat</td><td align="left"><a href="architecture#metrics">Deno.metrics()</a></td></tr>
+<tr><td align="right">man pages</td><td align="left">deno types</td></tr>
 </tbody></table>
-<h4><a class="header" href="#资源-resources" id="资源-resources">资源 (Resources)</a></h4>
-<p>资源（Resources)，又称 <code>rid</code>，是 Deno 版本的文件描述符。它们是一些整数数值，用来指代打开的文件、套接字 (sockets) 和其他概念。基于 <code>rid</code>，Deno 能够查询系统中有多少个打开的资源，这在测试时很有用。</p>
+<h4><a class="header" href="#resources" id="resources">Resources</a></h4>
+<p>Resources (AKA <code>rid</code>) are Deno's version of file descriptors. They are integer
+values used to refer to open files, sockets, and other concepts. For testing it
+would be good to be able to query the system for how many open resources there
+are.</p>
 <pre><code class="language-ts">console.log(Deno.resources());
 // { 0: &quot;stdin&quot;, 1: &quot;stdout&quot;, 2: &quot;stderr&quot; }
 Deno.close(0);
 console.log(Deno.resources());
 // { 1: &quot;stdout&quot;, 2: &quot;stderr&quot; }
 </code></pre>
-<h4><a class="header" href="#指标-metrics" id="指标-metrics">指标 (Metrics)</a></h4>
-<p>指标 (Metrics) 是 Deno 用于各种统计数据的内部计数器。</p>
+<h4><a class="header" href="#metrics" id="metrics">Metrics</a></h4>
+<p>Metrics is Deno's internal counter for various statistics.</p>
 <pre><code class="language-shell">&gt; console.table(Deno.metrics())
 ┌──────────────────┬────────┐
 │     (index)      │ Values │
@@ -191,8 +194,8 @@ console.log(Deno.resources());
 │  bytesReceived   │  856   │
 └──────────────────┴────────┘
 </code></pre>
-<h3><a class="header" href="#架构示意图" id="架构示意图">架构示意图</a></h3>
-<p><img src="schematic_v0.2.png" alt="架构示意图" /></p>
+<h3><a class="header" href="#schematic-diagram" id="schematic-diagram">Schematic diagram</a></h3>
+<p><img src="https://deno.land/images/schematic_v0.2.png" alt="architectural schematic" /></p>
 
                     </main>
 
