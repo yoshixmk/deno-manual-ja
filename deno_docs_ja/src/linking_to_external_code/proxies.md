@@ -1,7 +1,8 @@
-## 代理（Proxies）
+## プロキシ
 
-Deno 支持模块下载和 Web 标准 `fetch` API 的代理。
+Denoは、モジュールダウンロードのプロキシとWeb標準`fetch`APIをサポートしています。
 
-代理配置从环境变量中读取: `HTTP_PROXY` 和 `HTTPS_PROXY`。
-
-在 Windows 的环境下，如果没有发现环境变量，Deno 会从注册表中读取代理。
+ プロキシ構成は、環境変数`HTTP_PROXY`および`HTTPS_PROXY`から読み取られます。 
+ 
+ Windowsの場合、環境変数が見つからない場合、Denoはレジストリからプロキシを読み取ることにフォールバックします。
+ 
