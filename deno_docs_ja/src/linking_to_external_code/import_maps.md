@@ -1,20 +1,17 @@
-## 导入映射（Import maps）
+## Import maps
 
-> 这是一个不稳定的特性。
-> 更多信息请查阅 [稳定性](../runtime/stability.md)
+> これは不安定な機能です。[不安定な機能の詳細](../runtime/stability.md)をご覧ください。
 
-Deno 支持 [导入映射](https://github.com/WICG/import-maps)。
+Denoは[import maps](https://github.com/WICG/import-maps)をサポートしています。
+`--importmap=<FILE>`のCLIフラグでimport mapsを使用できます。
 
-您可以通过 `--importmap=<FILE>` 的命令行选项使用导入映射。
+ 現在の制限：
+- 単一のインポートマップ
+- フォールバックURLなし
+- Deno`std:`名前空間をサポートしていません
+- `file:`、`http:`、`https:` スキームのみをサポート
 
-目前的限制:
-
-- 只支持单个导入映射
-- 没有 fallback URL
-- Deno 不支持 `std:` 命名空间
-- 仅支持 `file:`，`http:` 和 `https:` 协议
-
-示例：
+例：
 
 **import_map.json**
 
@@ -34,13 +31,13 @@ import { red } from "fmt/colors.ts";
 console.log(red("hello world"));
 ```
 
-运行：
+それから：
 
 ```shell
 $ deno run --importmap=import_map.json --unstable color.ts
 ```
 
-为绝对导入使用起始目录：
+ディレクトリを絶対パスでインポートを使用するには：
 
 ```json
 // import_map.json
@@ -58,7 +55,7 @@ $ deno run --importmap=import_map.json --unstable color.ts
 import { MyUtil } from "/util.ts";
 ```
 
-您可以映射一个不同的目录（比如 src）：
+別のディレクトリをマッピングすることができます（例：src）：
 
 ```json
 // import_map.json
