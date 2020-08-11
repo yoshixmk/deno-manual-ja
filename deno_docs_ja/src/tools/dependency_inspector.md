@@ -1,6 +1,6 @@
-## 依赖检查器
+## Dependency Inspector
 
-`deno info [URL]` 会列出 ES 模块和它的所有依赖。
+`deno info [URL]` will inspect ES module and all of its dependencies.
 
 ```shell
 deno info https://deno.land/std@0.52.0/http/file_server.ts
@@ -61,11 +61,11 @@ https://deno.land/std@0.52.0/http/file_server.ts
   └── https://deno.land/std@0.52.0/testing/asserts.ts
 ```
 
-依赖检查器对本地或远程的任意 ES 模块都有效。
+Dependency inspector works with any local or remote ES modules.
 
-## 缓存位置
+## Cache location
 
-`deno info` 可以用来显示与缓存位置有关的信息：
+`deno info` can be used to display information about cache location:
 
 ```shell
 deno info

@@ -1,11 +1,11 @@
-# 内置工具
+# ビルトインツール
 
-Deno 提供了一些内置的工具，在处理 JavaScript 和 TypeScript 时很有用。
+Denoは、JavaScriptおよびTypeScriptを操作するときに役立つ組み込みツールをいくつか提供しています。
 
-- [打包器 (`deno bundle`)](./tools/bundler.md)
-- [调试器 (`--inspect, --inspect-brk`)](./tools/debugger.md)
-- [依赖检查器 (`deno info`)](./tools/dependency_inspector.md)
-- [文档生成器 (`deno doc`)](./tools/documentation_generator.md)
-- [代码格式化 (`deno fmt`)](./tools/formatter.md)
-- [测试 (`deno test`)](./testing.md)
-- [linter (`deno lint`)](./tools/linter.md)
+- [`deno bundle`](./tools/bundler.md)
+- [`--inspect, --inspect-brk`](./tools/debugger.md)
+- [`deno info`](./tools/dependency_inspector.md)
+- [`deno doc`](./tools/documentation_generator.md)
+- [`deno fmt`](./tools/formatter.md)
+- [`deno test`](./testing.md)
+- [`deno lint`](./tools/linter.md)

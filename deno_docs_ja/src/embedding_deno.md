@@ -1,12 +1,9 @@
-# 嵌入式 Deno
+# 組み込みDeno
 
-Deno 由多个部分组成，其中之一是 `deno_core`。这是一个 rust
-crate，可以用作 Rust 应用中的嵌入式 JavaScript 运行时。
+Denoは複数の部分で構成されており、そのうちの1つは`deno_core`です。これは、JavaScriptランタイムをRustアプリケーションに埋め込むために使用できるRust Crateです。 Denoは`deno_core`の上に構築されています。
 
-Deno 建立在 `deno_core` 的基础上。
+Denoクレートは、[crates.io](https://crates.io/crates/deno_core)でホストされています。 
 
-Deno crate 发布于 [crates.io](https://crates.io/crates/deno_core)。
-
-您可以通过 [docs.rs](https://docs.rs/deno_core) 查阅其 API。
+APIは[docs.rs](https://docs.rs/deno_core)で確認できます。
 
 <!-- TODO(lucacasonato): better docs -->

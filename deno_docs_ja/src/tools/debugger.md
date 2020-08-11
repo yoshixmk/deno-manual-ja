@@ -1,18 +1,24 @@
-## 调试器 (debugger)
+## Debugger
 
-Deno 支持 [V8 Inspector Protocol](https://v8.dev/docs/inspector).
+Deno supports the [V8 Inspector Protocol](https://v8.dev/docs/inspector).
 
-使用 Chrome Devtools 或其他支持该协议的客户端（比如 VSCode）能够调试 Deno 程序。
+It's possible to debug Deno programs using Chrome Devtools or other clients that
+support the protocol (eg. VSCode).
 
-要启用调试功能，用 `--inspect` 或 `--inspect-brk` 选项运行 Deno。
+To activate debugging capabilities run Deno with the `--inspect` or
+`--inspect-brk` flags.
 
-`--inspect` 选项允许在任何时间点连接调试器，而 `--inspect-brk` 选项会等待调试器连接，在第一行代码处暂停执行。
+The `--inspect` flag allows attaching the debugger at any point in time, while
+`--inspect-brk` will wait for the debugger to attach and will pause execution on
+the first line of code.
 
 ### Chrome Devtools
 
-让我们用 Chrome 开发者工具来调试一个程序，我们将使用来自 `std` 的 [file_server.ts](https://deno.land/std@v0.50.0/http/file_server.ts)，这是一个静态文件服务。
+Let's try debugging a program using Chrome Devtools. For this, we'll use
+[file_server.ts](https://deno.land/std@v0.50.0/http/file_server.ts) from `std`,
+a static file server.
 
-使用 `--inspect-brk` 选项，在第一行代码处暂停执行。
+Use the `--inspect-brk` flag to break execution on the first line:
 
 ```shell
 $ deno run --inspect-brk --allow-read --allow-net https://deno.land/std@v0.50.0/http/file_server.ts
@@ -22,31 +28,44 @@ Compile https://deno.land/std@v0.50.0/http/file_server.ts
 ...
 ```
 
-打开 `chrome://inspect`，点击 target 旁边的 `Inspect`。
+Open `chrome://inspect` and click `Inspect` next to target:
 
 ![chrome://inspect](../images/debugger1.jpg)
 
-开发者工具加载所有模块时可能会等待几秒。
+It might take a few seconds after opening the devtools to load all modules.
 
 ![Devtools opened](../images/debugger2.jpg)
 
-您可能注意到开发者工具暂停执行的地方不是 `file_server.ts`，而是 `_constants.ts` 的第一行。这是符合预期的行为，ES 模块在 V8 中执行的顺序如此。`_constants.ts` 是 `file_server.ts` 最深、最先的依赖，因此它会最先执行。
+You might notice that Devtools paused execution on the first line of
+`_constants.ts` instead of `file_server.ts`. This is expected behavior and is
+caused by the way ES modules are evaluated by V8 (`_constants.ts` is left-most,
+bottom-most dependency of `file_server.ts` so it is evaluated first).
 
-在这时，所有源码在开发者工具中都可用。打开 `file_server.ts`，加一处断点，然后打开 "Sources" 面板，展开树：
+At this point all source code is available in the Devtools, so let's open up
+`file_server.ts` and add a breakpoint there; go to "Sources" pane and expand the
+tree:
 
 ![Open file_server.ts](../images/debugger3.jpg)
 
-_仔细观察，您会发现每个文件都有重复的条目，一个是正常字体，另一个是斜体。前者是编译后的源文件（所以 `.ts` 文件会生成 JavaScript 源代码），后者是该文件的源映射 (source map)。_
+_Looking closely you'll find duplicate entries for each file; one written
+regularly and one in italics. The former is compiled source file (so in the case
+of `.ts` files it will be emitted JavaScript source), while the latter is a
+source map for the file._
 
-下一步，在 `listenAndServe` 方法处加一个断点。
+Next, add a breakpoint in the `listenAndServe` method:
 
 ![Break in file_server.ts](../images/debugger4.jpg)
 
-添加断点后，开发者工具会自动打开源映射文件，让我们能在包含类型的实际源码中步进。
+As soon as we've added the breakpoint Devtools automatically opened up the
+source map file, which allows us step through the actual source code that
+includes types.
 
-现在我们已经设置了断点，在触发断点时，我们可以检查传入的请求，也可以继续执行脚本。点击恢复脚本执行的按钮即可，您可能需要点两次。
+Now that we have our breakpoints set, we can resume the execution of our script
+so that we might inspect an incoming request. Hit the Resume script execution
+button to do so. You might even need to hit it twice!
 
-当脚本继续运行时，让我们发送一个请求，看看开发者工具中发生了什么。
+Once our script is running again, let's send a request and inspect it in
+Devtools:
 
 ```
 $ curl http://0.0.0.0:4500/
@@ -54,15 +73,19 @@ $ curl http://0.0.0.0:4500/
 
 ![Break in request handling](../images/debugger5.jpg)
 
-在这时，我们可以检查请求的内容，逐步调试代码。
+At this point we can introspect the contents of the request and go step-by-step
+to debug the code.
 
 ### VSCode
 
-Deno 可以在 VSCode 中调试。
+Deno can be debugged using VSCode.
 
-插件的官方支持正在开发中 <https://github.com/denoland/vscode_deno/issues/12>
+Official support via the plugin is being worked on -
+https://github.com/denoland/vscode_deno/issues/12
 
-我们也可以通过手动提供 [`launch.json`](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations) 配置，来连接调试器：
+We can still attach the debugger by manually providing a
+[`launch.json`](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations)
+config:
 
 ```json
 {
@@ -81,9 +104,10 @@ Deno 可以在 VSCode 中调试。
 }
 ```
 
-**注意**：这将使用您打开的文件作为入口点；如果需要固定的入口点，请用脚本名称替换 `${file}`。
+**NOTE**: This uses the file you have open as the entry point; replace `${file}`
+with a script name if you want a fixed entry point.
 
-让我们尝试一下本地源文件，创建 `server.ts`：
+Let's try out debugging a local source file. Create `server.ts`:
 
 ```ts
 import { serve } from "https://deno.land/std@v0.50.0/http/server.ts";
@@ -95,21 +119,27 @@ for await (const req of server) {
 }
 ```
 
-然后我们可以设置断点，运行已创建的配置：
+Then we can set a breakpoint, and run the created configuration:
 
 ![VSCode debugger](../images/debugger7.jpg)
 
-### JetBrains IDE
+### JetBrains IDEs
 
-您可以使用 JetBrains IDE 来调试 Deno，右击您想要调试的文件，选择 `Debug 'Deno: <file name>'`。这会创建一个没有权限设置的 运行/调试 配置，您可能需要更改 `Arguments` 字段来提供所需权限。
+You can debug Deno using your JetBrains IDE by right-clicking the file you want
+to debug and selecting the `Debug 'Deno: <file name>'` option. This will create
+a run/debug configuration with no permission flags set. To configure these flags
+edit the run/debug configuration and modify the `Arguments` field with the
+required flags.
 
-### 其他
+### Other
 
-实现 Devtools 协议的任何客户端都能连接 Deno 进程。
+Any client that implements the Devtools protocol should be able to connect to a
+Deno process.
 
-### 限制
+### Limitations
 
-开发者工具的支持仍不成熟，有一些功能是缺失的，或是有 bug 的：
+Devtools support is still immature. There is some functionality that is known to
+be missing or buggy:
 
-- 开发者工具控制台中的自动补全会让 Deno 进程退出。
-- 性能分析 (profiling) 和内存转储 (memory dump) 可能不正确。
+- autocomplete in Devtools' console causes the Deno process to exit
+- profiling and memory dumps might not work correctly

@@ -1,17 +1,18 @@
 ## Linter
 
-Deno 附带了 JavaScript 和 TypeScript 的内置 linter。
+Deno ships with a built in code linter for JavaScript and TypeScript.
 
-**注意：linter 是一个新功能，仍然不稳定，因此需要 `--unstable` 选项**
+**Note: linter is a new feature and still unstable thus it requires `--unstable`
+flag**
 
 ```shell
-# 检查当前目录树内所有 JS/TS 文件
+# lint all JS/TS files in the current directory and subdirectories
 deno lint --unstable
-# 检查特定文件
+# lint specific files
 deno lint --unstable myfile1.ts myfile2.ts
 ```
 
-### 可用规则
+### Available rules
 
 - `ban-ts-comment`
 - `ban-untagged-ignore`
@@ -56,11 +57,12 @@ deno lint --unstable myfile1.ts myfile2.ts
 - `use-isnan`
 - `valid-typeof`
 
-### 忽略指令
+### Ignore directives
 
-#### 文件
+#### Files
 
-要忽略整个文件，`// deno-lint-ignore-file` 指令应该置于文件顶部。
+To ignore whole file `// deno-lint-ignore-file` directive should placed at the
+top of the file.
 
 ```ts
 // deno-lint-ignore-file
@@ -70,7 +72,7 @@ function foo(): any {
 }
 ```
 
-必须在第一个语句或声明之前放置忽略指令：
+Ignore directive must be placed before first stament or declaration:
 
 ```ts
 // Copyright 2020 the Deno authors. All rights reserved. MIT license.
@@ -88,9 +90,10 @@ function foo(): any {
 }
 ```
 
-#### 诊断 (Diagnostics)
+#### Diagnostics
 
-要忽略某些诊断，`// deno-lint-ignore <codes ...>` 指令应该置于违规行之前。必须指定要忽略的规则名称。
+To ignore certain diagnostic `// deno-lint-ignore <codes...>` directive should
+be placed before offending line. Specifying ignored rule name is required.
 
 ```ts
 // deno-lint-ignore no-explicit-any
@@ -104,7 +107,9 @@ function bar(a: any) {
 }
 ```
 
-为了与 ESLint 兼容，`deno lint` 也支持 `// eslint-ignore-next-line` 指令。像 `// deno-lint-ignore` 一样，这也需要指定忽略的规则名称。
+To provide some compatibility with ESLint `deno lint` also supports
+`// eslint-ignore-next-line` directive. Just like in `// deno-lint-ignore` it's
+required to specify ignored rule name is required.
 
 ```ts
 // eslint-ignore-next-line no-empty
