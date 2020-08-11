@@ -1,29 +1,25 @@
-# 运行时
+# ランタイム
 
-包含所有运行时函数（Web API 与全局空间 `Deno`）的文档可以在 [doc.deno.land](https://doc.deno.land/https/github.com/denoland/deno/releases/latest/download/lib.deno.d.ts) 找到。
+すべてのランタイム関数（Web API + Denoグローバル）の ドキュメントは、[doc.deno.land](https://doc.deno.land/https/github.com/denoland/deno/releases/latest/download/lib.deno.d.ts)にあります。
 
 ## Web API
 
-对于 web 标准中存在的 API，比如 `fetch`，Deno 使用它们，而不是自己发明新的。
+`fetch` HTTPリクエストのように、Web標準がすでに存在するAPIの場合、Denoは新しい独自のAPIを発明するのではなく、これらを使用します。
 
-已实现的 Web API 文档：[doc.deno.land](https://doc.deno.land/https/raw.githubusercontent.com/denoland/deno/master/cli/dts/lib.deno.shared_globals.d.ts)
+実装されたWeb APIの詳細なドキュメントは、[doc.deno.land](https://doc.deno.land/https/raw.githubusercontent.com/denoland/deno/master/cli/dts/lib.deno.shared_globals.d.ts)にあります。さらに、Denoが実装するWeb APIの完全なリストは、[リポジトリ](https://github.com/denoland/deno/blob/master/cli/rt/README.md)にもあります。
 
-已实现的 Web API 的列表在 [这里](https://github.com/denoland/deno/blob/master/cli/rt/README.md)。
+実装されたWeb APIのTypeScript定義は、
+[lib.deno.shared_globals.d.ts](https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.shared_globals.d.ts) および
+[lib.deno.window.d.ts](https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.window.d.ts)ファイルにあります。
 
-已实现的 web API 的 TypeScript 定义：
+ワーカーに固有の定義は[lib.deno.worker.d.ts](https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.worker.d.ts)ファイルにあります。
 
-- [lib.deno.shared_globals.d.ts](https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.shared_globals.d.ts)
+## `Deno` グローバル名前空間
 
-- [lib.deno.window.d.ts](https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.window.d.ts)
+Web標準ではないすべてのAPIは、グローバル`Deno`名前空間に含まれています。ファイルからの読み取り、TCPソケットのオープン、サブプロセスの実行などのためのAPIを備えています。
 
-worker 特定的 API 定义：[lib.deno.worker.d.ts](https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.worker.d.ts)
+Deno名前空間のTypeScript定義は
+[lib.deno.ns.d.ts](https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.ns.d.ts)ファイルにあります。
 
-## 全局空间 `Deno`
-
-所有非 web 标准的 API 位于全局命名空间 `Deno`。
-
-这其中包含文件读取、打开 TCP sockets、运行子进程等。
-
-Deno 命名空间 的 TypeScript 定义：[lib.deno.ns.d.ts](https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.ns.d.ts)
-
-Deno 特定的 API 定义：[doc.deno.land](https://doc.deno.land/https/raw.githubusercontent.com/denoland/deno/master/cli/dts/lib.deno.ns.d.ts)
+Deno固有のすべてのAPIのドキュメントは、
+[doc.deno.land](https://doc.deno.land/https/raw.githubusercontent.com/denoland/deno/master/cli/dts/lib.deno.ns.d.ts)にあります。
