@@ -159,22 +159,21 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#管理依赖" id="管理依赖">管理依赖</a></h1>
-<p>在Deno中，没有包管理器的概念，因为外部模块直接导入到本地模块中。</p>
-<p>这就提出了一个问题，即如何在没有包管理器的情况下管理远程依赖关系。在具有许多依赖性的大型项目中，如果将模块全部单独导入到单个模块中，则更新模块将变得很麻烦且耗时。</p>
-<p>在 Deno 中解决此问题的标准做法是创建一个 <code>deps.ts</code> 文件。此文件中引用了所有必需的远程依赖关系，并且重新导出了所需的方法和类。本地模块从 <code>deps.ts</code> 导入所需方法和类，而不是远程依赖。</p>
-<p>这样就可以轻松跨大型代码库更新模块，并解决“程序包管理器问题”（如果它存在的话）。开发依赖项也可以在单独的 <code>dev_deps.ts</code> 文件中进行管理。</p>
-<p><strong>deps.ts 示例</strong></p>
+                        <h1><a class="header" href="#依存関係の管理" id="依存関係の管理">依存関係の管理</a></h1>
+<p>Denoでは、外部モジュールがローカルモジュールに直接インポートされるため、パッケージマネージャーの概念はありません。これは、パッケージマネージャーなしでリモートの依存関係を管理する方法の問題を提起します。依存関係の多い大きなプロジェクトでは、モジュールを個別のモジュールに個別にインポートすると、モジュールを更新するのが面倒で時間がかかります。</p>
+<p>Denoでこの問題を解決するための標準的な方法は、<code>deps.ts</code>ファイルを作成することです。必要なすべてのリモート依存関係がこのファイルで参照され、必要なメソッドとクラスが再エクスポートされます。依存するローカルモジュールは、リモートの依存関係ではなく<code>deps.ts</code>を参照します。</p>
+<p>これにより、大規模なコードベース全体のモジュールを簡単に更新できるようになり、「パッケージマネージャーの問題」があったとしても、それが解決されます。開発の依存関係は、別の<code>dev_deps.ts</code>ファイルで管理することもできます。</p>
+<p><strong>deps.ts 例</strong></p>
 <pre><code class="language-ts">/**
- * deps.ts 从远程的 Ramda 模块中重新导出所需方法。
+ * deps.ts re-exports the required methods from the remote Ramda module.
  **/
 export {
   add,
   multiply,
 } from &quot;https://x.nest.land/ramda@0.27.0/source/index.js&quot;;
 </code></pre>
-<p>此示例中的功能与 <a href="./import_export.html">导入和导出模块</a> 相同。但是在这种情况下，不是直接导入 Ramda 模块，而是从本地代理 <code>deps.ts</code> 模块中导入。</p>
-<p><strong>命令：</strong> <code>deno run dependencies.ts</code></p>
+<p>この例では、<a href="./import_export.html">ローカルおよびリモートのインポート例</a>と同じ機能が作成されます。ただし、この場合、Ramdaモジュールが直接参照される代わりに、ローカルの<code>deps.ts</code>モジュールを使用してプロキシによって参照されます。</p>
+<p><strong>Command：</strong> <code>deno run dependencies.ts</code></p>
 <pre><code class="language-ts">import {
   add,
   multiply,
@@ -188,7 +187,7 @@ console.log(totalCost(19, 31, 1.2));
 console.log(totalCost(45, 27, 1.15));
 
 /**
- * 输出：
+ * Output
  *
  * 60
  * 82.8
