@@ -3670,23 +3670,22 @@ for await (const _ of sig) {
 }
 </code></pre>
 <p>上記のfor-awaitループは、<code>sig.dispose()</code>が呼び出されると5秒後に終了します。</p>
-<h3><a class="header" href="#文件系统事件" id="文件系统事件">文件系统事件</a></h3>
-<p>轮询文件系统事件：</p>
+<h3><a class="header" href="#ファイルシステムイベント" id="ファイルシステムイベント">ファイルシステムイベント</a></h3>
+<p>ファイルシステムイベントをポーリングするには：</p>
 <pre><code class="language-ts">const watcher = Deno.watchFs(&quot;/&quot;);
 for await (const event of watcher) {
   console.log(&quot;&gt;&gt;&gt;&gt; event&quot;, event);
   // { kind: &quot;create&quot;, paths: [ &quot;/foo.txt&quot; ] }
 }
 </code></pre>
-<p>请注意，事件的确切顺序可能因操作系统而异。</p>
-<p>此功能根据平台使用不同的系统调用：</p>
+<p>イベントの正確な順序は、オペレーティングシステムによって異なる場合があることに注意してください。この機能は、プラットフォームに応じて異なるsyscallを使用します：</p>
 <ul>
 <li>Linux: inotify</li>
 <li>macOS: FSEvents</li>
 <li>Windows: ReadDirectoryChangesW</li>
 </ul>
-<h2><a class="header" href="#测试当前文件是否为主程序" id="测试当前文件是否为主程序">测试当前文件是否为主程序</a></h2>
-<p>当前脚本作为主程序的标志是 <code>import.meta.main</code>。</p>
+<h2><a class="header" href="#現在のファイルがメインプログラムかどうかのテスト" id="現在のファイルがメインプログラムかどうかのテスト">現在のファイルがメインプログラムかどうかのテスト</a></h2>
+<p>現在のスクリプトがプログラムへのメイン入力として実行されたかどうかをテストするには、<code>import.meta.main</code>を確認します。</p>
 <pre><code class="language-ts">if (import.meta.main) {
   console.log(&quot;main&quot;);
 }
