@@ -1,20 +1,23 @@
-## 内部细节
+## Internal details
 
-### Deno 和 Linux 类比
+### Deno and Linux analogy
 
-|                       **Linux** | **Deno**                              |
-| ------------------------------: | :------------------------------------ |
-|                进程 (Processes) | Web Workers                           |
-|             系统调用 (Syscalls) | Ops                                   |
-|                 文件描述符 (fd) | [Resource ids (rid)](#资源-resources) |
-|              调度器 (Scheduler) | Tokio                                 |
-| 用户空间: libc++ / glib / boost | https://deno.land/std/                |
-|                 /proc/\$\$/stat | [Deno.metrics()](#指标-metrics)       |
-|              手册页 (man pages) | deno types                            |
+|                       **Linux** | **Deno**                                     |
+| ------------------------------: | :------------------------------------------- |
+|                       Processes | Web Workers                                  |
+|                        Syscalls | Ops                                          |
+|           File descriptors (fd) | [Resource ids (rid)](architecture#resources) |
+|                       Scheduler | Tokio                                        |
+| Userland: libc++ / glib / boost | https://deno.land/std/                       |
+|                 /proc/\$\$/stat | [Deno.metrics()](architecture#metrics)       |
+|                       man pages | deno types                                   |
 
-#### 资源 (Resources)
+#### Resources
 
-资源（Resources)，又称 `rid`，是 Deno 版本的文件描述符。它们是一些整数数值，用来指代打开的文件、套接字 (sockets) 和其他概念。基于 `rid`，Deno 能够查询系统中有多少个打开的资源，这在测试时很有用。
+Resources (AKA `rid`) are Deno's version of file descriptors. They are integer
+values used to refer to open files, sockets, and other concepts. For testing it
+would be good to be able to query the system for how many open resources there
+are.
 
 ```ts
 console.log(Deno.resources());
@@ -24,9 +27,9 @@ console.log(Deno.resources());
 // { 1: "stdout", 2: "stderr" }
 ```
 
-#### 指标 (Metrics)
+#### Metrics
 
-指标 (Metrics) 是 Deno 用于各种统计数据的内部计数器。
+Metrics is Deno's internal counter for various statistics.
 
 ```shell
 > console.table(Deno.metrics())
@@ -41,6 +44,6 @@ console.log(Deno.resources());
 └──────────────────┴────────┘
 ```
 
-### 架构示意图
+### Schematic diagram
 
-![架构示意图](schematic_v0.2.png)
+![architectural schematic](https://deno.land/images/schematic_v0.2.png)

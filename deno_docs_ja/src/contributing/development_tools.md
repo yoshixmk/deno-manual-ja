@@ -1,74 +1,76 @@
-TODO
+## Testing and Tools
 
-## 测试和工具
+### Tests
 
-### 测试
-
-测试 `deno`:
+Test `deno`:
 
 ```shell
-# 运行所有测试套件：
+# Run the whole suite:
 cargo test
 
-# 只测试 cli/js/：
+# Only test cli/js/:
 cargo test js_unit_tests
 ```
 
-测试 `std/`:
+Test `std/`:
 
 ```shell
 cargo test std_tests
 ```
 
-### 代码检查与格式化
+### Lint and format
 
-检查
+Lint the code:
 
 ```shell
 ./tools/lint.py
 ```
 
-格式化
+Format the code:
 
 ```shell
 ./tools/format.py
 ```
 
-### 性能分析
+### Profiling
+
+To start profiling,
 
 ```sh
-# 确认我们正在构建发布版 (release)。
-# 构建 deno 和 V8 的 d8。
+# Make sure we're only building release.
+# Build deno and V8's d8.
 ninja -C target/release d8
 
-# 使用 --prof 选项运行想要分析的程序。
+# Start the program we want to benchmark with --prof
 ./target/release/deno run tests/http_bench.ts --allow-net --v8-flags=--prof &
 
-# 施加压力。
+# Exercise it.
 third_party/wrk/linux/wrk http://localhost:4500/
 kill `pgrep deno`
 ```
 
-V8 将在当前目录写入一个文件，像这样 `isolate-0x7fad98242400-v8.log`。查看这个文件：
+V8 will write a file in the current directory that looks like this:
+`isolate-0x7fad98242400-v8.log`. To examine this file:
 
 ```sh
 D8_PATH=target/release/ ./third_party/v8/tools/linux-tick-processor
 isolate-0x7fad98242400-v8.log > prof.log
-# 在 macOS 上, 使用 ./third_party/v8/tools/mac-tick-processor
+# on macOS, use ./third_party/v8/tools/mac-tick-processor instead
 ```
 
-`prof.log` 将包含不用调用的 tick 分布。
+`prof.log` will contain information about tick distribution of different calls.
 
-用 Web UI 查看这个日志，先生成 JSON 文件：
+To view the log with Web UI, generate JSON file of the log:
 
 ```sh
 D8_PATH=target/release/ ./third_party/v8/tools/linux-tick-processor
 isolate-0x7fad98242400-v8.log --preprocess > prof.json
 ```
 
-在您的浏览器中打开 `third_party/v8/tools/profview/index.html`，选择 `prof.json` 以查看分布图。
+Open `third_party/v8/tools/profview/index.html` in your browser, and select
+`prof.json` to view the distribution graphically.
 
-在性能分析时有用的 V8 选项：
+Useful V8 flags during profiling:
 
 - --prof
 - --log-internal-timer-events
@@ -77,31 +79,21 @@ isolate-0x7fad98242400-v8.log --preprocess > prof.json
 - --log-source-code
 - --track-gc-object-stats
 
-有关 `d8` 和性能分析的更多信息，请查阅以下链接：
+To learn more about `d8` and profiling, check out the following links:
 
 - [https://v8.dev/docs/d8](https://v8.dev/docs/d8)
 - [https://v8.dev/docs/profile](https://v8.dev/docs/profile)
 
-### 使用 LLDB 调试
-
 ### Debugging with LLDB
 
-```shell
-$ lldb -- target/debug/deno run tests/worker.js
-> run
-> bt
-> up
-> up
-> l
-```
-
-调试 Rust 代码，可以用 `rust-lldb`。
+To debug the deno binary, we can use `rust-lldb`. It should come with `rustc`
+and is a wrapper around LLDB.
 
 ```shell
 $ rust-lldb -- ./target/debug/deno run --allow-net tests/http_bench.ts
-# 在 macOS 上，您可能看到像这样的警告：
+# On macOS, you might get warnings like
 # `ImportError: cannot import name _remove_dead_weakref`
-# 在这种情况下，设置 PATH 以使用系统 python，例如
+# In that case, use system python by setting PATH, e.g.
 # PATH=/System/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
 (lldb) command script import "/Users/kevinqian/.rustup/toolchains/1.36.0-x86_64-apple-darwin/lib/rustlib/etc/lldb_rust_formatters.py"
 (lldb) type summary add --no-value --python-function lldb_rust_formatters.print_val -x ".*" --category Rust
@@ -113,9 +105,9 @@ Current executable set to '../deno/target/debug/deno' (x86_64).
 (lldb) r
 ```
 
-### V8 选项
+### V8 flags
 
-V8 有很多内部的命令行选项。
+V8 has many many internal command-line flags.
 
 ```shell
 $ deno run --v8-flags=--help _
@@ -1096,18 +1088,19 @@ Options:
         type: bool  default: false
 ```
 
-
-特别有用的：
+Particularly useful ones:
 
 ```
 --async-stack-trace
 ```
 
-### 持续的性能测试
+### Continuous Benchmarks
 
-参考我们的测试 [https://deno.land/benchmarks](https://deno.land/benchmarks)
+See our benchmarks [over here](https://deno.land/benchmarks)
 
-测试图表假设 <https://github.com/denoland/benchmark_data/blob/gh-pages/data.json> 有着 `BenchmarkData[]` 类型。以下是 `BenchmarkData` 的定义：
+The benchmark chart supposes
+https://github.com/denoland/benchmark_data/blob/gh-pages/data.json has the type
+`BenchmarkData[]` where `BenchmarkData` is defined like the below:
 
 ```ts
 interface ExecTimeData {
