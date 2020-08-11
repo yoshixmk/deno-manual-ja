@@ -1,16 +1,17 @@
-## 断言
+## アサーション
 
-为了帮助开发者编写测试，Deno 标准库提供了内置的 [断言模块](https://deno.land/std/testing/asserts.ts)，可从 `https://deno.land/std/testing/asserts.ts` 导入。
+開発者がテストを記述できるように、Deno標準ライブラリには、
+`https：//deno.land/std@0.64.0/testing/asserts.ts`からインポートできる組み込みの[アサーションモジュール](https://deno.land/std/testing/asserts.ts)が付属しています。
 
 ```js
-import { assert } from "https://deno.land/std/testing/asserts.ts";
+import { assert } from "https://deno.land/std@0.64.0/testing/asserts.ts";
 
 Deno.test("Hello Test", () => {
   assert("Hello");
 });
 ```
 
-断言模块提供了九个断言函数：
+アサーションモジュールは、9つのアサーションを提供します：
 
 - `assert(expr: unknown, msg = ""): asserts expr`
 - `assertEquals(actual: unknown, expected: unknown, msg?: string): void`
@@ -22,9 +23,9 @@ Deno.test("Hello Test", () => {
 - `assertThrows(fn: () => void, ErrorClass?: Constructor, msgIncludes = "", msg?: string): Error`
 - `assertThrowsAsync(fn: () => Promise<void>, ErrorClass?: Constructor, msgIncludes = "", msg?: string): Promise<Error>`
 
-### 断言
+### アサート
 
-`assert` 方法是一个简单的“真值”断言，可用于断言任何可以推导为 `true` 的值。
+`assert`メソッドは単純な「真の」アサーションであり、`true`と推定できる任意の値をアサートするために使用できます。
 
 ```js
 Deno.test("Test Assert", () => {
@@ -34,11 +35,11 @@ Deno.test("Test Assert", () => {
 });
 ```
 
-### 相等性
+### 同等性
 
-可用的相等性断言有三个：`assertEquals()`，`assertNotEquals()` 和 `assertStrictEquals()`.
+利用可能な等価アサーションには、`assertEquals()`、`assertNotEquals()` 、 `assertStrictEquals()`の3つがあります
 
-`assertEquals()` 和 `assertNotEquals()` 方法提供常规的相等性检查，并能够断言基本类型和对象的相等性。
+`assertEquals()` と `assertNotEquals()` のメソッドは、一般的な等価チェックを提供し、プリミティブ型とオブジェクト間の等価をアサートすることができます。
 
 ```js
 Deno.test("Test Assert Equals", () => {
@@ -67,7 +68,7 @@ Deno.test("Test Assert Not Equals", () => {
 });
 ```
 
-`assertStrictEquals()` 基于 `===` 运算符提供了更简单、严格的检查。相同对象的两个实例不会判断为相等，因为引用不相同。
+対照的に、`assertStrictEquals()`は、`===`演算子に基づいて、より単純で厳密な等価チェックを提供します。結果として、同一オブジェクトの2つのインスタンスは参照上同じではないため、アサートされません。
 
 ```js
 Deno.test("Test Assert Strict Equals", () => {
@@ -82,9 +83,10 @@ Deno.test("Test Assert Strict Equals", () => {
 
 ### 包含
 
-`assertStringContains()` 和 `assertArrayContains()` 可用于断言包含关系。
+値が値を含むことをアサートするために使用できるメソッドは、`assertStringContains()`と`assertArrayContains()`の2つです。 `assertStringContains()`アサーションは、期待される文字列が含まれているかどうかを確認するために、文字列に対して単純なインクルードチェックを実行します。
 
-`assertStringContains()` 方法检查一个字符串是否包含了预期的字符串。
+
+`assertStringContains()`アサーションは、期待される文字列が含まれているかどうかを確認するために、文字列に対して単純なインクルードチェックを実行します。
 
 ```js
 Deno.test("Test Assert String Contains", () => {
@@ -92,7 +94,7 @@ Deno.test("Test Assert String Contains", () => {
 });
 ```
 
-`assertArrayContains()` 方法稍微高级一些，能够找到一个数组内的值，或是子数组。
+`assertArrayContains()`アサーションは少し高度で、配列内の値と配列内の値の配列の両方を見つけることができます。
 
 ```js
 Deno.test("Test Assert Array Contains", () => {
@@ -102,9 +104,9 @@ Deno.test("Test Assert Array Contains", () => {
 });
 ```
 
-### 正则表达式
+### Regex
 
-通过 `assertMatch()` 方法断言正则匹配。
+`assertMatch()` を介して正規表現をアサートできます。
 
 ```js
 Deno.test("Test Assert Match", () => {
@@ -116,15 +118,13 @@ Deno.test("Test Assert Match", () => {
 });
 ```
 
-### 抛出错误
+### 例外スロー
 
-在 Deno 中有两种方式断言抛出错误的行为：`assertThrows()` 和 `assertAsyncThrows()`。
+Denoでエラーがスローされたかどうかをアサートするには、`assertThrows()`と`assertAsyncThrows()`の2つの方法があります。どちらのアサーションでも、[Error](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Error)がスローされたこと、スローされたエラーのタイプ、メッセージが何であったかを確認できます。
 
-两种方式都能检查抛出[错误](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Error) 的类型和信息。
+2つのアサーションの違いは、`assertThrows()`が標準関数を受け入れ、`assertAsyncThrows()`が[Promise](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise) を返す関数を受け入れることです。
 
-两种方式的区别是 `assertThrows()` 接收一个标准函数，而 `assertAsyncThrows()` 接收一个返回 [Promise](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise) 的函数。
-
-`assertThrows()` 将检查抛出的错误，也可以检查所抛出的错误的类型是否正确，并判断错误消息是否符合预期。
+`assertThrows()`は、エラーがスローされたことを確認し、オプションで、スローされたエラーが正しいタイプであることを確認し、エラーメッセージが期待どおりであることをアサートします。
 
 ```js
 Deno.test("Test Assert Throws", () => {
@@ -138,7 +138,7 @@ Deno.test("Test Assert Throws", () => {
 });
 ```
 
-`assertAsyncThrows()` 稍微复杂一点，主要是因为它处理 Promise。它将捕获 Promise 中抛出的错误或 rejection。您还可以选择检查错误类型和错误消息。
+`assertAsyncThrows()` は、主にPromiseを処理するため、もう少し複雑です。しかし、基本的にはPromiseでスローされたエラーや拒否をキャッチします。オプションで、エラーの種類とエラーメッセージを確認することもできます。
 
 ```js
 Deno.test("Test Assert Throws Async", () => {
@@ -162,11 +162,11 @@ Deno.test("Test Assert Throws Async", () => {
 });
 ```
 
-### 自定义消息
+### カスタムメッセージ
 
-Deno 的每个内置断言都允许您覆盖标准 CLI 错误消息。
+Denoの組み込みアサーションはそれぞれ、必要に応じて標準のCLIエラーメッセージを上書きできます。
 
-这个示例将输出 "Values Don't Match!"，而不是标准 CLI 错误消息。
+たとえば、この例では"Values Don't Match!"が出力されます。標準のCLIエラーメッセージではなく。
 
 ```js
 Deno.test("Test Assert Equal Fail Custom Message", () => {

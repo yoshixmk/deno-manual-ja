@@ -4,9 +4,9 @@ Denoには、JavaScriptまたはTypeScriptコードのテストに使用でき�
 
 ## テストを書く
 
-テストを定義するには、テストする名前と関数を指定して`Deno.test`を呼び出す必要があります。使用できるスタイルは2つあります。
+テストを定義するには、テストする名前と関数を指定して`Deno.test`を呼び出す必要があります。
 
-您可以使用两种风格：
+使用できるスタイルは2つあります：
 
 ```ts
 // Simple name and function, compact form, but not configurable
