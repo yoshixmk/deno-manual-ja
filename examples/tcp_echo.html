@@ -159,30 +159,30 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2><a class="header" href="#tcp-echo" id="tcp-echo">TCP echo</a></h2>
-<p>这个示例是一个 TCP echo 服务，接收 8080 端口的连接，把接收到的任何数据返回给客户端。</p>
+                        <h2><a class="header" href="#tcp-echo-server" id="tcp-echo-server">TCP echo server</a></h2>
+<p>これは、ポート8080で接続を受け入れ、送信したものをクライアントに返すサーバーの例です。</p>
 <pre><code class="language-ts">const listener = Deno.listen({ port: 8080 });
 console.log(&quot;listening on 0.0.0.0:8080&quot;);
 for await (const conn of listener) {
   Deno.copy(conn, conn);
 }
 </code></pre>
-<p>当这个程序启动时，它会抛出一个没有网络权限的错误。</p>
+<p>このプログラムを起動すると、PermissionDeniedエラーがスローされます。</p>
 <pre><code class="language-shell">$ deno run https://deno.land/std@$STD_VERSION/examples/echo_server.ts
 error: Uncaught PermissionDenied: network access to &quot;0.0.0.0:8080&quot;, run again with the --allow-net flag
 ► $deno$/dispatch_json.ts:40:11
     at DenoError ($deno$/errors.ts:20:5)
     ...
 </code></pre>
-<p>为了安全，Deno 不允许程序访问网络，除非显式赋予权限。使用一个命令行选项来允许程序访问网络：</p>
+<p>セキュリティ上の理由から、Denoは明示的な許可なしにプログラムがネットワークにアクセスすることを許可していません。ネットワークへのアクセスを許可するには、コマンドラインフラグを使用します：</p>
 <pre><code class="language-shell">deno run --allow-net https://deno.land/std@$STD_VERSION/examples/echo_server.ts
 </code></pre>
-<p>尝试用 netcat 向它发送数据。</p>
+<p>テストするには、netcatを使用してデータを送信してみてください。</p>
 <pre><code class="language-shell">$ nc localhost 8080
 hello world
 hello world
 </code></pre>
-<p>像示例 <code>cat.ts</code> 一样，<code>copy()</code> 函数不会产生不必要的内存拷贝。它从内核接收数据包，然后发送回去，就这么简单。</p>
+<p><code>cat.ts</code>の例と同様に、ここでの<code>copy()</code>関数も不要なメモリコピーを作成しません。それはカーネルからパケットを受信し、さらに複雑にすることなく送り返します。</p>
 
                     </main>
 
