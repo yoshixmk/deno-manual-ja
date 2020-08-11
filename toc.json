@@ -68,6 +68,9 @@
   "examples": {
     "name": "例",
     "children": {
+      "hello_world": "Hello World",
+      "import_export": "モジュールのインポートとエクスポート",
+      "manage_dependencies": "依存関係の管理",
       "unix_cat": "Unix cat",
       "file_server": "ファイルサーバー",
       "tcp_echo": "TCP echo",
