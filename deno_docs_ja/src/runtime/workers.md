@@ -1,12 +1,12 @@
 ## Worker
 
-Deno 支持 [Web Worker API](https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/Worker).
+Denoは[Web Worker API](https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/Worker)をサポートしています。
 
-Worker 能够用来在多个线程中运行代码，`Worker` 的每个实例都会在一个单独的线程中运行，这个线程专属于它。
+Workerを使用して、複数のスレッドでコードを実行できます。 `Worker`の各インスタンスは、そのWorker専用の個別のスレッドで実行されます。
 
-目前，Deno 只支持 `module` 类型的 worker，因此在创建新的 worker 时必须传递 `type: "module"` 选项。
+現在、Denoは`モジュール`タイプのWorkerのみをサポートしています。したがって、新しいWorkerを作成するときは、`type： "module"`オプションを渡すことが不可欠です。
 
-目前，相对模块说明符 (Relative module specifiers) [尚不支持](https://github.com/denoland/deno/issues/5216)。作为代替，您可以用 `URL` 构造函数和 `import.meta.url` 来为附近的脚本创建说明符。
+ 現在のところ、相対モジュール指定子は[サポートされていません](https://github.com/denoland/deno/issues/5216)。代わりに、`URL`コンストラクターと`import.meta.url`を使用して、近くにあるスクリプトの指定子を簡単に作成できます。
 
 ```ts
 // Good
@@ -18,11 +18,11 @@ new Worker(new URL("worker.js", import.meta.url).href, { type: "classic" });
 new Worker("./worker.js", { type: "module" });
 ```
 
-### 权限
+### パーミッション
 
-创建一个新的 `Worker` 实例的行为与动态导入类似，因此 Deno 需要适当的权限来做这个操作。
+新しい`Worker`インスタンスの作成は、動的インポートに似ています。したがって、Denoはこのアクションに適切な許可を必要とします。
 
-对于使用本地模块的 worker，Deno 需要读取 (`--allow-read`) 权限：
+ローカルモジュールを使用するWorker向け。 `--allow-read`パーミッションが必要です。
 
 **main.ts**
 
@@ -45,7 +45,7 @@ $ deno run --allow-read main.ts
 hello world
 ```
 
-对于使用远程模块的 worker，Deno 需要网络 (`--allow-net`) 权限：
+リモートモジュールを使用するWorker向け。 --allow-netパーミッションが必要です:
 
 **main.ts**
 
@@ -68,14 +68,13 @@ $ deno run --allow-net main.ts
 hello world
 ```
 
-### 在 Worker 中使用 Deno
+### WorkerでのDenoの使用
 
-> 这是一个不稳定的 Deno 特性。
-> 更多信息请查阅 [稳定性](stability.md)
+> これは不安定なDeno機能です。[不安定な機能の詳細](stability.md)をご覧ください。
 
-默认情况下，`Deno` 命名空间在 worker 作用域中不可用。
+デフォルトでは、`Deno`名前空間はワーカースコープでは使用できません。 
 
-要想启用 `Deno` 命名空间，在创建新的 worker 时传递 `deno: true` 选项：
+新しいワーカーを作成するときに`Deno`名前空間パス`deno：true`オプションを追加するには：
 
 **main.js**
 
@@ -108,6 +107,4 @@ hello world
 $ deno run --allow-read --unstable main.js
 hello world
 ```
-当 `Deno` 命名空间在 worker 作用域中启用时，此 worker 继承创建者的权限（使用类似 `--allow-*` 的选项指定的权限）。
-
-我们计划提供 worker 权限的配置方法。
+`Deno`名前空間がワーカースコープで使用可能な場合、ワーカーは親プロセスの権限（`--allow-*`フラグを使用して指定されたもの）を継承します。 パーミッションをワーカーに対して構成可能にする予定です。
