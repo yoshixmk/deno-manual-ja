@@ -159,15 +159,16 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2><a class="header" href="#断言" id="断言">断言</a></h2>
-<p>为了帮助开发者编写测试，Deno 标准库提供了内置的 <a href="https://deno.land/std/testing/asserts.ts">断言模块</a>，可从 <code>https://deno.land/std/testing/asserts.ts</code> 导入。</p>
-<pre><code class="language-js">import { assert } from &quot;https://deno.land/std/testing/asserts.ts&quot;;
+                        <h2><a class="header" href="#アサーション" id="アサーション">アサーション</a></h2>
+<p>開発者がテストを記述できるように、Deno標準ライブラリには、
+<code>https：//deno.land/std@0.64.0/testing/asserts.ts</code>からインポートできる組み込みの<a href="https://deno.land/std/testing/asserts.ts">アサーションモジュール</a>が付属しています。</p>
+<pre><code class="language-js">import { assert } from &quot;https://deno.land/std@0.64.0/testing/asserts.ts&quot;;
 
 Deno.test(&quot;Hello Test&quot;, () =&gt; {
   assert(&quot;Hello&quot;);
 });
 </code></pre>
-<p>断言模块提供了九个断言函数：</p>
+<p>アサーションモジュールは、9つのアサーションを提供します：</p>
 <ul>
 <li><code>assert(expr: unknown, msg = &quot;&quot;): asserts expr</code></li>
 <li><code>assertEquals(actual: unknown, expected: unknown, msg?: string): void</code></li>
@@ -179,17 +180,17 @@ Deno.test(&quot;Hello Test&quot;, () =&gt; {
 <li><code>assertThrows(fn: () =&gt; void, ErrorClass?: Constructor, msgIncludes = &quot;&quot;, msg?: string): Error</code></li>
 <li><code>assertThrowsAsync(fn: () =&gt; Promise&lt;void&gt;, ErrorClass?: Constructor, msgIncludes = &quot;&quot;, msg?: string): Promise&lt;Error&gt;</code></li>
 </ul>
-<h3><a class="header" href="#断言-1" id="断言-1">断言</a></h3>
-<p><code>assert</code> 方法是一个简单的“真值”断言，可用于断言任何可以推导为 <code>true</code> 的值。</p>
+<h3><a class="header" href="#アサート" id="アサート">アサート</a></h3>
+<p><code>assert</code>メソッドは単純な「真の」アサーションであり、<code>true</code>と推定できる任意の値をアサートするために使用できます。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert&quot;, () =&gt; {
   assert(1);
   assert(&quot;Hello&quot;);
   assert(true);
 });
 </code></pre>
-<h3><a class="header" href="#相等性" id="相等性">相等性</a></h3>
-<p>可用的相等性断言有三个：<code>assertEquals()</code>，<code>assertNotEquals()</code> 和 <code>assertStrictEquals()</code>.</p>
-<p><code>assertEquals()</code> 和 <code>assertNotEquals()</code> 方法提供常规的相等性检查，并能够断言基本类型和对象的相等性。</p>
+<h3><a class="header" href="#同等性" id="同等性">同等性</a></h3>
+<p>利用可能な等価アサーションには、<code>assertEquals()</code>、<code>assertNotEquals()</code> 、 <code>assertStrictEquals()</code>の3つがあります</p>
+<p><code>assertEquals()</code> と <code>assertNotEquals()</code> のメソッドは、一般的な等価チェックを提供し、プリミティブ型とオブジェクト間の等価をアサートすることができます。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Equals&quot;, () =&gt; {
   assertEquals(1, 1);
   assertEquals(&quot;Hello&quot;, &quot;Hello&quot;);
@@ -215,7 +216,7 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
   assertNotEquals(new RegExp(&quot;abc&quot;), new RegExp(&quot;def&quot;));
 });
 </code></pre>
-<p><code>assertStrictEquals()</code> 基于 <code>===</code> 运算符提供了更简单、严格的检查。相同对象的两个实例不会判断为相等，因为引用不相同。</p>
+<p>対照的に、<code>assertStrictEquals()</code>は、<code>===</code>演算子に基づいて、より単純で厳密な等価チェックを提供します。結果として、同一オブジェクトの2つのインスタンスは参照上同じではないため、アサートされません。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Strict Equals&quot;, () =&gt; {
   assertStrictEquals(1, 1);
   assertStrictEquals(&quot;Hello&quot;, &quot;Hello&quot;);
@@ -225,21 +226,21 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
 </code></pre>
 <p><code>assertStrictEquals()</code> 最好用于精确判断两个基本类型的相等性。</p>
 <h3><a class="header" href="#包含" id="包含">包含</a></h3>
-<p><code>assertStringContains()</code> 和 <code>assertArrayContains()</code> 可用于断言包含关系。</p>
-<p><code>assertStringContains()</code> 方法检查一个字符串是否包含了预期的字符串。</p>
+<p>値が値を含むことをアサートするために使用できるメソッドは、<code>assertStringContains()</code>と<code>assertArrayContains()</code>の2つです。 <code>assertStringContains()</code>アサーションは、期待される文字列が含まれているかどうかを確認するために、文字列に対して単純なインクルードチェックを実行します。</p>
+<p><code>assertStringContains()</code>アサーションは、期待される文字列が含まれているかどうかを確認するために、文字列に対して単純なインクルードチェックを実行します。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert String Contains&quot;, () =&gt; {
   assertStringContains(&quot;Hello World&quot;, &quot;Hello&quot;);
 });
 </code></pre>
-<p><code>assertArrayContains()</code> 方法稍微高级一些，能够找到一个数组内的值，或是子数组。</p>
+<p><code>assertArrayContains()</code>アサーションは少し高度で、配列内の値と配列内の値の配列の両方を見つけることができます。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Array Contains&quot;, () =&gt; {
   assertArrayContains([1, 2, 3], [1]);
   assertArrayContains([1, 2, 3], [1, 2]);
   assertArrayContains(Array.from(&quot;Hello World&quot;), Array.from(&quot;Hello&quot;));
 });
 </code></pre>
-<h3><a class="header" href="#正则表达式" id="正则表达式">正则表达式</a></h3>
-<p>通过 <code>assertMatch()</code> 方法断言正则匹配。</p>
+<h3><a class="header" href="#regex" id="regex">Regex</a></h3>
+<p><code>assertMatch()</code> を介して正規表現をアサートできます。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Match&quot;, () =&gt; {
   assertMatch(&quot;abcdefghi&quot;, new RegExp(&quot;def&quot;));
 
@@ -248,11 +249,10 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
   assertMatch(&quot;http://facebook.com&quot;, basicUrl);
 });
 </code></pre>
-<h3><a class="header" href="#抛出错误" id="抛出错误">抛出错误</a></h3>
-<p>在 Deno 中有两种方式断言抛出错误的行为：<code>assertThrows()</code> 和 <code>assertAsyncThrows()</code>。</p>
-<p>两种方式都能检查抛出<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Error">错误</a> 的类型和信息。</p>
-<p>两种方式的区别是 <code>assertThrows()</code> 接收一个标准函数，而 <code>assertAsyncThrows()</code> 接收一个返回 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a> 的函数。</p>
-<p><code>assertThrows()</code> 将检查抛出的错误，也可以检查所抛出的错误的类型是否正确，并判断错误消息是否符合预期。</p>
+<h3><a class="header" href="#例外スロー" id="例外スロー">例外スロー</a></h3>
+<p>Denoでエラーがスローされたかどうかをアサートするには、<code>assertThrows()</code>と<code>assertAsyncThrows()</code>の2つの方法があります。どちらのアサーションでも、<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>がスローされたこと、スローされたエラーのタイプ、メッセージが何であったかを確認できます。</p>
+<p>2つのアサーションの違いは、<code>assertThrows()</code>が標準関数を受け入れ、<code>assertAsyncThrows()</code>が<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a> を返す関数を受け入れることです。</p>
+<p><code>assertThrows()</code>は、エラーがスローされたことを確認し、オプションで、スローされたエラーが正しいタイプであることを確認し、エラーメッセージが期待どおりであることをアサートします。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Throws&quot;, () =&gt; {
   assertThrows(
     () =&gt; {
@@ -263,7 +263,7 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
   );
 });
 </code></pre>
-<p><code>assertAsyncThrows()</code> 稍微复杂一点，主要是因为它处理 Promise。它将捕获 Promise 中抛出的错误或 rejection。您还可以选择检查错误类型和错误消息。</p>
+<p><code>assertAsyncThrows()</code> は、主にPromiseを処理するため、もう少し複雑です。しかし、基本的にはPromiseでスローされたエラーや拒否をキャッチします。オプションで、エラーの種類とエラーメッセージを確認することもできます。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Throws Async&quot;, () =&gt; {
   assertThrowsAsync(
     () =&gt; {
@@ -284,9 +284,9 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
   );
 });
 </code></pre>
-<h3><a class="header" href="#自定义消息" id="自定义消息">自定义消息</a></h3>
-<p>Deno 的每个内置断言都允许您覆盖标准 CLI 错误消息。</p>
-<p>这个示例将输出 &quot;Values Don't Match!&quot;，而不是标准 CLI 错误消息。</p>
+<h3><a class="header" href="#カスタムメッセージ" id="カスタムメッセージ">カスタムメッセージ</a></h3>
+<p>Denoの組み込みアサーションはそれぞれ、必要に応じて標準のCLIエラーメッセージを上書きできます。</p>
+<p>たとえば、この例では&quot;Values Don't Match!&quot;が出力されます。標準のCLIエラーメッセージではなく。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Equal Fail Custom Message&quot;, () =&gt; {
   assertEquals(1, 2, &quot;Values Don't Match!&quot;);
 });

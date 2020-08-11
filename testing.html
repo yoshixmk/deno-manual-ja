@@ -159,18 +159,18 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#测试" id="测试">测试</a></h1>
-<p>Deno 有一个内置的测试器，可以用来测试 JavaScript 或 TypeScript 代码。</p>
-<h2><a class="header" href="#编写测试" id="编写测试">编写测试</a></h2>
-<p>要定义测试，需要使用要测试的名称和函数调用 <code>Deno.test</code>。</p>
-<p>您可以使用两种风格：</p>
-<pre><code class="language-ts">// 传递名称和函数，紧凑的形式，但不能配置
+                        <h1><a class="header" href="#テスト" id="テスト">テスト</a></h1>
+<p>Denoには、JavaScriptまたはTypeScriptコードのテストに使用できる組み込みのテストランナーがあります。</p>
+<h2><a class="header" href="#テストを書く" id="テストを書く">テストを書く</a></h2>
+<p>テストを定義するには、テストする名前と関数を指定して<code>Deno.test</code>を呼び出す必要があります。</p>
+<p>使用できるスタイルは2つあります：</p>
+<pre><code class="language-ts">// Simple name and function, compact form, but not configurable
 Deno.test(&quot;hello world #1&quot;, () =&gt; {
   const x = 1 + 2;
   assertEquals(x, 3);
 });
 
-// 全面的测试定义，更长的形式，但可配置（请参见下文）
+// Fully fledged test definition, longer form, but configurable (see below)
 Deno.test({
   name: &quot;hello world #2&quot;,
   fn: () =&gt; {
@@ -179,8 +179,8 @@ Deno.test({
   },
 });
 </code></pre>
-<h2><a class="header" href="#断言" id="断言">断言</a></h2>
-<p>在 <a href="https://deno.land/std/testing#usage">https://deno.land/std/testing</a> 上有一些有用的断言实用程序，可以简化测试：</p>
+<h2><a class="header" href="#アサーション" id="アサーション">アサーション</a></h2>
+<p>テストを容易にするために、<a href="https://deno.land/std@0.64.0/testing#usage">https：//deno.land/std@0.64.0/testing#usage</a>に有用なアサーションユーティリティがいくつかあります。</p>
 <pre><code class="language-ts">import {
   assertEquals,
   assertArrayContains,
@@ -192,9 +192,8 @@ Deno.test(&quot;hello world&quot;, () =&gt; {
   assertArrayContains([1, 2, 3, 4, 5, 6], [3], &quot;Expected 3 to be in the array&quot;);
 });
 </code></pre>
-<h3><a class="header" href="#异步函数" id="异步函数">异步函数</a></h3>
-<p>您还可以通过传递一个测试函数来测试异步代码，该函数返回一个 promise。
-为此，您可以在定义函数时使用 <code>async</code> 关键字：</p>
+<h3><a class="header" href="#非同期ファンクション" id="非同期ファンクション">非同期ファンクション</a></h3>
+<p>promiseを返すテスト関数を渡すことで、非同期コードをテストすることもできます。このため、関数を定義するときに<code>async</code>キーワードを使用できます:</p>
 <pre><code class="language-ts">import { delay } from &quot;https://deno.land/std/async/delay.ts&quot;;
 
 Deno.test(&quot;async hello world&quot;, async () =&gt; {
@@ -208,12 +207,10 @@ Deno.test(&quot;async hello world&quot;, async () =&gt; {
   }
 });
 </code></pre>
-<h3><a class="header" href="#资源和异步操作清理器" id="资源和异步操作清理器">资源和异步操作清理器</a></h3>
-<p>Deno 中的某些操作在资源表（<a href="./contributing/architecture.html">在此处了解更多</a>）中创建资源。
-这些资源应该在使用完后关闭。</p>
-<p>对于每个测试定义，测试器会检查此测试中创建的所有资源是否已关闭，以防止资源“泄漏”。
-默认情况下，这对所有测试都是启用的，但可以通过在测试定义中将 <code>sanitizeResources</code> 布尔值设置为 false 来禁用。</p>
-<p>对于异步操作（如与文件系统交互）也是如此。测试器检查您在测试中启动的每个操作是否在测试结束之前完成。默认情况下，这对所有测试都是启用的，但可以通过在测试定义中将 <code>sanitizeps</code> 布尔值设置为 false 来禁用。</p>
+<h3><a class="header" href="#リソースおよび非同期opサニタイザー" id="リソースおよび非同期opサニタイザー">リソースおよび非同期opサニタイザー</a></h3>
+<p>Denoの特定のアクションは、リソーステーブルにリソースを作成します（<a href="(./contributing/architecture.html">詳細はこちら</a>）。これらのリソースは、使い終わったら閉じてください。</p>
+<p>各テスト定義について、テストランナーはこのテストで作成されたすべてのリソースが閉じられていることを確認します。これは、リソースの「リーク」を防ぐためです。これはすべてのテストでデフォルトで有効になっていますが、テスト定義で<code>sanitizeResources</code>のboolean値をfalseに設定することで無効にできます。</p>
+<p>ファイルシステムとの対話などの非同期操作についても同様です。テストランナーは、テストで開始する各操作がテストの終了前に完了することを確認します。これはすべてのテストでデフォルトで有効になっていますが、テスト定義でsanitizeOpsのboolean値をfalseに設定することで無効にできます。</p>
 <pre><code class="language-ts">Deno.test({
   name: &quot;leaky test&quot;,
   fn() {
@@ -223,42 +220,42 @@ Deno.test(&quot;async hello world&quot;, async () =&gt; {
   sanitizeOps: false,
 });
 </code></pre>
-<h2><a class="header" href="#运行测试" id="运行测试">运行测试</a></h2>
-<p>要运行测试，使用 <code>deno test</code> 命令，传入包含测试函数的文件。您也可以忽略文件名，这样当前目录树内所有符合通配符 <code>{*_,*.,}test.{js,mjs,ts,jsx,tsx}</code> 的测试都会被运行。如果您传入了一个目录，那么该目录下所有匹配的文件都会被运行。</p>
-<pre><code class="language-shell"># 运行当前目录树内的所有测试
+<h2><a class="header" href="#テストの実行" id="テストの実行">テストの実行</a></h2>
+<p>テストを実行するには、テスト関数を含むファイルを使用して<code>deno test</code>を呼び出します。また、ファイル名を省略することもできます。その場合、現在のディレクトリ内でglobが<code>{*_,*.,}test.{js,mjs,ts,jsx,tsx}</code>に一致するすべてのテストが（再帰的に）実行されます。ディレクトリを渡すと、このグロブに一致するディレクトリ内のすべてのファイルが実行されます。</p>
+<pre><code class="language-shell"># Run all tests in the current directly and all sub-directories
 deno test
 
-# 运行 util 目录内的所有测试
+# Run all tests in the util directory
 deno test util/
 
-# 只运行 my_test.ts
+# Run just my_test.ts
 deno test my_test.ts
 </code></pre>
-<p><code>deno test</code> 和 <code>deno run</code> 使用相同的权限模型，比如在测试期间有可能要求 <code>--allow-write</code> 来写入文件系统。</p>
-<p>使用 <code>deno help test</code> 命令来查看相关选项。</p>
-<h2><a class="header" href="#过滤" id="过滤">过滤</a></h2>
-<p>有许多选项可以过滤要运行的测试。</p>
-<h3><a class="header" href="#命令行过滤" id="命令行过滤">命令行过滤</a></h3>
-<p>使用 <code>--filter</code> 选项可以单独或成组运行测试。</p>
-<p>该选项接受一个字符串或一个模式作为值。</p>
-<p>假设有以下测试：</p>
+<p><code>deno test</code>は<code>deno run</code>と同じアクセス許可モデルを使用するため、たとえば、テスト中に<code>--allow-write</code>を実行してファイルシステムに書き込む必要があります。</p>
+<p><code>deno test</code>のすべてのランタイムオプションを表示するには、コマンドラインのhelpで参照できます。</p>
+<pre><code class="language-shell">deno help test
+</code></pre>
+<h2><a class="header" href="#フィルタリング" id="フィルタリング">フィルタリング</a></h2>
+<p>実行中のテストをフィルタリングするためのオプションがいくつかあります。</p>
+<h3><a class="header" href="#コマンドラインでフィルタリングする" id="コマンドラインでフィルタリングする">コマンドラインでフィルタリングする</a></h3>
+<p>テストは、コマンドラインの<code>--filter</code>オプションを使用して、個別にまたはグループで実行できます。</p>
+<p>フィルターフラグは、文字列またはパターンを値として受け入れます。</p>
+<p>次のテストを想定しています。</p>
 <pre><code class="language-ts">Deno.test({ name: &quot;my-test&quot;, fn: myTest });
 Deno.test({ name: &quot;test-1&quot;, fn: test1 });
 Deno.test({ name: &quot;test2&quot;, fn: test2 });
 </code></pre>
-<p>以下命令将会运行所有包含 &quot;test&quot; 的测试：</p>
+<p>これらのテストにはすべて「test」という単語が含まれているため、このコマンドはこれらのテストをすべて実行します。</p>
 <pre><code class="language-shell">deno test --filter &quot;test&quot; tests/
 </code></pre>
-<p>以下命令将会运行匹配该模式的测试，即第二个和第三个：</p>
+<p>反対に、次のコマンドはパターンを使用して、2番目と3番目のテストを実行します：</p>
 <pre><code class="language-shell">deno test --filter &quot;/test-*\d/&quot; tests/
 </code></pre>
-<p>像 JavaScript 的正则表达式语法糖一样，Deno 会将用斜杠包裹的过滤字符串认为是模式。</p>
-<h3><a class="header" href="#测试定义过滤" id="测试定义过滤">测试定义过滤</a></h3>
-<p>在测试本身中，您有两个过滤选项。</p>
-<h4><a class="header" href="#忽略测试" id="忽略测试">忽略测试</a></h4>
-<p>有时您希望忽略基于某种条件的测试（例如您只希望在 Windows 上运行测试）。
-为此，您可以使用 <code>ignore</code> 测试定义中的布尔值。
-如果它被设置为 true，则测试将被跳过。</p>
+<p><em>パターンを使用することをDenoに通知するには、REGEXのJavaScript構文シュガーのように、フィルターをスラッシュで囲みます。</em></p>
+<h3><a class="header" href="#テスト定義のフィルタリング" id="テスト定義のフィルタリング">テスト定義のフィルタリング</a></h3>
+<p>テスト自体には、フィルタリングのための2つのオプションがあります。</p>
+<h4><a class="header" href="#フィルタリング特定のテストは無視" id="フィルタリング特定のテストは無視">フィルタリング（特定のテストは無視）</a></h4>
+<p>ある種の条件に基づくテストを無視したい場合があります（たとえば、Windowsでのみテストを実行したい場合など）。このために、テスト定義で<code>ignore</code>のboolean値を使用できます。 trueに設定されている場合、テストはスキップされます。</p>
 <pre><code class="language-ts">Deno.test({
   name: &quot;do macOS feature&quot;,
   ignore: Deno.build.os !== &quot;darwin&quot;,
@@ -267,9 +264,8 @@ Deno.test({ name: &quot;test2&quot;, fn: test2 });
   },
 });
 </code></pre>
-<h4><a class="header" href="#启用测试" id="启用测试">启用测试</a></h4>
-<p>有时您可能会在大型测试中遇到问题，只想专注于有问题的测试，忽略其他测试。</p>
-<p>为此您可以使用 <code>only</code> 选项来让测试框架只运行一部分测试。多个测试可以设置此选项。尽管测试框架将报告每个测试的成功或失败，但当任何一个测试标记为 <code>only</code> 时，总体测试将始终失败。因为这只是一种临时措施，几乎会禁用所有测试。</p>
+<h4><a class="header" href="#フィルタリング特定のテストのみを実行" id="フィルタリング特定のテストのみを実行">フィルタリング（特定のテストのみを実行）</a></h4>
+<p>大きなテストクラス内で問題の真っ只中にいる可能性があり、そのテストのみに焦点を当て、残りは今は無視したい場合があります。このため、<code>only</code>のオプションを使用して、テストフレームワークに、trueに設定されたテストのみを実行するように指示できます。複数のテストでこのオプションを設定できます。テストの実行では各テストの成功または失敗が報告されますが、テストで<code>only</code>フラグが立てられている場合は、テスト全体が常に失敗します。これは、ほとんどすべてのテストを無効にする一時的な対策に過ぎないためです。</p>
 <pre><code class="language-ts">Deno.test({
   name: &quot;Focus on this test only&quot;,
   only: true,
@@ -278,8 +274,8 @@ Deno.test({ name: &quot;test2&quot;, fn: test2 });
   },
 });
 </code></pre>
-<h2><a class="header" href="#快速失败" id="快速失败">快速失败</a></h2>
-<p>如果您有一个运行时间较长的测试，并希望它在第一次失败时停止运行，则可以在运行测试时指定 <code>--failfast</code> 选项。</p>
+<h2><a class="header" href="#失敗を早める" id="失敗を早める">失敗を早める</a></h2>
+<p>長時間実行するテストスイートがあり、最初の失敗時にテストスイートを停止したい場合は、スイートの実行時に<code>--failfast</code>フラグを指定できます。</p>
 <pre><code class="language-shell">deno test --failfast
 </code></pre>
 

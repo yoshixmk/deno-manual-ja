@@ -1115,61 +1115,61 @@ import { MyUtil } from &quot;/util.ts&quot;;
   }
 }
 </code></pre>
-<h1><a class="header" href="#标准库" id="标准库">标准库</a></h1>
-<p>Deno 提供一组标准模块，它们经过核心团队审计，保证能在 Deno 上工作。</p>
-<p>标准库地址：<a href="https://deno.land/std/">https://deno.land/std/</a></p>
-<h2><a class="header" href="#版本和稳定性" id="版本和稳定性">版本和稳定性</a></h2>
-<p>标准库尚不稳定，因此采用与 Deno 不同的版本号。每次 Deno 发布时，标准库也会一起发布。</p>
-<p>最新的发布请查阅 <a href="https://deno.land/std/">https://deno.land/std/</a> 或 <a href="https://deno.land/std/version.ts">https://deno.land/std/version.ts</a>。</p>
-<p>我们强烈建议：始终使用确定版本的标准库，以避免意外的改动。</p>
-<p>例如，连接到随时可能更改的主分支时可能会导致编译错误或意外行为：</p>
-<pre><code class="language-typescript">// 从 master 导入，这应当避免
+<h1><a class="header" href="#標準ライブラリ" id="標準ライブラリ">標準ライブラリ</a></h1>
+<p>Denoは、コアチームによって監査され、Denoでの動作が保証されている一連の標準モジュールを提供します。</p>
+<p>標準ライブラリは<a href="https://deno.land/std/">https://deno.land/std/</a>で入手できます。</p>
+<h2><a class="header" href="#バージョン管理と安定性" id="バージョン管理と安定性">バージョン管理と安定性</a></h2>
+<p>標準ライブラリはまだ安定していないため、Denoとはバージョンが異なります。最新のリリースについては、<a href="https://deno.land/std/">https://deno.land/std/</a>または<a href="https://deno.land/std/version.ts">https://deno.land/std/version.ts</a>。を参照してください。標準ライブラリは、Denoがリリースされるたびにリリースされます。</p>
+<p>意図しない変更を避けるために、常に標準ライブラリの固定バージョンでインポートを使用することを強くお勧めします。たとえば、いつでも変更される可能性があるコードのマスターブランチにリンクするのではなく、コンパイルエラーや予期しない動作を引き起こす可能性があります。</p>
+<pre><code class="language-typescript">// imports from master, this should be avoided
 import { copy } from &quot;https://deno.land/std/fs/copy.ts&quot;;
 </code></pre>
-<p>更好的选择是使用不可变且不会更改的 std 库版本：</p>
-<pre><code class="language-typescript">// 从不可变的 std v0.50.0 导入
-import { copy } from &quot;https://deno.land/std@0.50.0/fs/copy.ts&quot;;
+<p>代わりに、バージョンを指定してstdライブラリを使用すればイミュータブルです：</p>
+<pre><code class="language-typescript">// imports from v0.64.0 of std, never changes
+import { copy } from &quot;https://deno.land/std@0.64.0/fs/copy.ts&quot;;
 </code></pre>
-<h2><a class="header" href="#排错-troubleshooting" id="排错-troubleshooting">排错 (Troubleshooting)</a></h2>
-<p>标准库中的一些模块使用了不稳定的 Deno API。</p>
-<p>不用 <code>--unstable</code> 命令行选项运行这些模块会产生一些 TypeScript 错误，表示 <code>Deno</code> 命名空间中不存在一些 API：</p>
+<h2><a class="header" href="#トラブルシューティング" id="トラブルシューティング">トラブルシューティング</a></h2>
+<p>標準ライブラリで提供されているモジュールの一部は、不安定なDeno APIを使用しています。 </p>
+<p>このようなモジュールを<code>--unstable</code> CLIフラグなしで実行しようとすると、<code>Deno</code>名前空間にいくつかのAPIが存在しないことを示唆する多くのTypeScriptエラーが発生します。</p>
 <pre><code class="language-typescript">// main.ts
-import { copy } from &quot;https://deno.land/std@0.50.0/fs/copy.ts&quot;;
+import { copy } from &quot;https://deno.land/std@0.64.0/fs/copy.ts&quot;;
 
 copy(&quot;log.txt&quot;, &quot;log-old.txt&quot;);
 </code></pre>
 <pre><code class="language-shell">$ deno run --allow-read --allow-write main.ts
 Compile file:///dev/deno/main.ts
-Download https://deno.land/std@0.50.0/fs/copy.ts
-Download https://deno.land/std@0.50.0/fs/ensure_dir.ts
-Download https://deno.land/std@0.50.0/fs/_util.ts
+Download https://deno.land/std@0.64.0/fs/copy.ts
+Download https://deno.land/std@0.64.0/fs/ensure_dir.ts
+Download https://deno.land/std@0.64.0/fs/_util.ts
 error: TS2339 [ERROR]: Property 'utime' does not exist on type 'typeof Deno'.
     await Deno.utime(dest, statInfo.atime, statInfo.mtime);
                ~~~~~
-    at https://deno.land/std@0.50.0/fs/copy.ts:90:16
+    at https://deno.land/std@0.64.0/fs/copy.ts:90:16
 
 TS2339 [ERROR]: Property 'utimeSync' does not exist on type 'typeof Deno'.
     Deno.utimeSync(dest, statInfo.atime, statInfo.mtime);
          ~~~~~~~~~
-    at https://deno.land/std@0.50.0/fs/copy.ts:101:10
+    at https://deno.land/std@0.64.0/fs/copy.ts:101:10
 </code></pre>
 <p>解决方法是加上 <code>--unstable</code> 选项：</p>
 <pre><code class="language-shell">deno run --allow-read --allow-write --unstable main.ts
 </code></pre>
-<p>要确定哪些 API 是不稳定的，请查阅类型声明 <a href="https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.unstable.d.ts">lib.deno.unstable.d.ts</a></p>
-<p>这个问题会在不远的将来解决。如果您依赖的特定模块在没有该选项的情况下成功编译，则可以忽略该选项。</p>
-<h1><a class="header" href="#测试" id="测试">测试</a></h1>
-<p>Deno 有一个内置的测试器，可以用来测试 JavaScript 或 TypeScript 代码。</p>
-<h2><a class="header" href="#编写测试" id="编写测试">编写测试</a></h2>
-<p>要定义测试，需要使用要测试的名称和函数调用 <code>Deno.test</code>。</p>
-<p>您可以使用两种风格：</p>
-<pre><code class="language-ts">// 传递名称和函数，紧凑的形式，但不能配置
+<p>API生成エラーが不安定であることを確認するには、
+<a href="https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.unstable.d.ts">lib.deno.unstable.d.ts</a>
+を確認してください。</p>
+<p>この問題は近い将来に修正される予定です。依存する特定のモジュールがフラグなしで正常にコンパイルされる場合は、フラグを省略してもかまいません。</p>
+<h1><a class="header" href="#テスト" id="テスト">テスト</a></h1>
+<p>Denoには、JavaScriptまたはTypeScriptコードのテストに使用できる組み込みのテストランナーがあります。</p>
+<h2><a class="header" href="#テストを書く" id="テストを書く">テストを書く</a></h2>
+<p>テストを定義するには、テストする名前と関数を指定して<code>Deno.test</code>を呼び出す必要があります。</p>
+<p>使用できるスタイルは2つあります：</p>
+<pre><code class="language-ts">// Simple name and function, compact form, but not configurable
 Deno.test(&quot;hello world #1&quot;, () =&gt; {
   const x = 1 + 2;
   assertEquals(x, 3);
 });
 
-// 全面的测试定义，更长的形式，但可配置（请参见下文）
+// Fully fledged test definition, longer form, but configurable (see below)
 Deno.test({
   name: &quot;hello world #2&quot;,
   fn: () =&gt; {
@@ -1178,8 +1178,8 @@ Deno.test({
   },
 });
 </code></pre>
-<h2><a class="header" href="#断言" id="断言">断言</a></h2>
-<p>在 <a href="https://deno.land/std/testing#usage">https://deno.land/std/testing</a> 上有一些有用的断言实用程序，可以简化测试：</p>
+<h2><a class="header" href="#アサーション" id="アサーション">アサーション</a></h2>
+<p>テストを容易にするために、<a href="https://deno.land/std@0.64.0/testing#usage">https：//deno.land/std@0.64.0/testing#usage</a>に有用なアサーションユーティリティがいくつかあります。</p>
 <pre><code class="language-ts">import {
   assertEquals,
   assertArrayContains,
@@ -1191,9 +1191,8 @@ Deno.test(&quot;hello world&quot;, () =&gt; {
   assertArrayContains([1, 2, 3, 4, 5, 6], [3], &quot;Expected 3 to be in the array&quot;);
 });
 </code></pre>
-<h3><a class="header" href="#异步函数" id="异步函数">异步函数</a></h3>
-<p>您还可以通过传递一个测试函数来测试异步代码，该函数返回一个 promise。
-为此，您可以在定义函数时使用 <code>async</code> 关键字：</p>
+<h3><a class="header" href="#非同期ファンクション" id="非同期ファンクション">非同期ファンクション</a></h3>
+<p>promiseを返すテスト関数を渡すことで、非同期コードをテストすることもできます。このため、関数を定義するときに<code>async</code>キーワードを使用できます:</p>
 <pre><code class="language-ts">import { delay } from &quot;https://deno.land/std/async/delay.ts&quot;;
 
 Deno.test(&quot;async hello world&quot;, async () =&gt; {
@@ -1207,12 +1206,10 @@ Deno.test(&quot;async hello world&quot;, async () =&gt; {
   }
 });
 </code></pre>
-<h3><a class="header" href="#资源和异步操作清理器" id="资源和异步操作清理器">资源和异步操作清理器</a></h3>
-<p>Deno 中的某些操作在资源表（<a href="./contributing/architecture.html">在此处了解更多</a>）中创建资源。
-这些资源应该在使用完后关闭。</p>
-<p>对于每个测试定义，测试器会检查此测试中创建的所有资源是否已关闭，以防止资源“泄漏”。
-默认情况下，这对所有测试都是启用的，但可以通过在测试定义中将 <code>sanitizeResources</code> 布尔值设置为 false 来禁用。</p>
-<p>对于异步操作（如与文件系统交互）也是如此。测试器检查您在测试中启动的每个操作是否在测试结束之前完成。默认情况下，这对所有测试都是启用的，但可以通过在测试定义中将 <code>sanitizeps</code> 布尔值设置为 false 来禁用。</p>
+<h3><a class="header" href="#リソースおよび非同期opサニタイザー" id="リソースおよび非同期opサニタイザー">リソースおよび非同期opサニタイザー</a></h3>
+<p>Denoの特定のアクションは、リソーステーブルにリソースを作成します（<a href="(./contributing/architecture.html">詳細はこちら</a>）。これらのリソースは、使い終わったら閉じてください。</p>
+<p>各テスト定義について、テストランナーはこのテストで作成されたすべてのリソースが閉じられていることを確認します。これは、リソースの「リーク」を防ぐためです。これはすべてのテストでデフォルトで有効になっていますが、テスト定義で<code>sanitizeResources</code>のboolean値をfalseに設定することで無効にできます。</p>
+<p>ファイルシステムとの対話などの非同期操作についても同様です。テストランナーは、テストで開始する各操作がテストの終了前に完了することを確認します。これはすべてのテストでデフォルトで有効になっていますが、テスト定義でsanitizeOpsのboolean値をfalseに設定することで無効にできます。</p>
 <pre><code class="language-ts">Deno.test({
   name: &quot;leaky test&quot;,
   fn() {
@@ -1222,42 +1219,42 @@ Deno.test(&quot;async hello world&quot;, async () =&gt; {
   sanitizeOps: false,
 });
 </code></pre>
-<h2><a class="header" href="#运行测试" id="运行测试">运行测试</a></h2>
-<p>要运行测试，使用 <code>deno test</code> 命令，传入包含测试函数的文件。您也可以忽略文件名，这样当前目录树内所有符合通配符 <code>{*_,*.,}test.{js,mjs,ts,jsx,tsx}</code> 的测试都会被运行。如果您传入了一个目录，那么该目录下所有匹配的文件都会被运行。</p>
-<pre><code class="language-shell"># 运行当前目录树内的所有测试
+<h2><a class="header" href="#テストの実行" id="テストの実行">テストの実行</a></h2>
+<p>テストを実行するには、テスト関数を含むファイルを使用して<code>deno test</code>を呼び出します。また、ファイル名を省略することもできます。その場合、現在のディレクトリ内でglobが<code>{*_,*.,}test.{js,mjs,ts,jsx,tsx}</code>に一致するすべてのテストが（再帰的に）実行されます。ディレクトリを渡すと、このグロブに一致するディレクトリ内のすべてのファイルが実行されます。</p>
+<pre><code class="language-shell"># Run all tests in the current directly and all sub-directories
 deno test
 
-# 运行 util 目录内的所有测试
+# Run all tests in the util directory
 deno test util/
 
-# 只运行 my_test.ts
+# Run just my_test.ts
 deno test my_test.ts
 </code></pre>
-<p><code>deno test</code> 和 <code>deno run</code> 使用相同的权限模型，比如在测试期间有可能要求 <code>--allow-write</code> 来写入文件系统。</p>
-<p>使用 <code>deno help test</code> 命令来查看相关选项。</p>
-<h2><a class="header" href="#过滤" id="过滤">过滤</a></h2>
-<p>有许多选项可以过滤要运行的测试。</p>
-<h3><a class="header" href="#命令行过滤" id="命令行过滤">命令行过滤</a></h3>
-<p>使用 <code>--filter</code> 选项可以单独或成组运行测试。</p>
-<p>该选项接受一个字符串或一个模式作为值。</p>
-<p>假设有以下测试：</p>
+<p><code>deno test</code>は<code>deno run</code>と同じアクセス許可モデルを使用するため、たとえば、テスト中に<code>--allow-write</code>を実行してファイルシステムに書き込む必要があります。</p>
+<p><code>deno test</code>のすべてのランタイムオプションを表示するには、コマンドラインのhelpで参照できます。</p>
+<pre><code class="language-shell">deno help test
+</code></pre>
+<h2><a class="header" href="#フィルタリング" id="フィルタリング">フィルタリング</a></h2>
+<p>実行中のテストをフィルタリングするためのオプションがいくつかあります。</p>
+<h3><a class="header" href="#コマンドラインでフィルタリングする" id="コマンドラインでフィルタリングする">コマンドラインでフィルタリングする</a></h3>
+<p>テストは、コマンドラインの<code>--filter</code>オプションを使用して、個別にまたはグループで実行できます。</p>
+<p>フィルターフラグは、文字列またはパターンを値として受け入れます。</p>
+<p>次のテストを想定しています。</p>
 <pre><code class="language-ts">Deno.test({ name: &quot;my-test&quot;, fn: myTest });
 Deno.test({ name: &quot;test-1&quot;, fn: test1 });
 Deno.test({ name: &quot;test2&quot;, fn: test2 });
 </code></pre>
-<p>以下命令将会运行所有包含 &quot;test&quot; 的测试：</p>
+<p>これらのテストにはすべて「test」という単語が含まれているため、このコマンドはこれらのテストをすべて実行します。</p>
 <pre><code class="language-shell">deno test --filter &quot;test&quot; tests/
 </code></pre>
-<p>以下命令将会运行匹配该模式的测试，即第二个和第三个：</p>
+<p>反対に、次のコマンドはパターンを使用して、2番目と3番目のテストを実行します：</p>
 <pre><code class="language-shell">deno test --filter &quot;/test-*\d/&quot; tests/
 </code></pre>
-<p>像 JavaScript 的正则表达式语法糖一样，Deno 会将用斜杠包裹的过滤字符串认为是模式。</p>
-<h3><a class="header" href="#测试定义过滤" id="测试定义过滤">测试定义过滤</a></h3>
-<p>在测试本身中，您有两个过滤选项。</p>
-<h4><a class="header" href="#忽略测试" id="忽略测试">忽略测试</a></h4>
-<p>有时您希望忽略基于某种条件的测试（例如您只希望在 Windows 上运行测试）。
-为此，您可以使用 <code>ignore</code> 测试定义中的布尔值。
-如果它被设置为 true，则测试将被跳过。</p>
+<p><em>パターンを使用することをDenoに通知するには、REGEXのJavaScript構文シュガーのように、フィルターをスラッシュで囲みます。</em></p>
+<h3><a class="header" href="#テスト定義のフィルタリング" id="テスト定義のフィルタリング">テスト定義のフィルタリング</a></h3>
+<p>テスト自体には、フィルタリングのための2つのオプションがあります。</p>
+<h4><a class="header" href="#フィルタリング特定のテストは無視" id="フィルタリング特定のテストは無視">フィルタリング（特定のテストは無視）</a></h4>
+<p>ある種の条件に基づくテストを無視したい場合があります（たとえば、Windowsでのみテストを実行したい場合など）。このために、テスト定義で<code>ignore</code>のboolean値を使用できます。 trueに設定されている場合、テストはスキップされます。</p>
 <pre><code class="language-ts">Deno.test({
   name: &quot;do macOS feature&quot;,
   ignore: Deno.build.os !== &quot;darwin&quot;,
@@ -1266,9 +1263,8 @@ Deno.test({ name: &quot;test2&quot;, fn: test2 });
   },
 });
 </code></pre>
-<h4><a class="header" href="#启用测试" id="启用测试">启用测试</a></h4>
-<p>有时您可能会在大型测试中遇到问题，只想专注于有问题的测试，忽略其他测试。</p>
-<p>为此您可以使用 <code>only</code> 选项来让测试框架只运行一部分测试。多个测试可以设置此选项。尽管测试框架将报告每个测试的成功或失败，但当任何一个测试标记为 <code>only</code> 时，总体测试将始终失败。因为这只是一种临时措施，几乎会禁用所有测试。</p>
+<h4><a class="header" href="#フィルタリング特定のテストのみを実行" id="フィルタリング特定のテストのみを実行">フィルタリング（特定のテストのみを実行）</a></h4>
+<p>大きなテストクラス内で問題の真っ只中にいる可能性があり、そのテストのみに焦点を当て、残りは今は無視したい場合があります。このため、<code>only</code>のオプションを使用して、テストフレームワークに、trueに設定されたテストのみを実行するように指示できます。複数のテストでこのオプションを設定できます。テストの実行では各テストの成功または失敗が報告されますが、テストで<code>only</code>フラグが立てられている場合は、テスト全体が常に失敗します。これは、ほとんどすべてのテストを無効にする一時的な対策に過ぎないためです。</p>
 <pre><code class="language-ts">Deno.test({
   name: &quot;Focus on this test only&quot;,
   only: true,
@@ -1277,19 +1273,20 @@ Deno.test({ name: &quot;test2&quot;, fn: test2 });
   },
 });
 </code></pre>
-<h2><a class="header" href="#快速失败" id="快速失败">快速失败</a></h2>
-<p>如果您有一个运行时间较长的测试，并希望它在第一次失败时停止运行，则可以在运行测试时指定 <code>--failfast</code> 选项。</p>
+<h2><a class="header" href="#失敗を早める" id="失敗を早める">失敗を早める</a></h2>
+<p>長時間実行するテストスイートがあり、最初の失敗時にテストスイートを停止したい場合は、スイートの実行時に<code>--failfast</code>フラグを指定できます。</p>
 <pre><code class="language-shell">deno test --failfast
 </code></pre>
-<h2><a class="header" href="#断言-1" id="断言-1">断言</a></h2>
-<p>为了帮助开发者编写测试，Deno 标准库提供了内置的 <a href="https://deno.land/std/testing/asserts.ts">断言模块</a>，可从 <code>https://deno.land/std/testing/asserts.ts</code> 导入。</p>
-<pre><code class="language-js">import { assert } from &quot;https://deno.land/std/testing/asserts.ts&quot;;
+<h2><a class="header" href="#アサーション-1" id="アサーション-1">アサーション</a></h2>
+<p>開発者がテストを記述できるように、Deno標準ライブラリには、
+<code>https：//deno.land/std@0.64.0/testing/asserts.ts</code>からインポートできる組み込みの<a href="https://deno.land/std/testing/asserts.ts">アサーションモジュール</a>が付属しています。</p>
+<pre><code class="language-js">import { assert } from &quot;https://deno.land/std@0.64.0/testing/asserts.ts&quot;;
 
 Deno.test(&quot;Hello Test&quot;, () =&gt; {
   assert(&quot;Hello&quot;);
 });
 </code></pre>
-<p>断言模块提供了九个断言函数：</p>
+<p>アサーションモジュールは、9つのアサーションを提供します：</p>
 <ul>
 <li><code>assert(expr: unknown, msg = &quot;&quot;): asserts expr</code></li>
 <li><code>assertEquals(actual: unknown, expected: unknown, msg?: string): void</code></li>
@@ -1301,17 +1298,17 @@ Deno.test(&quot;Hello Test&quot;, () =&gt; {
 <li><code>assertThrows(fn: () =&gt; void, ErrorClass?: Constructor, msgIncludes = &quot;&quot;, msg?: string): Error</code></li>
 <li><code>assertThrowsAsync(fn: () =&gt; Promise&lt;void&gt;, ErrorClass?: Constructor, msgIncludes = &quot;&quot;, msg?: string): Promise&lt;Error&gt;</code></li>
 </ul>
-<h3><a class="header" href="#断言-2" id="断言-2">断言</a></h3>
-<p><code>assert</code> 方法是一个简单的“真值”断言，可用于断言任何可以推导为 <code>true</code> 的值。</p>
+<h3><a class="header" href="#アサート" id="アサート">アサート</a></h3>
+<p><code>assert</code>メソッドは単純な「真の」アサーションであり、<code>true</code>と推定できる任意の値をアサートするために使用できます。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert&quot;, () =&gt; {
   assert(1);
   assert(&quot;Hello&quot;);
   assert(true);
 });
 </code></pre>
-<h3><a class="header" href="#相等性" id="相等性">相等性</a></h3>
-<p>可用的相等性断言有三个：<code>assertEquals()</code>，<code>assertNotEquals()</code> 和 <code>assertStrictEquals()</code>.</p>
-<p><code>assertEquals()</code> 和 <code>assertNotEquals()</code> 方法提供常规的相等性检查，并能够断言基本类型和对象的相等性。</p>
+<h3><a class="header" href="#同等性" id="同等性">同等性</a></h3>
+<p>利用可能な等価アサーションには、<code>assertEquals()</code>、<code>assertNotEquals()</code> 、 <code>assertStrictEquals()</code>の3つがあります</p>
+<p><code>assertEquals()</code> と <code>assertNotEquals()</code> のメソッドは、一般的な等価チェックを提供し、プリミティブ型とオブジェクト間の等価をアサートすることができます。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Equals&quot;, () =&gt; {
   assertEquals(1, 1);
   assertEquals(&quot;Hello&quot;, &quot;Hello&quot;);
@@ -1337,7 +1334,7 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
   assertNotEquals(new RegExp(&quot;abc&quot;), new RegExp(&quot;def&quot;));
 });
 </code></pre>
-<p><code>assertStrictEquals()</code> 基于 <code>===</code> 运算符提供了更简单、严格的检查。相同对象的两个实例不会判断为相等，因为引用不相同。</p>
+<p>対照的に、<code>assertStrictEquals()</code>は、<code>===</code>演算子に基づいて、より単純で厳密な等価チェックを提供します。結果として、同一オブジェクトの2つのインスタンスは参照上同じではないため、アサートされません。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Strict Equals&quot;, () =&gt; {
   assertStrictEquals(1, 1);
   assertStrictEquals(&quot;Hello&quot;, &quot;Hello&quot;);
@@ -1347,21 +1344,21 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
 </code></pre>
 <p><code>assertStrictEquals()</code> 最好用于精确判断两个基本类型的相等性。</p>
 <h3><a class="header" href="#包含" id="包含">包含</a></h3>
-<p><code>assertStringContains()</code> 和 <code>assertArrayContains()</code> 可用于断言包含关系。</p>
-<p><code>assertStringContains()</code> 方法检查一个字符串是否包含了预期的字符串。</p>
+<p>値が値を含むことをアサートするために使用できるメソッドは、<code>assertStringContains()</code>と<code>assertArrayContains()</code>の2つです。 <code>assertStringContains()</code>アサーションは、期待される文字列が含まれているかどうかを確認するために、文字列に対して単純なインクルードチェックを実行します。</p>
+<p><code>assertStringContains()</code>アサーションは、期待される文字列が含まれているかどうかを確認するために、文字列に対して単純なインクルードチェックを実行します。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert String Contains&quot;, () =&gt; {
   assertStringContains(&quot;Hello World&quot;, &quot;Hello&quot;);
 });
 </code></pre>
-<p><code>assertArrayContains()</code> 方法稍微高级一些，能够找到一个数组内的值，或是子数组。</p>
+<p><code>assertArrayContains()</code>アサーションは少し高度で、配列内の値と配列内の値の配列の両方を見つけることができます。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Array Contains&quot;, () =&gt; {
   assertArrayContains([1, 2, 3], [1]);
   assertArrayContains([1, 2, 3], [1, 2]);
   assertArrayContains(Array.from(&quot;Hello World&quot;), Array.from(&quot;Hello&quot;));
 });
 </code></pre>
-<h3><a class="header" href="#正则表达式" id="正则表达式">正则表达式</a></h3>
-<p>通过 <code>assertMatch()</code> 方法断言正则匹配。</p>
+<h3><a class="header" href="#regex" id="regex">Regex</a></h3>
+<p><code>assertMatch()</code> を介して正規表現をアサートできます。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Match&quot;, () =&gt; {
   assertMatch(&quot;abcdefghi&quot;, new RegExp(&quot;def&quot;));
 
@@ -1370,11 +1367,10 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
   assertMatch(&quot;http://facebook.com&quot;, basicUrl);
 });
 </code></pre>
-<h3><a class="header" href="#抛出错误" id="抛出错误">抛出错误</a></h3>
-<p>在 Deno 中有两种方式断言抛出错误的行为：<code>assertThrows()</code> 和 <code>assertAsyncThrows()</code>。</p>
-<p>两种方式都能检查抛出<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Error">错误</a> 的类型和信息。</p>
-<p>两种方式的区别是 <code>assertThrows()</code> 接收一个标准函数，而 <code>assertAsyncThrows()</code> 接收一个返回 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a> 的函数。</p>
-<p><code>assertThrows()</code> 将检查抛出的错误，也可以检查所抛出的错误的类型是否正确，并判断错误消息是否符合预期。</p>
+<h3><a class="header" href="#例外スロー" id="例外スロー">例外スロー</a></h3>
+<p>Denoでエラーがスローされたかどうかをアサートするには、<code>assertThrows()</code>と<code>assertAsyncThrows()</code>の2つの方法があります。どちらのアサーションでも、<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>がスローされたこと、スローされたエラーのタイプ、メッセージが何であったかを確認できます。</p>
+<p>2つのアサーションの違いは、<code>assertThrows()</code>が標準関数を受け入れ、<code>assertAsyncThrows()</code>が<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a> を返す関数を受け入れることです。</p>
+<p><code>assertThrows()</code>は、エラーがスローされたことを確認し、オプションで、スローされたエラーが正しいタイプであることを確認し、エラーメッセージが期待どおりであることをアサートします。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Throws&quot;, () =&gt; {
   assertThrows(
     () =&gt; {
@@ -1385,7 +1381,7 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
   );
 });
 </code></pre>
-<p><code>assertAsyncThrows()</code> 稍微复杂一点，主要是因为它处理 Promise。它将捕获 Promise 中抛出的错误或 rejection。您还可以选择检查错误类型和错误消息。</p>
+<p><code>assertAsyncThrows()</code> は、主にPromiseを処理するため、もう少し複雑です。しかし、基本的にはPromiseでスローされたエラーや拒否をキャッチします。オプションで、エラーの種類とエラーメッセージを確認することもできます。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Throws Async&quot;, () =&gt; {
   assertThrowsAsync(
     () =&gt; {
@@ -1406,9 +1402,9 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
   );
 });
 </code></pre>
-<h3><a class="header" href="#自定义消息" id="自定义消息">自定义消息</a></h3>
-<p>Deno 的每个内置断言都允许您覆盖标准 CLI 错误消息。</p>
-<p>这个示例将输出 &quot;Values Don't Match!&quot;，而不是标准 CLI 错误消息。</p>
+<h3><a class="header" href="#カスタムメッセージ" id="カスタムメッセージ">カスタムメッセージ</a></h3>
+<p>Denoの組み込みアサーションはそれぞれ、必要に応じて標準のCLIエラーメッセージを上書きできます。</p>
+<p>たとえば、この例では&quot;Values Don't Match!&quot;が出力されます。標準のCLIエラーメッセージではなく。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Equal Fail Custom Message&quot;, () =&gt; {
   assertEquals(1, 2, &quot;Values Don't Match!&quot;);
 });
@@ -1930,7 +1926,7 @@ cargo clean &amp;&amp; cargo build -vv
 </code></pre>
 <p>TODO</p>
 <h2><a class="header" href="#测试和工具" id="测试和工具">测试和工具</a></h2>
-<h3><a class="header" href="#测试-1" id="测试-1">测试</a></h3>
+<h3><a class="header" href="#测试" id="测试">测试</a></h3>
 <p>测试 <code>deno</code>:</p>
 <pre><code class="language-shell"># 运行所有测试套件：
 cargo test

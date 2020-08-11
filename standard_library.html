@@ -159,49 +159,49 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#标准库" id="标准库">标准库</a></h1>
-<p>Deno 提供一组标准模块，它们经过核心团队审计，保证能在 Deno 上工作。</p>
-<p>标准库地址：<a href="https://deno.land/std/">https://deno.land/std/</a></p>
-<h2><a class="header" href="#版本和稳定性" id="版本和稳定性">版本和稳定性</a></h2>
-<p>标准库尚不稳定，因此采用与 Deno 不同的版本号。每次 Deno 发布时，标准库也会一起发布。</p>
-<p>最新的发布请查阅 <a href="https://deno.land/std/">https://deno.land/std/</a> 或 <a href="https://deno.land/std/version.ts">https://deno.land/std/version.ts</a>。</p>
-<p>我们强烈建议：始终使用确定版本的标准库，以避免意外的改动。</p>
-<p>例如，连接到随时可能更改的主分支时可能会导致编译错误或意外行为：</p>
-<pre><code class="language-typescript">// 从 master 导入，这应当避免
+                        <h1><a class="header" href="#標準ライブラリ" id="標準ライブラリ">標準ライブラリ</a></h1>
+<p>Denoは、コアチームによって監査され、Denoでの動作が保証されている一連の標準モジュールを提供します。</p>
+<p>標準ライブラリは<a href="https://deno.land/std/">https://deno.land/std/</a>で入手できます。</p>
+<h2><a class="header" href="#バージョン管理と安定性" id="バージョン管理と安定性">バージョン管理と安定性</a></h2>
+<p>標準ライブラリはまだ安定していないため、Denoとはバージョンが異なります。最新のリリースについては、<a href="https://deno.land/std/">https://deno.land/std/</a>または<a href="https://deno.land/std/version.ts">https://deno.land/std/version.ts</a>。を参照してください。標準ライブラリは、Denoがリリースされるたびにリリースされます。</p>
+<p>意図しない変更を避けるために、常に標準ライブラリの固定バージョンでインポートを使用することを強くお勧めします。たとえば、いつでも変更される可能性があるコードのマスターブランチにリンクするのではなく、コンパイルエラーや予期しない動作を引き起こす可能性があります。</p>
+<pre><code class="language-typescript">// imports from master, this should be avoided
 import { copy } from &quot;https://deno.land/std/fs/copy.ts&quot;;
 </code></pre>
-<p>更好的选择是使用不可变且不会更改的 std 库版本：</p>
-<pre><code class="language-typescript">// 从不可变的 std v0.50.0 导入
-import { copy } from &quot;https://deno.land/std@0.50.0/fs/copy.ts&quot;;
+<p>代わりに、バージョンを指定してstdライブラリを使用すればイミュータブルです：</p>
+<pre><code class="language-typescript">// imports from v0.64.0 of std, never changes
+import { copy } from &quot;https://deno.land/std@0.64.0/fs/copy.ts&quot;;
 </code></pre>
-<h2><a class="header" href="#排错-troubleshooting" id="排错-troubleshooting">排错 (Troubleshooting)</a></h2>
-<p>标准库中的一些模块使用了不稳定的 Deno API。</p>
-<p>不用 <code>--unstable</code> 命令行选项运行这些模块会产生一些 TypeScript 错误，表示 <code>Deno</code> 命名空间中不存在一些 API：</p>
+<h2><a class="header" href="#トラブルシューティング" id="トラブルシューティング">トラブルシューティング</a></h2>
+<p>標準ライブラリで提供されているモジュールの一部は、不安定なDeno APIを使用しています。 </p>
+<p>このようなモジュールを<code>--unstable</code> CLIフラグなしで実行しようとすると、<code>Deno</code>名前空間にいくつかのAPIが存在しないことを示唆する多くのTypeScriptエラーが発生します。</p>
 <pre><code class="language-typescript">// main.ts
-import { copy } from &quot;https://deno.land/std@0.50.0/fs/copy.ts&quot;;
+import { copy } from &quot;https://deno.land/std@0.64.0/fs/copy.ts&quot;;
 
 copy(&quot;log.txt&quot;, &quot;log-old.txt&quot;);
 </code></pre>
 <pre><code class="language-shell">$ deno run --allow-read --allow-write main.ts
 Compile file:///dev/deno/main.ts
-Download https://deno.land/std@0.50.0/fs/copy.ts
-Download https://deno.land/std@0.50.0/fs/ensure_dir.ts
-Download https://deno.land/std@0.50.0/fs/_util.ts
+Download https://deno.land/std@0.64.0/fs/copy.ts
+Download https://deno.land/std@0.64.0/fs/ensure_dir.ts
+Download https://deno.land/std@0.64.0/fs/_util.ts
 error: TS2339 [ERROR]: Property 'utime' does not exist on type 'typeof Deno'.
     await Deno.utime(dest, statInfo.atime, statInfo.mtime);
                ~~~~~
-    at https://deno.land/std@0.50.0/fs/copy.ts:90:16
+    at https://deno.land/std@0.64.0/fs/copy.ts:90:16
 
 TS2339 [ERROR]: Property 'utimeSync' does not exist on type 'typeof Deno'.
     Deno.utimeSync(dest, statInfo.atime, statInfo.mtime);
          ~~~~~~~~~
-    at https://deno.land/std@0.50.0/fs/copy.ts:101:10
+    at https://deno.land/std@0.64.0/fs/copy.ts:101:10
 </code></pre>
 <p>解决方法是加上 <code>--unstable</code> 选项：</p>
 <pre><code class="language-shell">deno run --allow-read --allow-write --unstable main.ts
 </code></pre>
-<p>要确定哪些 API 是不稳定的，请查阅类型声明 <a href="https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.unstable.d.ts">lib.deno.unstable.d.ts</a></p>
-<p>这个问题会在不远的将来解决。如果您依赖的特定模块在没有该选项的情况下成功编译，则可以忽略该选项。</p>
+<p>API生成エラーが不安定であることを確認するには、
+<a href="https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.unstable.d.ts">lib.deno.unstable.d.ts</a>
+を確認してください。</p>
+<p>この問題は近い将来に修正される予定です。依存する特定のモジュールがフラグなしで正常にコンパイルされる場合は、フラグを省略してもかまいません。</p>
 
                     </main>
 
