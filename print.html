@@ -411,28 +411,26 @@ for (const filename of filenames) {
 </code></pre>
 <p>除了内核到用户空间再到内核的必要拷贝，这里的 <code>copy()</code> 函数不会产生额外的昂贵操作，从文件中读到的数据会原样写入标准输出流。这反映了 Deno I/O 流的通用设计目标。</p>
 <p>尝试一下：</p>
-<pre><code class="language-shell">deno run --allow-read https://deno.land/std/examples/cat.ts /etc/passwd
+<pre><code class="language-shell">deno run --allow-read https://deno.land/std@$STD_VERSION/examples/cat.ts /etc/passwd
 </code></pre>
 <h3><a class="header" href="#tcp-サーバー" id="tcp-サーバー">TCP サーバー</a></h3>
 <p>例：<a href="getting_started/../examples/tcp_echo.html">TCP echo</a></p>
 <p>这个示例是一个 TCP echo 服务，接收 8080 端口的连接，把接收到的任何数据返回给客户端。</p>
-<pre><code class="language-ts">const hostname = &quot;0.0.0.0&quot;;
-const port = 8080;
-const listener = Deno.listen({ hostname, port });
-console.log(`Listening on ${hostname}:${port}`);
+<pre><code class="language-ts">const listener = Deno.listen({ port: 8080 });
+console.log(&quot;listening on 0.0.0.0:8080&quot;);
 for await (const conn of listener) {
   Deno.copy(conn, conn);
 }
 </code></pre>
 <p>当这个程序启动时，它会抛出一个没有网络权限的错误。</p>
-<pre><code class="language-shell">$ deno run https://deno.land/std/examples/echo_server.ts
+<pre><code class="language-shell">$ deno run https://deno.land/std@$STD_VERSION/examples/echo_server.ts
 error: Uncaught PermissionDenied: network access to &quot;0.0.0.0:8080&quot;, run again with the --allow-net flag
 ► $deno$/dispatch_json.ts:40:11
     at DenoError ($deno$/errors.ts:20:5)
     ...
 </code></pre>
 <p>为了安全，Deno 不允许程序访问网络，除非显式赋予权限。使用一个命令行选项来允许程序访问网络：</p>
-<pre><code class="language-shell">deno run --allow-net https://deno.land/std/examples/echo_server.ts
+<pre><code class="language-shell">deno run --allow-net https://deno.land/std@$STD_VERSION/examples/echo_server.ts
 </code></pre>
 <p>尝试用 netcat 向它发送数据。</p>
 <pre><code class="language-shell">$ nc localhost 8080
@@ -3371,8 +3369,154 @@ console.log(Deno.resources());
 <li><a href="./examples/testing_if_main">Testing If Main</a></li>
 </ul>
 <h1><a class="header" href="#hello-world-1" id="hello-world-1">Hello World</a></h1>
-<h1><a class="header" href="#インポートとエクスポート" id="インポートとエクスポート">インポートとエクスポート</a></h1>
-<h1><a class="header" href="#依存関係の管理" id="依存関係の管理">依存関係の管理</a></h1>
+<p>Denoは、JavaScriptとTypeScriptの両方の安全なランタイムです。以下のhello worldの例は、同じ機能をJavaScriptまたはTypeScriptで作成できることを示しているので、Denoは両方を実行します。</p>
+<h2><a class="header" href="#javascript" id="javascript">JavaScript</a></h2>
+<p>このJavaScriptの例では、メッセージ<code>Hello [name]</code>がコンソールに出力され、コードにより、提供された名前が大文字で使用されることが保証されます。</p>
+<p><strong>Command：</strong> <code>deno run hello-world.js</code></p>
+<pre><code class="language-js">function capitalize(word) {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
+function hello(name) {
+  return &quot;Hello &quot; + capitalize(name);
+}
+
+console.log(hello(&quot;john&quot;));
+console.log(hello(&quot;Sarah&quot;));
+console.log(hello(&quot;kai&quot;));
+
+/**
+ * Output:
+ *
+ * Hello John
+ * Hello Sarah
+ * Hello Kai
+**/
+</code></pre>
+<h2><a class="header" href="#typescript-1" id="typescript-1">TypeScript</a></h2>
+<p>このTypeScriptの例は、上記のJavaScriptの例とまったく同じです。コードには、TypeScriptがサポートする追加の型情報が含まれています。</p>
+<p><code>deno run</code>コマンドを使うのはまったく同じです。<code>*.js</code>ファイルではなく<code>*.ts</code>ファイルを参照するだけです。</p>
+<p><strong>Command：</strong> <code>deno run hello-world.ts</code></p>
+<pre><code class="language-ts">function capitalize(word: string): string {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
+function hello(name: string): string {
+  return &quot;Hello &quot; + capitalize(name);
+}
+
+console.log(hello(&quot;john&quot;));
+console.log(hello(&quot;Sarah&quot;));
+console.log(hello(&quot;kai&quot;));
+
+/**
+ * Output:
+ *
+ * Hello John
+ * Hello Sarah
+ * Hello Kai
+**/
+</code></pre>
+<h1><a class="header" href="#导入和导出模块" id="导入和导出模块">导入和导出模块</a></h1>
+<p>默认情况下，Deno标准化了在 JavaScript 和 TypeScript 中导入模块的方式。</p>
+<p>它遵循 ECMAScript 6 <code>import/export</code> 标准，但有一个警告，文件类型（后缀名）必须包含在 import 语句的末尾。</p>
+<pre><code class="language-js">import {
+  add,
+  multiply,
+} from &quot;./arithmetic.ts&quot;;
+</code></pre>
+<p>依赖项也直接导入，没有包管理开销。本地模块的导入方式与远程模块完全相同。</p>
+<p>如下面的示例所示，可以使用本地或远程模块以相同的方式产生相同的功能。</p>
+<h2><a class="header" href="#本地导入" id="本地导入">本地导入</a></h2>
+<p>在这个例子中，<code>add</code> 和 <code>multiply</code> 函数是从本地的 <code>arithmetic.ts</code> 模块导入的。</p>
+<p><strong>命令：</strong> <code>deno run local.ts</code></p>
+<pre><code class="language-ts">import { add, multiply } from &quot;./arithmetic.ts&quot;;
+
+function totalCost(outbound: number, inbound: number, tax: number): number {
+  return multiply(add(outbound, inbound), tax);
+}
+
+console.log(totalCost(19, 31, 1.2));
+console.log(totalCost(45, 27, 1.15));
+
+/**
+ * 输出：
+ *
+ * 60
+ * 82.8
+ */
+</code></pre>
+<h2><a class="header" href="#导出" id="导出">导出</a></h2>
+<p>在上面的示例中，<code>add</code> 和 <code>multiply</code> 函数是从本地存储的算术模块导入的。为此，必须导出存储在运算模块中的功能。</p>
+<p>只需将关键字 <code>export</code> 添加到函数签名的开头，如下所示。</p>
+<pre><code class="language-ts">export function add(a: number, b: number): number {
+  return a + b;
+}
+
+export function multiply(a: number, b: number): number {
+  return a * b;
+}
+</code></pre>
+<p>需要在外部模块中访问的所有函数、类、常量和变量都必须导出。可以在它们的前面加上 <code>export</code> 关键字，也可以将它们包括在文件底部的 export 语句中。</p>
+<p>要了解有关 ECMAScript 导出功能的更多信息，请阅读 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/export">MDN 文档</a>.</p>
+<h2><a class="header" href="#远程导入" id="远程导入">远程导入</a></h2>
+<p>在上面的本地导入示例中，从本地存储的算术模块中导入了 <code>add</code> 和 <code>multiply</code> 方法。 也可以通过从远程模块导入 <code>add</code> 和 <code>multiply</code> 方法来实现相同的功能。</p>
+<p>在这种情况下，可以导入 Ramda 模块，包括版本号。Deno 可以处理 JavaScript 模块直接导入到 TypeSript 模块的情况。</p>
+<p><strong>命令：</strong> <code>deno run ./remote.ts</code></p>
+<pre><code class="language-ts">import {
+  add,
+  multiply,
+} from &quot;https://x.nest.land/ramda@0.27.0/source/index.js&quot;;
+
+function totalCost(outbound: number, inbound: number, tax: number): number {
+  return multiply(add(outbound, inbound), tax);
+}
+
+console.log(totalCost(19, 31, 1.2));
+console.log(totalCost(45, 27, 1.15));
+
+/**
+ * 输出：
+ *
+ * 60
+ * 82.8
+ */
+</code></pre>
+<h1><a class="header" href="#管理依赖" id="管理依赖">管理依赖</a></h1>
+<p>在Deno中，没有包管理器的概念，因为外部模块直接导入到本地模块中。</p>
+<p>这就提出了一个问题，即如何在没有包管理器的情况下管理远程依赖关系。在具有许多依赖性的大型项目中，如果将模块全部单独导入到单个模块中，则更新模块将变得很麻烦且耗时。</p>
+<p>在 Deno 中解决此问题的标准做法是创建一个 <code>deps.ts</code> 文件。此文件中引用了所有必需的远程依赖关系，并且重新导出了所需的方法和类。本地模块从 <code>deps.ts</code> 导入所需方法和类，而不是远程依赖。</p>
+<p>这样就可以轻松跨大型代码库更新模块，并解决“程序包管理器问题”（如果它存在的话）。开发依赖项也可以在单独的 <code>dev_deps.ts</code> 文件中进行管理。</p>
+<p><strong>deps.ts 示例</strong></p>
+<pre><code class="language-ts">/**
+ * deps.ts 从远程的 Ramda 模块中重新导出所需方法。
+ **/
+export {
+  add,
+  multiply,
+} from &quot;https://x.nest.land/ramda@0.27.0/source/index.js&quot;;
+</code></pre>
+<p>此示例中的功能与 <a href="examples/./import_export.html">导入和导出模块</a> 相同。但是在这种情况下，不是直接导入 Ramda 模块，而是从本地代理 <code>deps.ts</code> 模块中导入。</p>
+<p><strong>命令：</strong> <code>deno run dependencies.ts</code></p>
+<pre><code class="language-ts">import {
+  add,
+  multiply,
+} from &quot;./deps.ts&quot;;
+
+function totalCost(outbound: number, inbound: number, tax: number): number {
+  return multiply(add(outbound, inbound), tax);
+}
+
+console.log(totalCost(19, 31, 1.2));
+console.log(totalCost(45, 27, 1.15));
+
+/**
+ * 输出：
+ *
+ * 60
+ * 82.8
+ */
+</code></pre>
 <h2><a class="header" href="#unix-cat" id="unix-cat">Unix cat</a></h2>
 <p>在这个程序中，每个命令行参数都是一个文件名，参数对应的文件将被依次打开，打印到标准输出流。</p>
 <pre><code class="language-ts">const filenames = Deno.args;
@@ -3384,16 +3528,16 @@ for (const filename of filenames) {
 </code></pre>
 <p>除了内核到用户空间再到内核的必要拷贝，这里的 <code>copy()</code> 函数不会产生额外的昂贵操作，从文件中读到的数据会原样写入标准输出流。这反映了 Deno I/O 流的通用设计目标。</p>
 <p>尝试一下：</p>
-<pre><code class="language-shell">deno run --allow-read https://deno.land/std/examples/cat.ts /etc/passwd
+<pre><code class="language-shell">deno run --allow-read https://deno.land/std@$STD_VERSION/examples/cat.ts /etc/passwd
 </code></pre>
 <h2><a class="header" href="#文件服务器" id="文件服务器">文件服务器</a></h2>
 <p>这个示例将会启动一个本地目录的 HTTP 服务器。</p>
 <p>安装</p>
-<pre><code class="language-shell">deno install --allow-net --allow-read https://deno.land/std/http/file_server.ts
+<pre><code class="language-shell">deno install --allow-net --allow-read https://deno.land/std@$STD_VERSION/http/file_server.ts
 </code></pre>
 <p>运行</p>
 <pre><code class="language-shell">$ file_server .
-Downloading https://deno.land/std/http/file_server.ts...
+Downloading https://deno.land/std@$STD_VERSION/http/file_server.ts...
 [...]
 HTTP server listening on http://0.0.0.0:4500/
 </code></pre>
@@ -3402,23 +3546,21 @@ HTTP server listening on http://0.0.0.0:4500/
 </code></pre>
 <h2><a class="header" href="#tcp-echo" id="tcp-echo">TCP echo</a></h2>
 <p>这个示例是一个 TCP echo 服务，接收 8080 端口的连接，把接收到的任何数据返回给客户端。</p>
-<pre><code class="language-ts">const hostname = &quot;0.0.0.0&quot;;
-const port = 8080;
-const listener = Deno.listen({ hostname, port });
-console.log(`Listening on ${hostname}:${port}`);
+<pre><code class="language-ts">const listener = Deno.listen({ port: 8080 });
+console.log(&quot;listening on 0.0.0.0:8080&quot;);
 for await (const conn of listener) {
   Deno.copy(conn, conn);
 }
 </code></pre>
 <p>当这个程序启动时，它会抛出一个没有网络权限的错误。</p>
-<pre><code class="language-shell">$ deno run https://deno.land/std/examples/echo_server.ts
+<pre><code class="language-shell">$ deno run https://deno.land/std@$STD_VERSION/examples/echo_server.ts
 error: Uncaught PermissionDenied: network access to &quot;0.0.0.0:8080&quot;, run again with the --allow-net flag
 ► $deno$/dispatch_json.ts:40:11
     at DenoError ($deno$/errors.ts:20:5)
     ...
 </code></pre>
 <p>为了安全，Deno 不允许程序访问网络，除非显式赋予权限。使用一个命令行选项来允许程序访问网络：</p>
-<pre><code class="language-shell">deno run --allow-net https://deno.land/std/examples/echo_server.ts
+<pre><code class="language-shell">deno run --allow-net https://deno.land/std@$STD_VERSION/examples/echo_server.ts
 </code></pre>
 <p>尝试用 netcat 向它发送数据。</p>
 <pre><code class="language-shell">$ nc localhost 8080
@@ -3450,7 +3592,7 @@ const p = Deno.run({
     &quot;deno&quot;,
     &quot;run&quot;,
     &quot;--allow-read&quot;,
-    &quot;https://deno.land/std/examples/cat.ts&quot;,
+    &quot;https://deno.land/std@$STD_VERSION/examples/cat.ts&quot;,
     ...fileNames,
   ],
   stdout: &quot;piped&quot;,
