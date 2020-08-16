@@ -165,7 +165,7 @@
 </blockquote>
 <p>Denoは、組み込みのTypeScriptコンパイラへのランタイムアクセスをサポートしています。 <code>Deno</code>名前空間には、このアクセスを提供する3つのメソッドがあります。</p>
 <h3><a class="header" href="#denocompile" id="denocompile"><code>Deno.compile()</code></a></h3>
-<p>これは<code>deno cacheと</code>同様に機能し、コードのフェッチ、キャッシュ、コンパイルはできますが、実行はできません。これは、最大3つの引数で、<code>rootName</code>と、オプションで<code>sources</code>、<code>options</code>を取ります。 <code>rootName</code>は、結果のプログラムを生成するために使用されるルートモジュールです。これは、<code>deno run --reload example.ts</code>のコマンドラインで渡すモジュール名に似ています。<code>sources</code>はハッシュであり、キーは完全修飾モジュール名であり、値はモジュールのテキストソースです。<code>sources</code>が渡された場合、Denoはそのハッシュ内からすべてのモジュールを解決し、Denoの外部では解決を試みません。ソースが提供されない場合、Denoは、ルートモジュールがコマンドラインで渡されたかのようにモジュールを解決します。 Denoはこれらのリソースもキャッシュします。解決されたすべてのリソースは動的インポートとして扱われ、ローカルかリモートかに応じて読み取りまたはネット権限が必要です。 <code>options</code>引数は、<code>Deno.CompilerOptions</code>タイプのオプションのセットです。これは、Denoでサポートされているオプションを含むTypeScriptコンパイラオプションのサブセットです。</p>
+<p>これは<code>deno cacheと</code>同様に機能し、コードのフェッチ、キャッシュ、コンパイルはできますが、実行はできません。これは、最大3つの引数で、<code>rootName</code>と、オプションで<code>sources</code>、<code>options</code>を取ります。 <code>rootName</code>は、結果のプログラムを生成するために使用されるルートモジュールです。これは、<code>deno run --reload example.ts</code>のコマンドラインで渡すモジュール名に似ています。<code>sources</code>はハッシュであり、キーは完全修飾モジュール名であり、値はモジュールのテキストソースです。<code>sources</code>が渡された場合、Denoはそのハッシュ内からすべてのモジュールを解決し、Denoの外部では解決を試みません。ソースが提供されない場合、Denoは、ルートモジュールがコマンドラインで渡されたかのようにモジュールを解決します。 Denoはこれらのリソースもキャッシュします。解決されたすべてのリソースは動的インポートとして扱われ、ローカルかリモートかに応じて読み取りまたはネットパーミッションが必要です。 <code>options</code>引数は、<code>Deno.CompilerOptions</code>タイプのオプションのセットです。これは、Denoでサポートされているオプションを含むTypeScriptコンパイラオプションのサブセットです。</p>
 <p>メソッドはタプルで解決されます。最初の引数には、コードに関連するすべての診断（構文または型エラー）が含まれます。 2番目の引数は、キーが出力ファイル名で値がコンテンツであるマップです。</p>
 <p>ソースを提供する例：:</p>
 <pre><code class="language-ts">const [diagnostics, emitMap] = await Deno.compile(&quot;/foo.ts&quot;, {
@@ -184,7 +184,7 @@ console.log(emitMap);
 </code></pre>
 <p>この場合、<code>emitMap</code>には<code>console.log()</code>ステートメントが含まれます。</p>
 <h3><a class="header" href="#denobundle" id="denobundle"><code>Deno.bundle()</code></a></h3>
-<p>これは、コマンドラインで<code>deno bundle</code>が行うのとよく似ています。これも<code>Deno.compile()</code>に似ていますが、ファイルのマップを返す代わりに、提供または解決されたすべてのコードとエクスポートを含む自己完結型のJavaScript ESモジュールである単一の文字列を返します。提供されたルートモジュールのすべてのエクスポートのこれは、最大3つの引数で、<code>rootName</code>、オプションで<code>sources</code>、<code>options</code>を取ります。 <code>rootName</code>は、結果のプログラムを生成するために使用されるルートモジュールです。これは、<code>deno bundle example.ts</code>のコマンドラインで渡すモジュール名に似ています。<code>sources</code>はハッシュであり、キーは完全修飾モジュール名であり、値はモジュールのテキストソースです。<code>sources</code>が渡された場合、Denoはそのハッシュ内からすべてのモジュールを解決し、Denoの外部では解決を試みません。<code>sources</code>が提供されない場合、Denoは、ルートモジュールがコマンドラインで渡されたかのようにモジュールを解決します。解決されたすべてのリソースは動的インポートとして扱われ、ローカルかリモートかに応じて読み取りまたはネット権限が必要です。 Denoはこれらのリソースもキャッシュします。 <code>options</code>引数は、<code>Deno.CompilerOptions</code>タイプのオプションのセットです。これは、Denoでサポートされているオプションを含むTypeScriptコンパイラオプションのサブセットです。</p>
+<p>これは、コマンドラインで<code>deno bundle</code>が行うのとよく似ています。これも<code>Deno.compile()</code>に似ていますが、ファイルのマップを返す代わりに、提供または解決されたすべてのコードとエクスポートを含む自己完結型のJavaScript ESモジュールである単一の文字列を返します。提供されたルートモジュールのすべてのエクスポートのこれは、最大3つの引数で、<code>rootName</code>、オプションで<code>sources</code>、<code>options</code>を取ります。 <code>rootName</code>は、結果のプログラムを生成するために使用されるルートモジュールです。これは、<code>deno bundle example.ts</code>のコマンドラインで渡すモジュール名に似ています。<code>sources</code>はハッシュであり、キーは完全修飾モジュール名であり、値はモジュールのテキストソースです。<code>sources</code>が渡された場合、Denoはそのハッシュ内からすべてのモジュールを解決し、Denoの外部では解決を試みません。<code>sources</code>が提供されない場合、Denoは、ルートモジュールがコマンドラインで渡されたかのようにモジュールを解決します。解決されたすべてのリソースは動的インポートとして扱われ、ローカルかリモートかに応じて読み取りまたはネットパーミッションが必要です。 Denoはこれらのリソースもキャッシュします。 <code>options</code>引数は、<code>Deno.CompilerOptions</code>タイプのオプションのセットです。これは、Denoでサポートされているオプションを含むTypeScriptコンパイラオプションのサブセットです。</p>
 <p>ソースを提供する例:</p>
 <pre><code class="language-ts">const [diagnostics, emit] = await Deno.bundle(&quot;/foo.ts&quot;, {
   &quot;/foo.ts&quot;: `import * as bar from &quot;./bar.ts&quot;;\nconsole.log(bar);\n`,
@@ -214,7 +214,7 @@ console.log(result[&quot;/foo.ts&quot;].map);
 <p><code>enum</code>は、enumerableを構成するIIFEに書き換えられ、マップが定義されることを期待します。</p>
 <h3><a class="header" href="#typescriptライブラリファイルの参照" id="typescriptライブラリファイルの参照">TypeScriptライブラリファイルの参照</a></h3>
 <p><code>deno run</code>、またはTypeScriptを型チェックする他のDenoコマンドを使用すると、そのコードは、Denoがサポートする環境を記述するカスタムライブラリに対して評価されます。デフォルトでは、TypeScriptを型チェックするコンパイラランタイムAPIもこれらのライブラリ（<code>Deno.compile()</code>および<code>Deno.bundle()</code>）を使用します。</p>
-<p>ただし、他のランタイム用にTypeScriptをコンパイルまたはバンドルする場合は、デフォルトのライブラリをオーバーライドすることができます。これを行うために、ランタイムAPIはコンパイラオプションの<code>lib</code>プロパティをサポートしています。たとえば、ブラウザを宛先とするTypeScriptコードがある場合、TypeScriptの<code>&quot;dom&quot;</code>ライブラリを使用します。:</p>
+<p>ただし、他のランタイム用にTypeScriptをコンパイルまたはバンドルする場合は、デフォルトのライブラリをオーバーライドすることができます。これを行うために、ランタイムAPIはコンパイラオプションの<code>lib</code>プロパティをサポートしています。例えば、ブラウザを宛先とするTypeScriptコードがある場合、TypeScriptの<code>&quot;dom&quot;</code>ライブラリを使用します。:</p>
 <pre><code class="language-ts">const [errors, emitted] = await Deno.compile(
   &quot;main.ts&quot;,
   {
@@ -249,7 +249,7 @@ console.log(result[&quot;/foo.ts&quot;].map);
 </code></pre>
 <p><strong>注意</strong> Deno名前空間は、少なくともES2018以降のランタイム環境を想定していること。つまり、ES2018より「低い」libを使用すると、コンパイルの一部としてエラーがログに記録されます。</p>
 <h4><a class="header" href="#トリプルスラッシュリファレンスの使用" id="トリプルスラッシュリファレンスの使用">トリプルスラッシュリファレンスの使用</a></h4>
-<p>コンパイラオプションで<code>lib</code>を指定する必要はありません。 Denoは、<a href="https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html#-reference-lib-">libへのトリプルスラッシュ参照</a>もサポートしています。ファイルのコンテンツに埋め込むことができます。たとえば、次のような<code>main.ts</code>があるとします。</p>
+<p>コンパイラオプションで<code>lib</code>を指定する必要はありません。 Denoは、<a href="https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html#-reference-lib-">libへのトリプルスラッシュ参照</a>もサポートしています。ファイルのコンテンツに埋め込むことができます。例えば、次のような<code>main.ts</code>があるとします。</p>
 <pre><code class="language-ts">/// &lt;reference lib=&quot;dom&quot; /&gt;
 
 document.getElementById(&quot;foo&quot;);

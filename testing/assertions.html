@@ -161,8 +161,8 @@
                     <main>
                         <h2><a class="header" href="#アサーション" id="アサーション">アサーション</a></h2>
 <p>開発者がテストを記述できるように、Deno標準ライブラリには、
-<code>https：//deno.land/std@0.64.0/testing/asserts.ts</code>からインポートできる組み込みの<a href="https://deno.land/std/testing/asserts.ts">アサーションモジュール</a>が付属しています。</p>
-<pre><code class="language-js">import { assert } from &quot;https://deno.land/std@0.64.0/testing/asserts.ts&quot;;
+<code>https：//deno.land/std@0.65.0/testing/asserts.ts</code>からインポートできる組み込みの<a href="https://deno.land/std/testing/asserts.ts">アサーションモジュール</a>が付属しています。</p>
+<pre><code class="language-js">import { assert } from &quot;https://deno.land/std@0.65.0/testing/asserts.ts&quot;;
 
 Deno.test(&quot;Hello Test&quot;, () =&gt; {
   assert(&quot;Hello&quot;);
@@ -286,7 +286,7 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
 </code></pre>
 <h3><a class="header" href="#カスタムメッセージ" id="カスタムメッセージ">カスタムメッセージ</a></h3>
 <p>Denoの組み込みアサーションはそれぞれ、必要に応じて標準のCLIエラーメッセージを上書きできます。</p>
-<p>たとえば、この例では&quot;Values Don't Match!&quot;が出力されます。標準のCLIエラーメッセージではなく。</p>
+<p>例えば、この例では&quot;Values Don't Match!&quot;が出力されます。標準のCLIエラーメッセージではなく。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Equal Fail Custom Message&quot;, () =&gt; {
   assertEquals(1, 2, &quot;Values Don't Match!&quot;);
 });

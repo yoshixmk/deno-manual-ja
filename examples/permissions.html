@@ -164,7 +164,7 @@
 <p>このプログラムは、不安定なDeno機能を利用しています。
 <a href="../runtime/stability.html">不安定な機能の詳細</a>をご覧ください。</p>
 </blockquote>
-<p>プログラムによっては、以前に付与されたアクセス許可を取り消すことが必要な場合があります。後の段階でプログラムがこれらの権限を必要とする場合、プログラムは失敗します。</p>
+<p>プログラムによっては、以前に付与されたアクセス許可を取り消すことが必要な場合があります。後の段階でプログラムがこれらのパーミッションを必要とする場合、プログラムは失敗します。</p>
 <pre><code class="language-ts">// lookup a permission
 const status = await Deno.permissions.query({ name: &quot;write&quot; });
 if (status.state !== &quot;granted&quot;) {

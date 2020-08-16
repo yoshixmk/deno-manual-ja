@@ -161,15 +161,15 @@
                     <main>
                         <h2><a class="header" href="#整合性チェックとファイルのロック" id="整合性チェックとファイルのロック">整合性チェックとファイルのロック</a></h2>
 <h3><a class="header" href="#イントロダクション" id="イントロダクション">イントロダクション</a></h3>
-<p>あなたのモジュールがリモートモジュール<code>https：//some.url/a.ts</code>に依存しているとしましょう。モジュールを初めてコンパイルするとき、<code>a.ts</code>が取得、コンパイル、およびキャッシュされます。これは、新しいマシンでモジュールを実行する（たとえば、本番環境で）か、キャッシュを再ロードする（たとえば、<code>deno cache --reload</code>を使用）まで、この方法のままです。しかし、リモートURL <code>https：//some.url/a.ts</code>のコンテンツが変更された場合はどうなりますか？これにより、ローカルモジュールとは異なる依存関係コードで運用モジュールが実行される可能性があります。これを回避するためのDenoのソリューションは、整合性チェックとロックファイルを使用することです。</p>
+<p>あなたのモジュールがリモートモジュール<code>https：//some.url/a.ts</code>に依存しているとしましょう。モジュールを初めてコンパイルするとき、<code>a.ts</code>が取得、コンパイル、およびキャッシュされます。これは、新しいマシンでモジュールを実行する（例えば、本番環境で）か、キャッシュを再ロードする（例えば、<code>deno cache --reload</code>を使用）まで、この方法のままです。しかし、リモートURL <code>https：//some.url/a.ts</code>のコンテンツが変更された場合はどうなりますか？これにより、ローカルモジュールとは異なる依存関係コードで運用モジュールが実行される可能性があります。これを回避するためのDenoのソリューションは、整合性チェックとロックファイルを使用することです。</p>
 <h3><a class="header" href="#ファイルのキャッシュとロック" id="ファイルのキャッシュとロック">ファイルのキャッシュとロック</a></h3>
 <p>Denoは、小さなJSONファイルを使用して、モジュールのサブリソースの整合性を保存およびチェックできます。</p>
 <p><code>--lock=lock.json</code>を使用して、ロックファイルのチェックを有効にして指定します。ロックを更新または作成するには、<code>--lock=lock.json --lock-write</code>を使用します。<code>--lock=lock.json</code>はDenoに使用するロックファイルを教えますが、<code>--lock-write</code>は依存関係ハッシュをロックファイルに出力するために使用されます（<code>--lock-write</code>は<code>--lock</code>と組み合わせて使用​​する必要があります） ）。 </p>
 <p><code>lock.json</code>は次のようになり、依存関係に対するファイルのハッシュを保存します。</p>
 <pre><code class="language-json">{
-  &quot;https://deno.land/std@v0.64.0/textproto/mod.ts&quot;: &quot;3118d7a42c03c242c5a49c2ad91c8396110e14acca1324e7aaefd31a999b71a4&quot;,
-  &quot;https://deno.land/std@v0.64.0/io/util.ts&quot;: &quot;ae133d310a0fdcf298cea7bc09a599c49acb616d34e148e263bcb02976f80dee&quot;,
-  &quot;https://deno.land/std@v0.64.0/async/delay.ts&quot;: &quot;35957d585a6e3dd87706858fb1d6b551cb278271b03f52c5a2cb70e65e00c26a&quot;,
+  &quot;https://deno.land/std@v0.65.0/textproto/mod.ts&quot;: &quot;3118d7a42c03c242c5a49c2ad91c8396110e14acca1324e7aaefd31a999b71a4&quot;,
+  &quot;https://deno.land/std@v0.65.0/io/util.ts&quot;: &quot;ae133d310a0fdcf298cea7bc09a599c49acb616d34e148e263bcb02976f80dee&quot;,
+  &quot;https://deno.land/std@v0.65.0/async/delay.ts&quot;: &quot;35957d585a6e3dd87706858fb1d6b551cb278271b03f52c5a2cb70e65e00c26a&quot;,
    ...
 }
 </code></pre>

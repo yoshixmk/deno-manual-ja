@@ -160,11 +160,11 @@
                 <div id="content" class="content">
                     <main>
                         <h2><a class="header" href="#環境セットアップ" id="環境セットアップ">環境セットアップ</a></h2>
-<p>Denoを生産的に使用するには、環境をセットアップする必要があります。つまり、シェルのオートコンプリート、環境変数、選択したエディターまたはIDEを設定します。</p>
+<p>Denoを生産的に使用するには、環境をセットアップする必要があります。つまり、シェルのオートコンプリート、環境変数、エディタ・IDEの設定を行います。</p>
 <h3><a class="header" href="#環境変数" id="環境変数">環境変数</a></h3>
-<p>Denoの動作を制御するいくつかの環境変数があります。：</p>
-<p><code>DENO_DIR</code>のデフォルトは <code>$HOME/.cache/deno</code>で、任意のパスに設定できますが、生成およびキャッシュされたソースコードの書き込みと読み取りを制御します。</p>
-<p>もし<code>NO_COLOR</code>を設定すれば、カラー出力がオフになります。 <a href="https://no-color.org/">https://no-color.org/</a>を参照してください。<code>NO_COLOR</code>を使用することで<code>--allow-env</code>を使うことなく、ソースコードでboolean定数の<code>Deno.noColor</code>を使用して、設定されているかどうかをテストできます。</p>
+<p>Denoの動作を制御するいくつかの環境変数があります：</p>
+<p>環境変数<code>DENO_DIR</code>のデフォルトは <code>$HOME/.cache/deno</code>で、任意のパスに設定できますが、生成およびキャッシュされたソースコードの書き込みと読み取りを制御します。</p>
+<p>もし、環境変数<code>NO_COLOR</code>を設定すれば、カラー出力がオフになります。 <a href="https://no-color.org/">https://no-color.org/</a>を参照してください。<code>NO_COLOR</code>を使用しているかのテストはソースコード内で、<code>--allow-env</code>なしで使用できるboolean定数の<code>Deno.noColor</code>を用いることで設定されているか確認ができます。</p>
 <h3><a class="header" href="#シェルのオートコンプリート" id="シェルのオートコンプリート">シェルのオートコンプリート</a></h3>
 <p><code>deno completions &lt;shell&gt;</code>を使用して、 シェルのオートコンプリート用のスクリプトを生成できます 。コマンドはstdoutに出力するため、適切なファイルにリダイレクトする必要があります。</p>
 <p>Deno がサポートしているシェルは次の通り：</p>
@@ -179,13 +179,23 @@
 <pre><code class="language-shell">deno completions bash &gt; /usr/local/etc/bash_completion.d/deno.bash
 source /usr/local/etc/bash_completion.d/deno.bash
 </code></pre>
-<p>例 (zsh):</p>
+<p>例 (フレームワークなしでのzsh):</p>
 <pre><code class="language-shell">mkdir ~/.oh-my-zsh/custom/plugins/deno
 deno completions zsh &gt; ~/.oh-my-zsh/custom/plugins/deno/_deno
 </code></pre>
-<p>在此之后，在 <code>~/.zshrc</code> 文件中的 plugins 标签下增加 <code>deno</code> 插件。</p>
-<h3><a class="header" href="#エディターとide" id="エディターとide">エディターとIDE</a></h3>
-<p>Denoはモジュールのインポートにファイル拡張子を使用する必要があり、さらにはhttpのインポートを許可が必要で、現在ほとんどのエディターと言語サーバーはこれをネイティブでサポートしていないため、多くのエディターは不要なファイル拡張子を持つファイルまたはインポートを見つけられないというエラーをスローします。</p>
+<p>次に、<code>.zshrc</code>に追加します。</p>
+<pre><code class="language-shell">fpath=(~/.zsh $fpath)
+autoload -Uz compinit
+compinit -u
+</code></pre>
+<p>それからターミナルを再起動します。補完がまだロードされない場合は、<code>rm ~/.zcompdump/</code>を実行して、以前に生成された補完を削除してから、<code>compinit</code>を実行してそれらを再度生成する必要があります。</p>
+<p>例（zsh + oh-my-zsh）[zshユーザーに推奨]：</p>
+<pre><code class="language-shell">mkdir ~/.oh-my-zsh/custom/plugins/deno
+deno completions zsh &gt; ~/.oh-my-zsh/custom/plugins/deno/_deno
+</code></pre>
+<p>この後<code>~/.zshrc</code>ファイルへdenoプラグインを追加します。<code>antigen</code>パスのようなツールの場合は<code>~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins</code>になり、コマンドは<code>antigen bundle deno</code>などになります。</p>
+<h3><a class="header" href="#エディタとide" id="エディタとide">エディタとIDE</a></h3>
+<p>Denoはモジュールのインポートにファイル拡張子を使用する必要があり、さらにはhttpのインポートを許可が必要で、現在ほとんどのエディタと言語サーバーはこれをネイティブでサポートしていないため、多くのエディタは不要なファイル拡張子を持つファイルまたはインポートを見つけられないというエラーをスローします。</p>
 <p>コミュニティは、一部の編集者がこれらの問題を解決するための拡張機能を開発しています:</p>
 <h4><a class="header" href="#vs-code" id="vs-code">VS Code</a></h4>
 <p>ベータバージョンの <a href="https://github.com/denoland/vscode_deno">vscode_deno</a>が<a href="https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno">Visual Studio Marketplace</a>に公開されました。問題があればIssuesをください。</p>
@@ -193,9 +203,8 @@ deno completions zsh &gt; ~/.oh-my-zsh/custom/plugins/deno/_deno
 <p>JetBrains IDEのサポートは、<a href="https://plugins.jetbrains.com/plugin/14382-deno">the Deno plugin</a>を通じて利用できます。</p>
 <p>JetBrains IDEをDeno用に設定する方法の詳細については、YouTrackの<a href="https://youtrack.jetbrains.com/issue/WEB-41607#focus=streamItem-27-4160152.0-0">このコメント</a>を参照してください。</p>
 <h3><a class="header" href="#vim-と-neovim" id="vim-と-neovim">Vim と NeoVim</a></h3>
-<p>もし<a href="https://github.com/neoclide/coc.nvim">CoC</a>（intellisense engine and language server protocol）をインストールすれば、Vim は Deno/TypeScript に対してかなりうまく機能します。</p>
-<p>当安装完 CoC 后，可以在 Vim 内部运行 <code>:CocInstall coc-deno</code>。你会发现，诸如 <code>gd</code>（转到定义）和 <code>gr</code>（转到/查找引用）之类的东西可以正常工作了。</p>
-<p>CoCをインストールした後、Vim内からおよび<code>：CocInstall coc-deno</code>と<code>:CocInstall coc-deno</code>を実行します。 Denoタイプ定義でオートコンプリートを機能させるには、<code>：CocCommand deno.types</code>を実行します。必要に応じて、<code>：CocRestart</code>でCoCサーバーを再起動します。これからは、<code>gd</code>（定義に移動）や<code>gr</code>（goto / find参照）などが機能するようになります。</p>
+<p>もし<a href="https://github.com/neoclide/coc.nvim">CoC</a>（intellisense engine and language server protocol）をインストールしていれば、Vim は Deno/TypeScript に対してかなりうまく機能します。</p>
+<p>CoCをインストールした後、Vim内から<code>：CocInstall coc-deno</code>と<code>:CocInstall coc-deno</code>を実行します。 Deno型定義でオートコンプリートを機能させるには、<code>：CocCommand deno.types</code>を実行します。必要に応じて、<code>：CocRestart</code>でCoCサーバーを再起動します。これからは、<code>gd</code>(go to definition)や<code>gr</code>(goto/find references)などが機能するようになります。</p>
 <h4><a class="header" href="#emacs" id="emacs">Emacs</a></h4>
 <p>Emacsは、Emacs内でTypeScriptを使用する標準的な方法である<a href="https://github.com/ananthakumaran/tide">tide</a>と、Denoの<a href="https://github.com/denoland/vscode_deno">公式VSCode拡張機能</a>で使用される<a href="https://github.com/justjavac/typescript-deno-plugin">typescript-deno-plugin</a>の組み合わせを使用することにより、DenoをターゲットとするTypeScriptプロジェクトでかなりうまく機能します。</p>
 <p>これを使用するには、まずEmacsのインスタンスに<code>tide</code>が設定されていることを確認してください。次に、 <a href="https://github.com/justjavac/typescript-deno-plugin">typescript-deno-plugin</a> ページで指示されているように、最初に <code>npm install --save-dev typescript-deno-plugin typescript</code> (<code>npm init -y</code>が必須)を行い、次に下記のブロックを<code>tsconfig.json</code>に追加すれば準備完了です！</p>

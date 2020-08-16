@@ -167,11 +167,11 @@
 </code></pre>
 <h3><a class="header" href="#特定のモジュールをリロードする" id="特定のモジュールをリロードする">特定のモジュールをリロードする</a></h3>
 <p>一部のモジュールのみをアップグレードしたい場合があります。 <code>--reload</code>フラグに引数を渡すことで制御できます。</p>
-<p>全ての 0.64.0 標準モジュールをリロードする：</p>
-<pre><code class="language-ts">deno cache --reload=https://deno.land/std@v0.64.0 my_module.ts
+<p>全ての 0.65.0 標準モジュールをリロードする：</p>
+<pre><code class="language-ts">deno cache --reload=https://deno.land/std@v0.65.0 my_module.ts
 </code></pre>
 <p>特定のモジュール（この例では、色とファイルシステムのコピー）を再ロードするには、コンマを使用してURLを区切ります：</p>
-<pre><code class="language-ts">deno cache --reload=https://deno.land/std@0.64.0/fs/copy.ts,https://deno.land/std@0.64.0/fmt/colors.ts my_module.ts
+<pre><code class="language-ts">deno cache --reload=https://deno.land/std@0.65.0/fs/copy.ts,https://deno.land/std@0.65.0/fmt/colors.ts my_module.ts
 </code></pre>
 <!-- Should this be part of examples? -->
 

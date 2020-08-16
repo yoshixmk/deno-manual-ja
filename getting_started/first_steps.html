@@ -161,16 +161,17 @@
                     <main>
                         <h2><a class="header" href="#ファーストステップ" id="ファーストステップ">ファーストステップ</a></h2>
 <p>このページには、Denoの基礎について説明するいくつかの例が含まれています。 </p>
-<p>このドキュメントは、JavaScript、特に<code>async</code>/<code>await</code>に関する予備知識があることを前提としています。 JavaScriptの予備知識がない場合は、Denoから始める前に、<a href="https://developer.mozilla.org/zh-CN/docs/learn/JavaScript">JavaScript</a>の基本に関するガイドに従うことをお勧めします。</p>
+<p>このドキュメントは、JavaScript、特に<code>async</code>/<code>await</code>に関する予備知識があることを前提としています。 JavaScriptの予備知識がない場合は、Denoから始める前に、<a href="https://developer.mozilla.org/ja/docs/Learn/JavaScript">JavaScript</a>の基本に関するガイドに従うことをお勧めします。</p>
 <h3><a class="header" href="#hello-world" id="hello-world">Hello World</a></h3>
-<p>DenoはJavaScript / TypeScriptのランタイムであり、Web互換で、可能な限り最新の機能を使用しようとします。 ブラウザーの互換性は、Denoの<code>Hello World</code>プログラムがブラウザーで実行できるプログラムと同じであることを意味します。</p>
+<p>DenoはJavaScript / TypeScriptのランタイムであり、Web互換で、可能な限り最新の機能を使用しようとします。</p>
+<p>ブラウザーの互換性は、Denoの<code>Hello World</code>プログラムがブラウザーで実行できるプログラムと同じであることを意味します。</p>
 <pre><code class="language-ts">console.log(&quot;Welcome to Deno 🦕&quot;);
 </code></pre>
 <p>プログラムを試してください：</p>
 <pre><code class="language-shell">deno run https://deno.land/std/examples/welcome.ts
 </code></pre>
 <h3><a class="header" href="#httpリクエストを行う" id="httpリクエストを行う">HTTPリクエストを行う</a></h3>
-<p>多くのプログラムは、HTTP要求を使用してWebサーバーからデータをフェッチします。ファイルをフェッチしてその内容を端末に出力する小さなプログラムを書いてみましょう。 ブラウザーと同様に、Web標準<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API"><code>fetch</code></a>APIを使用してHTTP呼び出しを行うことができます。</p>
+<p>多くのプログラムは、HTTP要求を使用してWebサーバーからデータをフェッチします。ファイルをフェッチしてその内容を端末に出力する小さなプログラムを書いてみましょう。 ブラウザーと同様に、Web標準<a href="https://developer.mozilla.org/ja/docs/Web/API/Fetch_API"><code>fetch</code></a>APIを使用してHTTP呼び出しを行うことができます。</p>
 <pre><code class="language-typescript">const url = Deno.args[0];
 const res = await fetch(url);
 
@@ -186,22 +187,22 @@ await Deno.stdout.write(body);
 <p>指定されたURLにリクエストを送信し、レスポンスを待って、<code>res</code>定数に格納します。</p>
 </li>
 <li>
-<p>応答の本文を<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer"><code>ArrayBuffer</code></a>として解析し、応答を待ち、<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array"><code>Uint8Array</code></a>に変換して<code>body</code>の定数に格納します。。</p>
+<p>応答の本文を<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer"><code>ArrayBuffer</code></a>として解析し、応答を待ち、<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array"><code>Uint8Array</code></a>に変換して<code>body</code>の定数に格納します。。</p>
 </li>
 <li>
 <p><code>body</code>定数の内容を<code>stdout</code>に書き込みます。</p>
 </li>
 </ol>
 <p>やってみよう：</p>
-<pre><code class="language-shell">deno run https://deno.land/std/examples/curl.ts https://example.com
+<pre><code class="language-shell">deno run https://deno.land/std@0.65.0/examples/curl.ts https://example.com
 </code></pre>
-<p>このプログラムはネットワークアクセスに関するエラーを返しますが、何が問題だったのでしょうか。はじめに、Denoはデフォルトで安全なランタイムであることを覚えているかもしれません。つまり、ネットワークへのアクセスなど、特定の「特権」アクションを実行する許可をプログラムに明示的に与える必要があります。</p>
-<p>正しい許可フラグでもう一度試してください:</p>
-<pre><code class="language-shell">deno run --allow-net=example.com https://deno.land/std/examples/curl.ts https://example.com
+<p>このプログラムはネットワークアクセスに関するエラーを返しますが、何が問題だったのでしょうか。はじめに、Denoはデフォルトで安全なランタイムであることを紹介したのを覚えているかもしれません。つまり、ネットワークへのアクセスなど、「特権」アクションを実行する場合はパーミッションをプログラムに対して明示的に与える必要があります。</p>
+<p>正しいパーミッションを与え、もう一度試してください:</p>
+<pre><code class="language-shell">deno run --allow-net=example.com https://deno.land/std@0.65.0/examples/curl.ts https://example.com
 </code></pre>
 <h3><a class="header" href="#ファイルを読み取る" id="ファイルを読み取る">ファイルを読み取る</a></h3>
 <p>Denoは、Web以外のAPIも提供しています。これらはすべて<code>Deno</code>グローバルに含まれています。これらのAPIのドキュメントは、<a href="https://doc.deno.land/https/github.com/denoland/deno/releases/latest/download/lib.deno.d.ts">doc.deno.land</a>にあります。</p>
-<p>たとえばファイルシステムAPIにはWeb標準形式がないため、Denoは独自のAPIを提供します。</p>
+<p>例えばファイルシステムAPIにはWeb標準形式がないため、Denoは独自のAPIを提供します。</p>
 <p>このプログラムでは、各コマンドライン引数はファイル名であると想定され、ファイルが開かれ、標準出力に出力されます。</p>
 <p>例：<a href="../examples/unix_cat.html">Unix cat</a></p>
 <p>このプログラムでは、各コマンドライン引数はファイル名であると想定され、ファイルが開かれ、標準出力に出力されます。</p>
@@ -212,12 +213,12 @@ for (const filename of filenames) {
   file.close();
 }
 </code></pre>
-<p>ここの<code>copy()</code>関数は、実際には必要なカーネル-&gt;ユーザースペース-&gt;カーネルのコピーしか作成しません。つまり、データがファイルから読み取られるのと同じメモリがstdoutに書き込まれます。これは、DenoのI / Oストリームの一般的な設計目標を示しています。</p>
+<p>ここの<code>copy()</code>関数は、実際には必要なカーネル-&gt;ユーザースペース-&gt;カーネルのコピーしか作成しません。つまり、データがファイルから読み取られるのと同じメモリがstdoutに書き込まれます。これは、Denoの I/Oストリームの一般的な設計目標を示しています。</p>
 <p>プログラムを試してください：</p>
-<pre><code class="language-shell">deno run --allow-read https://deno.land/std@$STD_VERSION/examples/cat.ts /etc/passwd
+<pre><code class="language-shell">deno run --allow-read https://deno.land/std@0.65.0/examples/cat.ts /etc/passwd
 </code></pre>
 <h3><a class="header" href="#tcp-サーバー" id="tcp-サーバー">TCP サーバー</a></h3>
-<p>例：<a href="../examples/tcp_echo.html">TCP echo</a></p>
+<p>例：<a href="../examples/tcp_echo.html">TCP echo server</a></p>
 <p>これは、ポート8080で接続を受け入れ、送信したものをクライアントに返すサーバーの例です。</p>
 <pre><code class="language-ts">const listener = Deno.listen({ port: 8080 });
 console.log(&quot;listening on 0.0.0.0:8080&quot;);
@@ -226,14 +227,14 @@ for await (const conn of listener) {
 }
 </code></pre>
 <p>このプログラムを起動すると、PermissionDeniedエラーがスローされます。</p>
-<pre><code class="language-shell">$ deno run https://deno.land/std@$STD_VERSION/examples/echo_server.ts
+<pre><code class="language-shell">$ deno run https://deno.land/std@0.65.0/examples/echo_server.ts
 error: Uncaught PermissionDenied: network access to &quot;0.0.0.0:8080&quot;, run again with the --allow-net flag
 ► $deno$/dispatch_json.ts:40:11
     at DenoError ($deno$/errors.ts:20:5)
     ...
 </code></pre>
 <p>セキュリティ上の理由から、Denoは明示的な許可なしにプログラムがネットワークにアクセスすることを許可していません。ネットワークへのアクセスを許可するには、コマンドラインフラグを使用します：</p>
-<pre><code class="language-shell">deno run --allow-net https://deno.land/std@$STD_VERSION/examples/echo_server.ts
+<pre><code class="language-shell">$ deno run --allow-net https://deno.land/std@0.65.0/examples/echo_server.ts
 </code></pre>
 <p>テストするには、netcatを使用してデータを送信してみてください。</p>
 <pre><code class="language-shell">$ nc localhost 8080
@@ -241,7 +242,7 @@ hello world
 hello world
 </code></pre>
 <p><code>cat.ts</code>の例と同様に、ここでの<code>copy()</code>関数も不要なメモリコピーを作成しません。それはカーネルからパケットを受信し、さらに複雑にすることなく送り返します。</p>
-<h3><a class="header" href="#更なる例について" id="更なる例について">更なる例について</a></h3>
+<h3><a class="header" href="#他の例も見るには" id="他の例も見るには">他の例も見るには</a></h3>
 <p>HTTPファイルサーバーなどの例は、<a href="../examples.html">例</a> の章にあります。</p>
 
                     </main>

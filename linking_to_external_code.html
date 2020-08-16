@@ -187,13 +187,13 @@ Asserted! ✓
 </ul>
 <h2><a class="header" href="#faq" id="faq">FAQ</a></h2>
 <h3><a class="header" href="#モジュールの特定のバージョンをインポートするにはどうすればよいですか" id="モジュールの特定のバージョンをインポートするにはどうすればよいですか">モジュールの特定のバージョンをインポートするにはどうすればよいですか？</a></h3>
-<p>URLでバージョンを指定します。たとえば、次のように実行中のコードで完全URLで指定します。 <code>https://unpkg.com/liltest@0.0.5/dist/liltest.js</code>。</p>
+<p>URLでバージョンを指定します。例えば、次のように実行中のコードで完全URLで指定します。 <code>https://unpkg.com/liltest@0.0.5/dist/liltest.js</code>。</p>
 <h3><a class="header" href="#どこにでもurlをインポートするのは扱いにくいようです" id="どこにでもurlをインポートするのは扱いにくいようです">どこにでもURLをインポートするのは扱いにくいようです。</a></h3>
 <blockquote>
 <p>URLの1つが微妙に異なるバージョンのライブラリにリンクしている場合はどうなりますか？<br />
 大規模なプロジェクトのどこにでもURLを保持するのは間違いやすいのではないでしょうか？</p>
 </blockquote>
-<p>解決策は、外部のライブラリを<code>deps.ts</code>ファイル（Nodeの<code>package.json</code>ファイルと同じ目的で機能する）にインポートおよび再エクスポートすることです。たとえば、大規模なプロジェクト全体で上記のアサーションライブラリを使用していたとしましょう。 <code>&quot;https://deno.land/std@0.64.0/testing/asserts.ts&quot;</code>をどこにでもインポートするのではなく、サードパーティのコードをエクスポートする<code>deps.ts</code>ファイルを作成できます。</p>
+<p>解決策は、外部のライブラリを<code>deps.ts</code>ファイル（Nodeの<code>package.json</code>ファイルと同じ目的で機能する）にインポートおよび再エクスポートすることです。例えば、大規模なプロジェクト全体で上記のアサーションライブラリを使用していたとしましょう。 <code>&quot;https://deno.land/std@0.65.0/testing/asserts.ts&quot;</code>をどこにでもインポートするのではなく、サードパーティのコードをエクスポートする<code>deps.ts</code>ファイルを作成できます。</p>
 <p><strong>deps.ts</strong></p>
 <pre><code class="language-ts">export {
   assert,

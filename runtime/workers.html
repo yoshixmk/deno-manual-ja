@@ -160,7 +160,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2><a class="header" href="#workers" id="workers">Workers</a></h2>
-<p>Denoは<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/Worker">Web Worker API</a>をサポートしています。</p>
+<p>Denoは<a href="https://developer.mozilla.org/ja/docs/Web/API/Worker/Worker">Web Worker API</a>をサポートしています。</p>
 <p>Workerを使用して、複数のスレッドでコードを実行できます。 <code>Worker</code>の各インスタンスは、そのWorker専用の個別のスレッドで実行されます。</p>
 <p>現在、Denoは<code>モジュール</code>タイプのWorkerのみをサポートしています。したがって、新しいWorkerを作成するときは、<code>type： &quot;module&quot;</code>オプションを渡すことが不可欠です。</p>
 <p>現在のところ、相対モジュール指定子は<a href="https://github.com/denoland/deno/issues/5216">サポートされていません</a>。代わりに、<code>URL</code>コンストラクターと<code>import.meta.url</code>を使用して、近くにあるスクリプトの指定子を簡単に作成できます。</p>
@@ -229,7 +229,7 @@ worker.postMessage({ filename: &quot;./log.txt&quot; });
 <pre><code class="language-shell">$ deno run --allow-read --unstable main.js
 hello world
 </code></pre>
-<p><code>Deno</code>名前空間がWorkerスコープで使用可能な場合、Workerは親プロセスの権限（<code>--allow-*</code>フラグを使用して指定されたもの）を継承します。 パーミッションをWorkerに対して構成可能にする予定です。</p>
+<p><code>Deno</code>名前空間がWorkerスコープで使用可能な場合、Workerは親プロセスのパーミッション（<code>--allow-*</code>フラグを使用して指定されたもの）を継承します。 パーミッションをWorkerに対して構成可能にする予定です。</p>
 
                     </main>
 

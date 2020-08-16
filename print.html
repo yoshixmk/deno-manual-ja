@@ -164,7 +164,7 @@
                         <h1><a class="header" href="#前書き" id="前書き">前書き</a></h1>
 <blockquote>
 <p><a href="https://github.com/yoshixmk/deno-manual-ja/" rel="noopener noreferrer" target="_blank" style="display:inline-flex;align-items:center"><span style="margin-right:1em">deno-manual-ja</span><img alt="GitHub stars" src="https://img.shields.io/github/stars/yoshixmk/deno-manual-ja?style=social"> </a></p>
-<p>最終更新日 2020 年 7 月 24 日 <a href="https://github.com/denoland/deno/tree/a8f74aa381c99e9c3c3d8fdfde02919966a3a824">deno @ a8f74aa</a></p>
+<p>最終更新日 2020 年 8 月 16 日 <a href="https://github.com/denoland/deno/tree/a8f74aa381c99e9c3c3d8fdfde02919966a3a824">deno @ a8f74aa</a></p>
 </blockquote>
 <p>DenoはJavaScript / TypeScriptランタイムであり、安全なデフォルトと優れた開発者エクスペリエンスを備えています。</p>
 <p>V8、Rust、Tokioに基づいて構築されています。</p>
@@ -256,12 +256,12 @@
 <p>この章では、以下について説明します。:</p>
 <ul>
 <li>Denoのインストール</li>
-<li>環境をセットアップする</li>
-<li><code>Hello World</code>スクリプトを実行する</li>
-<li>独自のスクリプトを書く</li>
+<li>環境のセットアップ</li>
+<li><code>Hello World</code>スクリプトの実行</li>
+<li>独自のスクリプト</li>
 <li>コマンドラインインターフェース(CLI)</li>
-<li>パーミッションについて理解する</li>
-<li>TypeScriptでのDenoの使用</li>
+<li>パーミッションについのて理解</li>
+<li>TypeScriptの使用</li>
 <li>WebAssemblyの使用</li>
 </ul>
 <h2><a class="header" href="#インストール方法" id="インストール方法">インストール方法</a></h2>
@@ -294,21 +294,21 @@
 <p><code>deno help</code>を使用すると、Denoのオプションのフラグと利用方法を確認できます。
 CLIの詳細については、<a href="getting_started/./command_line_interface.html">こちら</a>をご確認ください。</p>
 <h3><a class="header" href="#アップデート" id="アップデート">アップデート</a></h3>
-<p>以前にインストールされたバージョンのDenoを更新するには、次のコマンドを実行します:</p>
+<p>以前にインストールしたDenoのバージョンを更新するには、次のコマンドを実行します:</p>
 <pre><code class="language-shell">deno upgrade
 </code></pre>
 <p>これにより、<a href="https://github.com/denoland/deno/releases">github.com/denoland/deno/releases</a>から、最新のリリースを取得し、解凍され、現在の実行ファイルと置き換えられます。</p>
 <p>次のユーティリティを使用して、特定のバージョンのDenoをインストールすることもできます:</p>
-<pre><code class="language-shell">deno upgrade --version 1.0.1
+<pre><code class="language-shell">deno upgrade --version 1.3.0
 </code></pre>
 <h3><a class="header" href="#ソースからビルドする" id="ソースからビルドする">ソースからビルドする</a></h3>
 <p>ソースからビルドする方法についての情報は、<code>貢献</code>の章にあります。</p>
 <h2><a class="header" href="#環境セットアップ" id="環境セットアップ">環境セットアップ</a></h2>
-<p>Denoを生産的に使用するには、環境をセットアップする必要があります。つまり、シェルのオートコンプリート、環境変数、選択したエディターまたはIDEを設定します。</p>
+<p>Denoを生産的に使用するには、環境をセットアップする必要があります。つまり、シェルのオートコンプリート、環境変数、エディタ・IDEの設定を行います。</p>
 <h3><a class="header" href="#環境変数" id="環境変数">環境変数</a></h3>
-<p>Denoの動作を制御するいくつかの環境変数があります。：</p>
-<p><code>DENO_DIR</code>のデフォルトは <code>$HOME/.cache/deno</code>で、任意のパスに設定できますが、生成およびキャッシュされたソースコードの書き込みと読み取りを制御します。</p>
-<p>もし<code>NO_COLOR</code>を設定すれば、カラー出力がオフになります。 <a href="https://no-color.org/">https://no-color.org/</a>を参照してください。<code>NO_COLOR</code>を使用することで<code>--allow-env</code>を使うことなく、ソースコードでboolean定数の<code>Deno.noColor</code>を使用して、設定されているかどうかをテストできます。</p>
+<p>Denoの動作を制御するいくつかの環境変数があります：</p>
+<p>環境変数<code>DENO_DIR</code>のデフォルトは <code>$HOME/.cache/deno</code>で、任意のパスに設定できますが、生成およびキャッシュされたソースコードの書き込みと読み取りを制御します。</p>
+<p>もし、環境変数<code>NO_COLOR</code>を設定すれば、カラー出力がオフになります。 <a href="https://no-color.org/">https://no-color.org/</a>を参照してください。<code>NO_COLOR</code>を使用しているかのテストはソースコード内で、<code>--allow-env</code>なしで使用できるboolean定数の<code>Deno.noColor</code>を用いることで設定されているか確認ができます。</p>
 <h3><a class="header" href="#シェルのオートコンプリート" id="シェルのオートコンプリート">シェルのオートコンプリート</a></h3>
 <p><code>deno completions &lt;shell&gt;</code>を使用して、 シェルのオートコンプリート用のスクリプトを生成できます 。コマンドはstdoutに出力するため、適切なファイルにリダイレクトする必要があります。</p>
 <p>Deno がサポートしているシェルは次の通り：</p>
@@ -323,13 +323,23 @@ CLIの詳細については、<a href="getting_started/./command_line_interface.
 <pre><code class="language-shell">deno completions bash &gt; /usr/local/etc/bash_completion.d/deno.bash
 source /usr/local/etc/bash_completion.d/deno.bash
 </code></pre>
-<p>例 (zsh):</p>
+<p>例 (フレームワークなしでのzsh):</p>
 <pre><code class="language-shell">mkdir ~/.oh-my-zsh/custom/plugins/deno
 deno completions zsh &gt; ~/.oh-my-zsh/custom/plugins/deno/_deno
 </code></pre>
-<p>在此之后，在 <code>~/.zshrc</code> 文件中的 plugins 标签下增加 <code>deno</code> 插件。</p>
-<h3><a class="header" href="#エディターとide" id="エディターとide">エディターとIDE</a></h3>
-<p>Denoはモジュールのインポートにファイル拡張子を使用する必要があり、さらにはhttpのインポートを許可が必要で、現在ほとんどのエディターと言語サーバーはこれをネイティブでサポートしていないため、多くのエディターは不要なファイル拡張子を持つファイルまたはインポートを見つけられないというエラーをスローします。</p>
+<p>次に、<code>.zshrc</code>に追加します。</p>
+<pre><code class="language-shell">fpath=(~/.zsh $fpath)
+autoload -Uz compinit
+compinit -u
+</code></pre>
+<p>それからターミナルを再起動します。補完がまだロードされない場合は、<code>rm ~/.zcompdump/</code>を実行して、以前に生成された補完を削除してから、<code>compinit</code>を実行してそれらを再度生成する必要があります。</p>
+<p>例（zsh + oh-my-zsh）[zshユーザーに推奨]：</p>
+<pre><code class="language-shell">mkdir ~/.oh-my-zsh/custom/plugins/deno
+deno completions zsh &gt; ~/.oh-my-zsh/custom/plugins/deno/_deno
+</code></pre>
+<p>この後<code>~/.zshrc</code>ファイルへdenoプラグインを追加します。<code>antigen</code>パスのようなツールの場合は<code>~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins</code>になり、コマンドは<code>antigen bundle deno</code>などになります。</p>
+<h3><a class="header" href="#エディタとide" id="エディタとide">エディタとIDE</a></h3>
+<p>Denoはモジュールのインポートにファイル拡張子を使用する必要があり、さらにはhttpのインポートを許可が必要で、現在ほとんどのエディタと言語サーバーはこれをネイティブでサポートしていないため、多くのエディタは不要なファイル拡張子を持つファイルまたはインポートを見つけられないというエラーをスローします。</p>
 <p>コミュニティは、一部の編集者がこれらの問題を解決するための拡張機能を開発しています:</p>
 <h4><a class="header" href="#vs-code" id="vs-code">VS Code</a></h4>
 <p>ベータバージョンの <a href="https://github.com/denoland/vscode_deno">vscode_deno</a>が<a href="https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno">Visual Studio Marketplace</a>に公開されました。問題があればIssuesをください。</p>
@@ -337,9 +347,8 @@ deno completions zsh &gt; ~/.oh-my-zsh/custom/plugins/deno/_deno
 <p>JetBrains IDEのサポートは、<a href="https://plugins.jetbrains.com/plugin/14382-deno">the Deno plugin</a>を通じて利用できます。</p>
 <p>JetBrains IDEをDeno用に設定する方法の詳細については、YouTrackの<a href="https://youtrack.jetbrains.com/issue/WEB-41607#focus=streamItem-27-4160152.0-0">このコメント</a>を参照してください。</p>
 <h3><a class="header" href="#vim-と-neovim" id="vim-と-neovim">Vim と NeoVim</a></h3>
-<p>もし<a href="https://github.com/neoclide/coc.nvim">CoC</a>（intellisense engine and language server protocol）をインストールすれば、Vim は Deno/TypeScript に対してかなりうまく機能します。</p>
-<p>当安装完 CoC 后，可以在 Vim 内部运行 <code>:CocInstall coc-deno</code>。你会发现，诸如 <code>gd</code>（转到定义）和 <code>gr</code>（转到/查找引用）之类的东西可以正常工作了。</p>
-<p>CoCをインストールした後、Vim内からおよび<code>：CocInstall coc-deno</code>と<code>:CocInstall coc-deno</code>を実行します。 Denoタイプ定義でオートコンプリートを機能させるには、<code>：CocCommand deno.types</code>を実行します。必要に応じて、<code>：CocRestart</code>でCoCサーバーを再起動します。これからは、<code>gd</code>（定義に移動）や<code>gr</code>（goto / find参照）などが機能するようになります。</p>
+<p>もし<a href="https://github.com/neoclide/coc.nvim">CoC</a>（intellisense engine and language server protocol）をインストールしていれば、Vim は Deno/TypeScript に対してかなりうまく機能します。</p>
+<p>CoCをインストールした後、Vim内から<code>：CocInstall coc-deno</code>と<code>:CocInstall coc-deno</code>を実行します。 Deno型定義でオートコンプリートを機能させるには、<code>：CocCommand deno.types</code>を実行します。必要に応じて、<code>：CocRestart</code>でCoCサーバーを再起動します。これからは、<code>gd</code>(go to definition)や<code>gr</code>(goto/find references)などが機能するようになります。</p>
 <h4><a class="header" href="#emacs" id="emacs">Emacs</a></h4>
 <p>Emacsは、Emacs内でTypeScriptを使用する標準的な方法である<a href="https://github.com/ananthakumaran/tide">tide</a>と、Denoの<a href="https://github.com/denoland/vscode_deno">公式VSCode拡張機能</a>で使用される<a href="https://github.com/justjavac/typescript-deno-plugin">typescript-deno-plugin</a>の組み合わせを使用することにより、DenoをターゲットとするTypeScriptプロジェクトでかなりうまく機能します。</p>
 <p>これを使用するには、まずEmacsのインスタンスに<code>tide</code>が設定されていることを確認してください。次に、 <a href="https://github.com/justjavac/typescript-deno-plugin">typescript-deno-plugin</a> ページで指示されているように、最初に <code>npm install --save-dev typescript-deno-plugin typescript</code> (<code>npm init -y</code>が必須)を行い、次に下記のブロックを<code>tsconfig.json</code>に追加すれば準備完了です！</p>
@@ -358,16 +367,17 @@ deno completions zsh &gt; ~/.oh-my-zsh/custom/plugins/deno/_deno
 <p>このリストにお気に入りのIDEがない場合は、拡張機能を開発するかもしれません。私たちの<a href="https://discord.gg/deno">コミュニティのDiscordグループ</a>で、どこから始めればよいかについて、いくつか指針を差し上げることができます。</p>
 <h2><a class="header" href="#ファーストステップ" id="ファーストステップ">ファーストステップ</a></h2>
 <p>このページには、Denoの基礎について説明するいくつかの例が含まれています。 </p>
-<p>このドキュメントは、JavaScript、特に<code>async</code>/<code>await</code>に関する予備知識があることを前提としています。 JavaScriptの予備知識がない場合は、Denoから始める前に、<a href="https://developer.mozilla.org/zh-CN/docs/learn/JavaScript">JavaScript</a>の基本に関するガイドに従うことをお勧めします。</p>
+<p>このドキュメントは、JavaScript、特に<code>async</code>/<code>await</code>に関する予備知識があることを前提としています。 JavaScriptの予備知識がない場合は、Denoから始める前に、<a href="https://developer.mozilla.org/ja/docs/Learn/JavaScript">JavaScript</a>の基本に関するガイドに従うことをお勧めします。</p>
 <h3><a class="header" href="#hello-world" id="hello-world">Hello World</a></h3>
-<p>DenoはJavaScript / TypeScriptのランタイムであり、Web互換で、可能な限り最新の機能を使用しようとします。 ブラウザーの互換性は、Denoの<code>Hello World</code>プログラムがブラウザーで実行できるプログラムと同じであることを意味します。</p>
+<p>DenoはJavaScript / TypeScriptのランタイムであり、Web互換で、可能な限り最新の機能を使用しようとします。</p>
+<p>ブラウザーの互換性は、Denoの<code>Hello World</code>プログラムがブラウザーで実行できるプログラムと同じであることを意味します。</p>
 <pre><code class="language-ts">console.log(&quot;Welcome to Deno 🦕&quot;);
 </code></pre>
 <p>プログラムを試してください：</p>
 <pre><code class="language-shell">deno run https://deno.land/std/examples/welcome.ts
 </code></pre>
 <h3><a class="header" href="#httpリクエストを行う" id="httpリクエストを行う">HTTPリクエストを行う</a></h3>
-<p>多くのプログラムは、HTTP要求を使用してWebサーバーからデータをフェッチします。ファイルをフェッチしてその内容を端末に出力する小さなプログラムを書いてみましょう。 ブラウザーと同様に、Web標準<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API"><code>fetch</code></a>APIを使用してHTTP呼び出しを行うことができます。</p>
+<p>多くのプログラムは、HTTP要求を使用してWebサーバーからデータをフェッチします。ファイルをフェッチしてその内容を端末に出力する小さなプログラムを書いてみましょう。 ブラウザーと同様に、Web標準<a href="https://developer.mozilla.org/ja/docs/Web/API/Fetch_API"><code>fetch</code></a>APIを使用してHTTP呼び出しを行うことができます。</p>
 <pre><code class="language-typescript">const url = Deno.args[0];
 const res = await fetch(url);
 
@@ -383,22 +393,22 @@ await Deno.stdout.write(body);
 <p>指定されたURLにリクエストを送信し、レスポンスを待って、<code>res</code>定数に格納します。</p>
 </li>
 <li>
-<p>応答の本文を<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer"><code>ArrayBuffer</code></a>として解析し、応答を待ち、<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array"><code>Uint8Array</code></a>に変換して<code>body</code>の定数に格納します。。</p>
+<p>応答の本文を<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer"><code>ArrayBuffer</code></a>として解析し、応答を待ち、<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array"><code>Uint8Array</code></a>に変換して<code>body</code>の定数に格納します。。</p>
 </li>
 <li>
 <p><code>body</code>定数の内容を<code>stdout</code>に書き込みます。</p>
 </li>
 </ol>
 <p>やってみよう：</p>
-<pre><code class="language-shell">deno run https://deno.land/std/examples/curl.ts https://example.com
+<pre><code class="language-shell">deno run https://deno.land/std@0.65.0/examples/curl.ts https://example.com
 </code></pre>
-<p>このプログラムはネットワークアクセスに関するエラーを返しますが、何が問題だったのでしょうか。はじめに、Denoはデフォルトで安全なランタイムであることを覚えているかもしれません。つまり、ネットワークへのアクセスなど、特定の「特権」アクションを実行する許可をプログラムに明示的に与える必要があります。</p>
-<p>正しい許可フラグでもう一度試してください:</p>
-<pre><code class="language-shell">deno run --allow-net=example.com https://deno.land/std/examples/curl.ts https://example.com
+<p>このプログラムはネットワークアクセスに関するエラーを返しますが、何が問題だったのでしょうか。はじめに、Denoはデフォルトで安全なランタイムであることを紹介したのを覚えているかもしれません。つまり、ネットワークへのアクセスなど、「特権」アクションを実行する場合はパーミッションをプログラムに対して明示的に与える必要があります。</p>
+<p>正しいパーミッションを与え、もう一度試してください:</p>
+<pre><code class="language-shell">deno run --allow-net=example.com https://deno.land/std@0.65.0/examples/curl.ts https://example.com
 </code></pre>
 <h3><a class="header" href="#ファイルを読み取る" id="ファイルを読み取る">ファイルを読み取る</a></h3>
 <p>Denoは、Web以外のAPIも提供しています。これらはすべて<code>Deno</code>グローバルに含まれています。これらのAPIのドキュメントは、<a href="https://doc.deno.land/https/github.com/denoland/deno/releases/latest/download/lib.deno.d.ts">doc.deno.land</a>にあります。</p>
-<p>たとえばファイルシステムAPIにはWeb標準形式がないため、Denoは独自のAPIを提供します。</p>
+<p>例えばファイルシステムAPIにはWeb標準形式がないため、Denoは独自のAPIを提供します。</p>
 <p>このプログラムでは、各コマンドライン引数はファイル名であると想定され、ファイルが開かれ、標準出力に出力されます。</p>
 <p>例：<a href="getting_started/../examples/unix_cat.html">Unix cat</a></p>
 <p>このプログラムでは、各コマンドライン引数はファイル名であると想定され、ファイルが開かれ、標準出力に出力されます。</p>
@@ -409,12 +419,12 @@ for (const filename of filenames) {
   file.close();
 }
 </code></pre>
-<p>ここの<code>copy()</code>関数は、実際には必要なカーネル-&gt;ユーザースペース-&gt;カーネルのコピーしか作成しません。つまり、データがファイルから読み取られるのと同じメモリがstdoutに書き込まれます。これは、DenoのI / Oストリームの一般的な設計目標を示しています。</p>
+<p>ここの<code>copy()</code>関数は、実際には必要なカーネル-&gt;ユーザースペース-&gt;カーネルのコピーしか作成しません。つまり、データがファイルから読み取られるのと同じメモリがstdoutに書き込まれます。これは、Denoの I/Oストリームの一般的な設計目標を示しています。</p>
 <p>プログラムを試してください：</p>
-<pre><code class="language-shell">deno run --allow-read https://deno.land/std@$STD_VERSION/examples/cat.ts /etc/passwd
+<pre><code class="language-shell">deno run --allow-read https://deno.land/std@0.65.0/examples/cat.ts /etc/passwd
 </code></pre>
 <h3><a class="header" href="#tcp-サーバー" id="tcp-サーバー">TCP サーバー</a></h3>
-<p>例：<a href="getting_started/../examples/tcp_echo.html">TCP echo</a></p>
+<p>例：<a href="getting_started/../examples/tcp_echo.html">TCP echo server</a></p>
 <p>これは、ポート8080で接続を受け入れ、送信したものをクライアントに返すサーバーの例です。</p>
 <pre><code class="language-ts">const listener = Deno.listen({ port: 8080 });
 console.log(&quot;listening on 0.0.0.0:8080&quot;);
@@ -423,14 +433,14 @@ for await (const conn of listener) {
 }
 </code></pre>
 <p>このプログラムを起動すると、PermissionDeniedエラーがスローされます。</p>
-<pre><code class="language-shell">$ deno run https://deno.land/std@$STD_VERSION/examples/echo_server.ts
+<pre><code class="language-shell">$ deno run https://deno.land/std@0.65.0/examples/echo_server.ts
 error: Uncaught PermissionDenied: network access to &quot;0.0.0.0:8080&quot;, run again with the --allow-net flag
 ► $deno$/dispatch_json.ts:40:11
     at DenoError ($deno$/errors.ts:20:5)
     ...
 </code></pre>
 <p>セキュリティ上の理由から、Denoは明示的な許可なしにプログラムがネットワークにアクセスすることを許可していません。ネットワークへのアクセスを許可するには、コマンドラインフラグを使用します：</p>
-<pre><code class="language-shell">deno run --allow-net https://deno.land/std@$STD_VERSION/examples/echo_server.ts
+<pre><code class="language-shell">$ deno run --allow-net https://deno.land/std@0.65.0/examples/echo_server.ts
 </code></pre>
 <p>テストするには、netcatを使用してデータを送信してみてください。</p>
 <pre><code class="language-shell">$ nc localhost 8080
@@ -438,10 +448,10 @@ hello world
 hello world
 </code></pre>
 <p><code>cat.ts</code>の例と同様に、ここでの<code>copy()</code>関数も不要なメモリコピーを作成しません。それはカーネルからパケットを受信し、さらに複雑にすることなく送り返します。</p>
-<h3><a class="header" href="#更なる例について" id="更なる例について">更なる例について</a></h3>
+<h3><a class="header" href="#他の例も見るには" id="他の例も見るには">他の例も見るには</a></h3>
 <p>HTTPファイルサーバーなどの例は、<a href="getting_started/../examples.html">例</a> の章にあります。</p>
 <h2><a class="header" href="#コマンドラインインターフェースcli" id="コマンドラインインターフェースcli">コマンドラインインターフェース(CLI)</a></h2>
-<p>Denoはコマンドラインプログラムです。これまでの例に従ってきたいくつかの簡単なコマンドに精通し、シェルの使用法の基本をすでに理解している必要があります。</p>
+<p>Denoはコマンドラインプログラムです。これまでの例に従ってきたいくつかの簡単なコマンドに精通し、シェルの使用法の基本を理解している必要があります。</p>
 <p>メインのヘルプテキストを表示する方法はいくつかあります。</p>
 <pre><code class="language-shell"># Using the subcommand.
 deno help
@@ -457,9 +467,9 @@ deno --help
 deno bundle -h
 deno bundle --help
 </code></pre>
-<p>各サブコマンドの詳細なガイドは<a href="getting_started/../tools.html">这里</a>にあります。</p>
+<p>各サブコマンドの詳細なガイドは<a href="getting_started/../tools.html">こちら</a>にあります。</p>
 <h3><a class="header" href="#スクリプト" id="スクリプト">スクリプト</a></h3>
-<p>Denoは、複数のソース、ファイル名、URL、および「-」からスクリプトを取得して、stdinからファイルを読み取ることができます。最後は他のアプリケーションとの統合に役立ちます。</p>
+<p>Denoは、複数のソース、ファイル名、URL、および「-」を用いてstdinからファイルを読み取りスクリプトを取得して、実行することができます。最後のは他のアプリケーションとの統合に役立ちます。</p>
 <pre><code class="language-shell">deno run main.ts
 deno run https://mydomain.com/main.ts
 cat main.ts | deno run -
@@ -471,8 +481,7 @@ cat main.ts | deno run -
 <pre><code class="language-ts">// main.ts
 console.log(Deno.args); // [ &quot;a&quot;, &quot;b&quot;, &quot;-c&quot;, &quot;--quiet&quot; ]
 </code></pre>
-<p><strong>スクリプト名の後に渡されたものはすべてスクリプト引数として渡され、Denoランタイムフラグとしては消費されないことに注意してください。</strong></p>
-<p>これは、次の落とし穴につながります:</p>
+<p><strong>スクリプト名の後に渡されたものはすべてスクリプト引数として渡され、Denoランタイムフラグとしては消費されないことに注意してください。</strong> これは、次のような落とし穴につながります:</p>
 <pre><code class="language-shell"># Good. We grant net permission to net_client.ts.
 deno run --allow-net net_client.ts
 
@@ -487,8 +496,7 @@ deno run net_client.ts --allow-net
 <ol>
 <li>これは、ランタイムフラグとスクリプト引数を区別する最も論理的な方法です。</li>
 <li>これは、ランタイムフラグとスクリプト引数を区別する最も人間工学的な方法です。</li>
-<li>これは実際には、他の一般的なランタイムと同じ動作です。</li>
-<li>实际上，这和其他流行的运行时具有相同的行为。
+<li>これは実際には、他の一般的なランタイムと同じ動作です。
 <ul>
 <li><code>node -c index.js</code> と <code>node index.js -c</code>を試してみます。すると1つ目は、ノードの<code>-c</code>フラグに従って、<code>index.js</code>の構文チェックのみを実行します。2番目は、<code>require(&quot;process&quot;).argv</code>に<code>-c</code>を渡して<code>index.js</code>を実行します。</li>
 </ul>
@@ -501,7 +509,7 @@ deno run net_client.ts --allow-net
 <pre><code>--lock &lt;FILE&gt;    Check the specified lock file
 --lock-write     Write lock file. Use with --lock.
 </code></pre>
-<p>これらの詳細については、<a href="getting_started/../linking_to_external_code/integrity_checking.html">这里</a>をご覧ください。</p>
+<p>これらの詳細については、<a href="getting_started/../linking_to_external_code/integrity_checking.html">こちら</a>をご覧ください。</p>
 <h3><a class="header" href="#キャッシュとコンパイルのフラグ" id="キャッシュとコンパイルのフラグ">キャッシュとコンパイルのフラグ</a></h3>
 <p>キャッシュにデータを入力できるコマンドに影響を与えます：<code>deno cache</code>、<code>deno run</code>、<code>deno test</code>。上記のフラグに加えて、これにはモジュールの解決、コンパイル構成などに影響するフラグが含まれます。</p>
 <pre><code>--config &lt;FILE&gt;               Load tsconfig.json configuration file
@@ -530,25 +538,25 @@ deno run net_client.ts --allow-net
 <h3><a class="header" href="#パーミッションのリスト" id="パーミッションのリスト">パーミッションのリスト</a></h3>
 <p>次のパーミッションを使用できます：</p>
 <ul>
-<li><strong>-A, --allow-all</strong> すべての権限を許可します。これにより、すべてのセキュリティが無効になります。</li>
+<li><strong>-A, --allow-all</strong> すべてのパーミッションを許可します。これにより、すべてのセキュリティが無効になります。</li>
 <li><strong>--allow-env</strong> 環境変数の取得や設定などの環境アクセスを許可します。</li>
 <li><strong>--allow-hrtime</strong> 高分解能の時間測定を可能にします。高解像度の時間は、タイミング攻撃やフィンガープリントに使用できます。</li>
 <li><strong>--allow-net=&lt;allow-net&gt;</strong> ネットワークアクセスを許可します。オプションのドメインのコンマ区切りリストを指定して、許可されたドメインの許可リストを提供できます。</li>
 <li><strong>--allow-plugin</strong> プラグインの読み込みを許可します。 --allow-pluginは不安定な機能であることに注意してください。</li>
 <li><strong>--allow-read=&lt;allow-read&gt;</strong> ファイルシステムの読み取りアクセスを許可します。オプションのコンマ区切りのディレクトリまたはファイルのリストを指定して、許可されたファイルシステムアクセスの許可リストを提供できます。</li>
-<li><strong>--allow-run</strong> サブプロセスの実行を許可します。サブプロセスはサンドボックスで実行されないため、denoプロセスと同じセキュリティ制限がないことに注意してください。したがって、注意して使用してください。</li>
+<li><strong>--allow-run</strong> サブプロセスの実行を許可します。サブプロセスはサンドボックスで実行されないため、denoのプロセスと同じくセキュリティ制限がないことに注意してください。したがって、注意して使用してください。</li>
 <li><strong>--allow-write=&lt;allow-write&gt;</strong> ファイルシステムの書き込みアクセスを許可します。オプションのコンマ区切りのディレクトリまたはファイルのリストを指定して、許可されたファイルシステムアクセスの許可リストを提供できます。</li>
 </ul>
 <h3><a class="header" href="#パーミッション許可リスト" id="パーミッション許可リスト">パーミッション許可リスト</a></h3>
-<p>Denoでは、許可リストを使用して一部の権限の細かさを制御することもできます。</p>
+<p>Denoでは、許可リストを使用して一部のパーミッションの細かさを制御することもできます。</p>
 <p>この例では、<code>/usr</code>ディレクトリのみを許可リストすることによってファイルシステムアクセスを制限していますが、プロセスが<code>/etc</code>ディレクトリ内のファイルにアクセスしようとしたため、実行は失敗します。</p>
-<pre><code class="language-shell">$ deno run --allow-read=/usr https://deno.land/std/examples/cat.ts /etc/passwd
+<pre><code class="language-shell">$ deno run --allow-read=/usr https://deno.land/std@0.65.0/examples/cat.ts /etc/passwd
 error: Uncaught PermissionDenied: read access to &quot;/etc/passwd&quot;, run again with the --allow-read flag
 ► $deno$/dispatch_json.ts:40:11
     at DenoError ($deno$/errors.ts:20:5)
     ...
 </code></pre>
-<p>代わりに<code>/etc</code>を許可リストにして、正しい権限でもう一度試してください:</p>
+<p>代わりに<code>/etc</code>を許可リストに加え、正しいパーミッションでもう一度試してください:</p>
 <pre><code class="language-shell">deno run --allow-read=/etc https://deno.land/std/examples/cat.ts /etc/passwd
 </code></pre>
 <p><code>--allow-write</code> は<code>--allow-read</code>と同じように機能します</p>
@@ -566,39 +574,39 @@ error: Uncaught PermissionDenied: read access to &quot;/etc/passwd&quot;, run ag
 <h2><a class="header" href="#typescriptの使用" id="typescriptの使用">TypeScriptの使用</a></h2>
 <!-- TODO(lucacasonato): text on 'just import .ts' -->
 <p>Denoは、実行時にファーストクラス言語としてJavaScriptとTypeScriptの両方をサポートします。つまり、拡張子（または正しいメディアタイプを提供するサーバー）を含む完全修飾モジュール名が必要です。さらに、Denoには「魔法の」モジュール解決策がありません。代わりに、インポートされたモジュールは、ファイル（拡張子を含む）または完全修飾URLインポートとして指定されます。 Typescriptモジュールは直接インポートできます。例えば：</p>
-<pre><code class="language-ts">import { Response } from &quot;https://deno.land/std@0.64.0/http/server.ts&quot;;
+<pre><code class="language-ts">import { Response } from &quot;https://deno.land/std@0.65.0/http/server.ts&quot;;
 import { queue } from &quot;./collections.ts&quot;;
 </code></pre>
 <h3><a class="header" href="#--no-check-オプション" id="--no-check-オプション"><code>--no-check</code> オプション</a></h3>
-<p><code>deno run</code>、<code>deno test</code>、<code>deno cache</code>、<code>deno info</code>、<code>deno bundle</code>を使用する場合、<code>--no-check</code>フラグを指定してTypeScriptタイプのチェックを無効にすることができます。これにより、プログラムの起動にかかる時間を大幅に短縮できます。これは、エディターによって型チェックが提供され、起動時間をできるだけ速くしたい場合（ファイルウォッチャーでプログラムを自動的に再起動する場合など）に非常に役立ちます。</p>
+<p><code>deno run</code>、<code>deno test</code>、<code>deno cache</code>、<code>deno info</code>、<code>deno bundle</code>を使用する場合、<code>--no-check</code>フラグを指定してTypeScriptタイプのチェックを無効にすることができます。これにより、プログラムの起動にかかる時間を大幅に短縮できます。これは、エディタによって型チェックが提供され、起動時間をできるだけ速くしたい場合（ファイルウォッチャーでプログラムを自動的に再起動する場合など）に非常に役立ちます。</p>
 <p><code>--no-check</code>はTypeScriptの型チェックを行わないため、型情報が必要になるため、型のみのインポートとエクスポートを自動的に削除することはできません。この目的のために、TypeScriptは<a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-8.html#type-only-imports-and-exports"><code>importタイプとexportタイプの構文</code></a>を提供します。タイプを別のファイルにエクスポートするには、<code>export type {AnInterface} from &quot;./mod.ts&quot;;</code>を使用します。タイプをインポートするには、 <code>import type { AnInterface } from &quot;./mod.ts&quot;;</code>を使用します。 <code>importsNotUsedAsValues</code> TypeScriptコンパイラオプションを<code>&quot;error&quot;</code>に設定することで、必要に応じてインポートタイプとエクスポートタイプを使用していることを確認できます。このオプションを使用した<a href="https://github.com/denoland/deno/blob/master/std/tsconfig_test.json"><code>tsconfig_test.json</code></a>の例は、標準ライブラリ内にあります。</p>
+<p><code>--no-check</code>を使用すると型情報がないため、<code>const enum</code>は型の指定であるためサポートされません。<code>--no-check</code>は、従来の<code>import =</code>および<code>export =</code>構文もサポートしていません。</p>
 <h3><a class="header" href="#外部型定義の使用" id="外部型定義の使用">外部型定義の使用</a></h3>
 <p>ただし、標準のTypeScriptコンパイラは、JavaScriptモジュールにタイプを適用するために、拡張機能のないモジュールとNode.jsモジュール解決ロジックの両方に依存しています。</p>
-<p>このギャップを埋めるために、Denoは「魔法の」解決に頼ることなくタイプ定義ファイルを参照する3つの方法をサポートしています。</p>
-<h4><a class="header" href="#コンパイラーのヒント" id="コンパイラーのヒント">コンパイラーのヒント</a></h4>
-<p>JavaScriptモジュールをインポートしていて、そのモジュールの型定義の場所がわかっている場合は、インポート時に型定義を指定できます。これはコンパイラのヒントの形をとります。コンパイラーのヒントは、<code>.d.ts</code>ファイルの場所と、それらが関連付けられているインポートされたJavaScriptコードをDenoに通知します。ヒントは<code>@deno-types</code>であり、指定すると、JavaScriptモジュールの代わりにコンパイラで値が使用されます。</p>
-<p>たとえば、<code>foo.js</code>があったが、それに加えてファイルのタイプであるfoo.d.tsであることがわかっている場合、コードは次のようになります:</p>
+<p>このギャップを埋めるために、Denoは「魔法の」解決に頼ることなく型定義ファイルを参照する3つの方法をサポートしています。</p>
+<h4><a class="header" href="#コンパイラーへのヒント" id="コンパイラーへのヒント">コンパイラーへのヒント</a></h4>
+<p>JavaScriptモジュールをインポートしていて、そのモジュールの型定義の場所がわかっている場合は、インポート時に型定義を指定できます。これでコンパイラへヒントを与えた形になります。コンパイラーへのヒントは、<code>.d.ts</code>ファイルの場所と、それらが関連付けられているインポートされたJavaScriptコードをDenoに通知します。ヒントは<code>@deno-types</code>であり、指定すると、JavaScriptモジュールの代わりにコンパイラで値が使用されます。</p>
+<p>例えば、<code>foo.js</code>があったが、それに加えてファイルのタイプであるfoo.d.tsであることがわかっている場合、コードは次のようになります:</p>
 <pre><code class="language-ts">// @deno-types=&quot;./foo.d.ts&quot;
 import * as foo from &quot;./foo.js&quot;;
 </code></pre>
 <p>値は、モジュールのインポートと同じ解決ロジックに従います。つまり、ファイルには拡張子が必要であり、現在のモジュールに対して相対的です。リモート指定子も使用できます。</p>
 <p>ヒントは、<code>@deno-types</code>の値が、指定されたモジュールの代わりにコンパイル時に置換される次の<code>import</code>ステートメント（または<code>export ... from</code>ステートメント）に影響します。上記の例のように、Denoコンパイラは<code>./foo.js</code>ではなく<code>./foo.d.ts</code>をロードします。 Denoはプログラムの実行時に<code>./foo.js</code>を引き続きロードします。</p>
 <h4><a class="header" href="#javascriptファイルのトリプルスラッシュ参照ディレクティブ" id="javascriptファイルのトリプルスラッシュ参照ディレクティブ">JavaScriptファイルのトリプルスラッシュ参照ディレクティブ</a></h4>
-<p>Denoで使用するモジュールをホストしていて、型定義の場所についてDenoに通知する場合は、実際のコードでトリプルスラッシュディレクティブを使用できます。たとえば、JavaScriptモジュールがあり、そのファイルの横にある型定義の場所をDenoに提供する場合、<code>foo.js</code>という名前のJavaScriptモジュールは次のようになります。：</p>
+<p>Denoで使用するモジュールをホストしていて、型定義の場所についてDenoに通知する場合は、実際のコードでトリプルスラッシュディレクティブを使用できます。例えば、JavaScriptモジュールがあり、そのファイルの横にある型定義の場所をDenoに提供する場合、<code>foo.js</code>という名前のJavaScriptモジュールは次のようになります。：</p>
 <pre><code class="language-js">/// &lt;reference types=&quot;./foo.d.ts&quot; /&gt;
 export const foo = &quot;foo&quot;;
 </code></pre>
-<p>Denoはこれを確認し、コンパイラはファイルの型チェック時に<code>foo.d.ts</code>を使用しますが、<code>foo.js</code>は実行時にロードされます。ディレクティブの値の解決は、モジュールのインポートと同じ解決ロジックに従います。</p>
-<p>つまり、ファイルには拡張子が必要であり、現在のファイルに対して相対的です。リモート指定子も使用できます。</p>
+<p>Denoはこれを確認し、コンパイラはファイルの型チェック時に<code>foo.d.ts</code>を使用しますが、<code>foo.js</code>は実行時にロードされます。ディレクティブの値の解決は、モジュールのインポートと同じ解決ロジックに従います。つまり、ファイルには拡張子が必要であり、現在のファイルに対して相対的です。リモート指定子も使用できます。</p>
 <h4><a class="header" href="#x-typescript-types-カスタムヘッダー" id="x-typescript-types-カスタムヘッダー">X-TypeScript-Types カスタムヘッダー</a></h4>
 <p>Denoによって使用されるモジュールをホストしていて、Denoに型定義の場所を通知する場合は、<code>X-TypeScript-Types</code>のカスタムHTTPヘッダーを使用して、そのファイルの場所をDenoに通知できます。</p>
 <p>ヘッダーは、前述のトリプルスラッシュリファレンスと同じように機能します。つまり、JavaScriptファイル自体のコンテンツを変更する必要がなく、型定義の場所をサーバー自体が決定できることを意味します。</p>
 <p><strong>すべての型定義がサポートされているわけではありません。</strong></p>
-<p>Denoはコンパイラヒントを使用して、指定された<code>.d.ts</code>ファイルをロードしますが、一部の<code>.d.ts</code>ファイルにはサポートされていない機能が含まれています。具体的には、一部の<code>.d.ts</code>ファイルは、モジュール解決ロジックを使用して、他のパッケージからタイプ定義をロードまたは参照できると想定しています。たとえば、<code>node</code>を含めるタイプ参照ディレクティブは、。<code>./node_modules/@types/node/index.d.ts</code>のようなパスに解決されることを期待しています。これは相対的でない「魔法の」解像度に依存するため、Denoはこれを解決できません。</p>
+<p>Denoはコンパイラヒントを使用して、指定された<code>.d.ts</code>ファイルをロードしますが、一部の<code>.d.ts</code>ファイルにはサポートされていない機能が含まれています。具体的には、一部の<code>.d.ts</code>ファイルは、モジュール解決ロジックを使用して、他のパッケージから型定義をロードまたは参照できると想定しています。例えば、<code>node</code>を含める型の参照ディレクティブは、。<code>./node_modules/@types/node/index.d.ts</code>のようなパスに解決されることを期待しています。これは相対的でない「魔法の」解像度に依存するため、Denoはこれを解決できません。</p>
 <p><strong>TypeScriptファイルでトリプルスラッシュタイプの参照を使用しないのはなぜですか？</strong></p>
-<p>TypeScriptコンパイラは、タイプ参照ディレクティブを含むトリプルスラッシュディレクティブをサポートします。 Denoがこれを使用した場合、TypeScriptコンパイラの動作に干渉します。 DenoはJavaScript（およびJSX）ファイルでディレクティブを検索するだけです。</p>
+<p>TypeScriptコンパイラは、型の参照ディレクティブを含むトリプルスラッシュディレクティブをサポートします。 Denoがこれを使用した場合、TypeScriptコンパイラの動作に干渉します。 DenoはJavaScript（およびJSX）ファイルでディレクティブを検索するだけです。</p>
 <h3><a class="header" href="#カスタムtypescriptコンパイラオプション" id="カスタムtypescriptコンパイラオプション">カスタムTypeScriptコンパイラオプション</a></h3>
-<p>Denoエコシステムでは、デフォルトで<code>厳格</code>であるというTypeScriptの理想に準拠するために、すべての厳格なフラグが有効になっています。ただし、カスタマイズをサポートする方法を提供するために、プログラムの実行時に<code>tsconfig.json</code>などの構成ファイルがDenoに提供される場合があります。 </p>
+<p>Denoエコシステムでは、デフォルトで<code>strict</code>(=厳格)であるというTypeScriptの理想に準拠するために、すべての厳格なフラグが有効になっています。ただし、カスタマイズをサポートする方法を提供するために、プログラムの実行時に<code>tsconfig.json</code>などの構成ファイルがDenoに提供される場合があります。 </p>
 <p>アプリケーションを実行するときに<code>-C</code>（または<code>--config</code>）引数を設定して、この構成を探す場所をDenoに明示的に指示する必要があります。</p>
 <pre><code class="language-shell">deno run -c tsconfig.json mod.ts
 </code></pre>
@@ -746,7 +754,7 @@ got unload event in event handler (main)
 </blockquote>
 <p>Denoは、組み込みのTypeScriptコンパイラへのランタイムアクセスをサポートしています。 <code>Deno</code>名前空間には、このアクセスを提供する3つのメソッドがあります。</p>
 <h3><a class="header" href="#denocompile" id="denocompile"><code>Deno.compile()</code></a></h3>
-<p>これは<code>deno cacheと</code>同様に機能し、コードのフェッチ、キャッシュ、コンパイルはできますが、実行はできません。これは、最大3つの引数で、<code>rootName</code>と、オプションで<code>sources</code>、<code>options</code>を取ります。 <code>rootName</code>は、結果のプログラムを生成するために使用されるルートモジュールです。これは、<code>deno run --reload example.ts</code>のコマンドラインで渡すモジュール名に似ています。<code>sources</code>はハッシュであり、キーは完全修飾モジュール名であり、値はモジュールのテキストソースです。<code>sources</code>が渡された場合、Denoはそのハッシュ内からすべてのモジュールを解決し、Denoの外部では解決を試みません。ソースが提供されない場合、Denoは、ルートモジュールがコマンドラインで渡されたかのようにモジュールを解決します。 Denoはこれらのリソースもキャッシュします。解決されたすべてのリソースは動的インポートとして扱われ、ローカルかリモートかに応じて読み取りまたはネット権限が必要です。 <code>options</code>引数は、<code>Deno.CompilerOptions</code>タイプのオプションのセットです。これは、Denoでサポートされているオプションを含むTypeScriptコンパイラオプションのサブセットです。</p>
+<p>これは<code>deno cacheと</code>同様に機能し、コードのフェッチ、キャッシュ、コンパイルはできますが、実行はできません。これは、最大3つの引数で、<code>rootName</code>と、オプションで<code>sources</code>、<code>options</code>を取ります。 <code>rootName</code>は、結果のプログラムを生成するために使用されるルートモジュールです。これは、<code>deno run --reload example.ts</code>のコマンドラインで渡すモジュール名に似ています。<code>sources</code>はハッシュであり、キーは完全修飾モジュール名であり、値はモジュールのテキストソースです。<code>sources</code>が渡された場合、Denoはそのハッシュ内からすべてのモジュールを解決し、Denoの外部では解決を試みません。ソースが提供されない場合、Denoは、ルートモジュールがコマンドラインで渡されたかのようにモジュールを解決します。 Denoはこれらのリソースもキャッシュします。解決されたすべてのリソースは動的インポートとして扱われ、ローカルかリモートかに応じて読み取りまたはネットパーミッションが必要です。 <code>options</code>引数は、<code>Deno.CompilerOptions</code>タイプのオプションのセットです。これは、Denoでサポートされているオプションを含むTypeScriptコンパイラオプションのサブセットです。</p>
 <p>メソッドはタプルで解決されます。最初の引数には、コードに関連するすべての診断（構文または型エラー）が含まれます。 2番目の引数は、キーが出力ファイル名で値がコンテンツであるマップです。</p>
 <p>ソースを提供する例：:</p>
 <pre><code class="language-ts">const [diagnostics, emitMap] = await Deno.compile(&quot;/foo.ts&quot;, {
@@ -765,7 +773,7 @@ console.log(emitMap);
 </code></pre>
 <p>この場合、<code>emitMap</code>には<code>console.log()</code>ステートメントが含まれます。</p>
 <h3><a class="header" href="#denobundle" id="denobundle"><code>Deno.bundle()</code></a></h3>
-<p>これは、コマンドラインで<code>deno bundle</code>が行うのとよく似ています。これも<code>Deno.compile()</code>に似ていますが、ファイルのマップを返す代わりに、提供または解決されたすべてのコードとエクスポートを含む自己完結型のJavaScript ESモジュールである単一の文字列を返します。提供されたルートモジュールのすべてのエクスポートのこれは、最大3つの引数で、<code>rootName</code>、オプションで<code>sources</code>、<code>options</code>を取ります。 <code>rootName</code>は、結果のプログラムを生成するために使用されるルートモジュールです。これは、<code>deno bundle example.ts</code>のコマンドラインで渡すモジュール名に似ています。<code>sources</code>はハッシュであり、キーは完全修飾モジュール名であり、値はモジュールのテキストソースです。<code>sources</code>が渡された場合、Denoはそのハッシュ内からすべてのモジュールを解決し、Denoの外部では解決を試みません。<code>sources</code>が提供されない場合、Denoは、ルートモジュールがコマンドラインで渡されたかのようにモジュールを解決します。解決されたすべてのリソースは動的インポートとして扱われ、ローカルかリモートかに応じて読み取りまたはネット権限が必要です。 Denoはこれらのリソースもキャッシュします。 <code>options</code>引数は、<code>Deno.CompilerOptions</code>タイプのオプションのセットです。これは、Denoでサポートされているオプションを含むTypeScriptコンパイラオプションのサブセットです。</p>
+<p>これは、コマンドラインで<code>deno bundle</code>が行うのとよく似ています。これも<code>Deno.compile()</code>に似ていますが、ファイルのマップを返す代わりに、提供または解決されたすべてのコードとエクスポートを含む自己完結型のJavaScript ESモジュールである単一の文字列を返します。提供されたルートモジュールのすべてのエクスポートのこれは、最大3つの引数で、<code>rootName</code>、オプションで<code>sources</code>、<code>options</code>を取ります。 <code>rootName</code>は、結果のプログラムを生成するために使用されるルートモジュールです。これは、<code>deno bundle example.ts</code>のコマンドラインで渡すモジュール名に似ています。<code>sources</code>はハッシュであり、キーは完全修飾モジュール名であり、値はモジュールのテキストソースです。<code>sources</code>が渡された場合、Denoはそのハッシュ内からすべてのモジュールを解決し、Denoの外部では解決を試みません。<code>sources</code>が提供されない場合、Denoは、ルートモジュールがコマンドラインで渡されたかのようにモジュールを解決します。解決されたすべてのリソースは動的インポートとして扱われ、ローカルかリモートかに応じて読み取りまたはネットパーミッションが必要です。 Denoはこれらのリソースもキャッシュします。 <code>options</code>引数は、<code>Deno.CompilerOptions</code>タイプのオプションのセットです。これは、Denoでサポートされているオプションを含むTypeScriptコンパイラオプションのサブセットです。</p>
 <p>ソースを提供する例:</p>
 <pre><code class="language-ts">const [diagnostics, emit] = await Deno.bundle(&quot;/foo.ts&quot;, {
   &quot;/foo.ts&quot;: `import * as bar from &quot;./bar.ts&quot;;\nconsole.log(bar);\n`,
@@ -795,7 +803,7 @@ console.log(result[&quot;/foo.ts&quot;].map);
 <p><code>enum</code>は、enumerableを構成するIIFEに書き換えられ、マップが定義されることを期待します。</p>
 <h3><a class="header" href="#typescriptライブラリファイルの参照" id="typescriptライブラリファイルの参照">TypeScriptライブラリファイルの参照</a></h3>
 <p><code>deno run</code>、またはTypeScriptを型チェックする他のDenoコマンドを使用すると、そのコードは、Denoがサポートする環境を記述するカスタムライブラリに対して評価されます。デフォルトでは、TypeScriptを型チェックするコンパイラランタイムAPIもこれらのライブラリ（<code>Deno.compile()</code>および<code>Deno.bundle()</code>）を使用します。</p>
-<p>ただし、他のランタイム用にTypeScriptをコンパイルまたはバンドルする場合は、デフォルトのライブラリをオーバーライドすることができます。これを行うために、ランタイムAPIはコンパイラオプションの<code>lib</code>プロパティをサポートしています。たとえば、ブラウザを宛先とするTypeScriptコードがある場合、TypeScriptの<code>&quot;dom&quot;</code>ライブラリを使用します。:</p>
+<p>ただし、他のランタイム用にTypeScriptをコンパイルまたはバンドルする場合は、デフォルトのライブラリをオーバーライドすることができます。これを行うために、ランタイムAPIはコンパイラオプションの<code>lib</code>プロパティをサポートしています。例えば、ブラウザを宛先とするTypeScriptコードがある場合、TypeScriptの<code>&quot;dom&quot;</code>ライブラリを使用します。:</p>
 <pre><code class="language-ts">const [errors, emitted] = await Deno.compile(
   &quot;main.ts&quot;,
   {
@@ -830,7 +838,7 @@ console.log(result[&quot;/foo.ts&quot;].map);
 </code></pre>
 <p><strong>注意</strong> Deno名前空間は、少なくともES2018以降のランタイム環境を想定していること。つまり、ES2018より「低い」libを使用すると、コンパイルの一部としてエラーがログに記録されます。</p>
 <h4><a class="header" href="#トリプルスラッシュリファレンスの使用" id="トリプルスラッシュリファレンスの使用">トリプルスラッシュリファレンスの使用</a></h4>
-<p>コンパイラオプションで<code>lib</code>を指定する必要はありません。 Denoは、<a href="https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html#-reference-lib-">libへのトリプルスラッシュ参照</a>もサポートしています。ファイルのコンテンツに埋め込むことができます。たとえば、次のような<code>main.ts</code>があるとします。</p>
+<p>コンパイラオプションで<code>lib</code>を指定する必要はありません。 Denoは、<a href="https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html#-reference-lib-">libへのトリプルスラッシュ参照</a>もサポートしています。ファイルのコンテンツに埋め込むことができます。例えば、次のような<code>main.ts</code>があるとします。</p>
 <pre><code class="language-ts">/// &lt;reference lib=&quot;dom&quot; /&gt;
 
 document.getElementById(&quot;foo&quot;);
@@ -842,7 +850,7 @@ document.getElementById(&quot;foo&quot;);
 </code></pre>
 <p><strong>注意</strong>，<code>dom</code>ライブラリは、Denoのデフォルトタイプライブラリで定義されているデフォルトグローバルの一部と競合することに注意してください。これを回避するには、ランタイムコンパイラAPIのコンパイラオプションで<code>lib</code>オプションを指定する必要があります。</p>
 <h2><a class="header" href="#workers" id="workers">Workers</a></h2>
-<p>Denoは<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/Worker">Web Worker API</a>をサポートしています。</p>
+<p>Denoは<a href="https://developer.mozilla.org/ja/docs/Web/API/Worker/Worker">Web Worker API</a>をサポートしています。</p>
 <p>Workerを使用して、複数のスレッドでコードを実行できます。 <code>Worker</code>の各インスタンスは、そのWorker専用の個別のスレッドで実行されます。</p>
 <p>現在、Denoは<code>モジュール</code>タイプのWorkerのみをサポートしています。したがって、新しいWorkerを作成するときは、<code>type： &quot;module&quot;</code>オプションを渡すことが不可欠です。</p>
 <p>現在のところ、相対モジュール指定子は<a href="https://github.com/denoland/deno/issues/5216">サポートされていません</a>。代わりに、<code>URL</code>コンストラクターと<code>import.meta.url</code>を使用して、近くにあるスクリプトの指定子を簡単に作成できます。</p>
@@ -911,7 +919,7 @@ worker.postMessage({ filename: &quot;./log.txt&quot; });
 <pre><code class="language-shell">$ deno run --allow-read --unstable main.js
 hello world
 </code></pre>
-<p><code>Deno</code>名前空間がWorkerスコープで使用可能な場合、Workerは親プロセスの権限（<code>--allow-*</code>フラグを使用して指定されたもの）を継承します。 パーミッションをWorkerに対して構成可能にする予定です。</p>
+<p><code>Deno</code>名前空間がWorkerスコープで使用可能な場合、Workerは親プロセスのパーミッション（<code>--allow-*</code>フラグを使用して指定されたもの）を継承します。 パーミッションをWorkerに対して構成可能にする予定です。</p>
 <h1><a class="header" href="#サードパーティのコードへのリンク" id="サードパーティのコードへのリンク">サードパーティのコードへのリンク</a></h1>
 <p>「<a href="(./getting_started.html">入門</a>」のセクションでは、DenoがURLからスクリプトを実行できることを確認しました。ブラウザのJavaScriptと同様に、DenoはURLから直接ライブラリをインポートできます。この例では、URLを使用してアサーションライブラリをインポートします。</p>
 <p><strong>test.ts</strong></p>
@@ -940,13 +948,13 @@ Asserted! ✓
 </ul>
 <h2><a class="header" href="#faq" id="faq">FAQ</a></h2>
 <h3><a class="header" href="#モジュールの特定のバージョンをインポートするにはどうすればよいですか" id="モジュールの特定のバージョンをインポートするにはどうすればよいですか">モジュールの特定のバージョンをインポートするにはどうすればよいですか？</a></h3>
-<p>URLでバージョンを指定します。たとえば、次のように実行中のコードで完全URLで指定します。 <code>https://unpkg.com/liltest@0.0.5/dist/liltest.js</code>。</p>
+<p>URLでバージョンを指定します。例えば、次のように実行中のコードで完全URLで指定します。 <code>https://unpkg.com/liltest@0.0.5/dist/liltest.js</code>。</p>
 <h3><a class="header" href="#どこにでもurlをインポートするのは扱いにくいようです" id="どこにでもurlをインポートするのは扱いにくいようです">どこにでもURLをインポートするのは扱いにくいようです。</a></h3>
 <blockquote>
 <p>URLの1つが微妙に異なるバージョンのライブラリにリンクしている場合はどうなりますか？<br />
 大規模なプロジェクトのどこにでもURLを保持するのは間違いやすいのではないでしょうか？</p>
 </blockquote>
-<p>解決策は、外部のライブラリを<code>deps.ts</code>ファイル（Nodeの<code>package.json</code>ファイルと同じ目的で機能する）にインポートおよび再エクスポートすることです。たとえば、大規模なプロジェクト全体で上記のアサーションライブラリを使用していたとしましょう。 <code>&quot;https://deno.land/std@0.64.0/testing/asserts.ts&quot;</code>をどこにでもインポートするのではなく、サードパーティのコードをエクスポートする<code>deps.ts</code>ファイルを作成できます。</p>
+<p>解決策は、外部のライブラリを<code>deps.ts</code>ファイル（Nodeの<code>package.json</code>ファイルと同じ目的で機能する）にインポートおよび再エクスポートすることです。例えば、大規模なプロジェクト全体で上記のアサーションライブラリを使用していたとしましょう。 <code>&quot;https://deno.land/std@0.65.0/testing/asserts.ts&quot;</code>をどこにでもインポートするのではなく、サードパーティのコードをエクスポートする<code>deps.ts</code>ファイルを作成できます。</p>
 <p><strong>deps.ts</strong></p>
 <pre><code class="language-ts">export {
   assert,
@@ -981,24 +989,24 @@ git commit
 </code></pre>
 <h3><a class="header" href="#特定のモジュールをリロードする" id="特定のモジュールをリロードする">特定のモジュールをリロードする</a></h3>
 <p>一部のモジュールのみをアップグレードしたい場合があります。 <code>--reload</code>フラグに引数を渡すことで制御できます。</p>
-<p>全ての 0.64.0 標準モジュールをリロードする：</p>
-<pre><code class="language-ts">deno cache --reload=https://deno.land/std@v0.64.0 my_module.ts
+<p>全ての 0.65.0 標準モジュールをリロードする：</p>
+<pre><code class="language-ts">deno cache --reload=https://deno.land/std@v0.65.0 my_module.ts
 </code></pre>
 <p>特定のモジュール（この例では、色とファイルシステムのコピー）を再ロードするには、コンマを使用してURLを区切ります：</p>
-<pre><code class="language-ts">deno cache --reload=https://deno.land/std@0.64.0/fs/copy.ts,https://deno.land/std@0.64.0/fmt/colors.ts my_module.ts
+<pre><code class="language-ts">deno cache --reload=https://deno.land/std@0.65.0/fs/copy.ts,https://deno.land/std@0.65.0/fmt/colors.ts my_module.ts
 </code></pre>
 <!-- Should this be part of examples? -->
 <h2><a class="header" href="#整合性チェックとファイルのロック" id="整合性チェックとファイルのロック">整合性チェックとファイルのロック</a></h2>
 <h3><a class="header" href="#イントロダクション" id="イントロダクション">イントロダクション</a></h3>
-<p>あなたのモジュールがリモートモジュール<code>https：//some.url/a.ts</code>に依存しているとしましょう。モジュールを初めてコンパイルするとき、<code>a.ts</code>が取得、コンパイル、およびキャッシュされます。これは、新しいマシンでモジュールを実行する（たとえば、本番環境で）か、キャッシュを再ロードする（たとえば、<code>deno cache --reload</code>を使用）まで、この方法のままです。しかし、リモートURL <code>https：//some.url/a.ts</code>のコンテンツが変更された場合はどうなりますか？これにより、ローカルモジュールとは異なる依存関係コードで運用モジュールが実行される可能性があります。これを回避するためのDenoのソリューションは、整合性チェックとロックファイルを使用することです。</p>
+<p>あなたのモジュールがリモートモジュール<code>https：//some.url/a.ts</code>に依存しているとしましょう。モジュールを初めてコンパイルするとき、<code>a.ts</code>が取得、コンパイル、およびキャッシュされます。これは、新しいマシンでモジュールを実行する（例えば、本番環境で）か、キャッシュを再ロードする（例えば、<code>deno cache --reload</code>を使用）まで、この方法のままです。しかし、リモートURL <code>https：//some.url/a.ts</code>のコンテンツが変更された場合はどうなりますか？これにより、ローカルモジュールとは異なる依存関係コードで運用モジュールが実行される可能性があります。これを回避するためのDenoのソリューションは、整合性チェックとロックファイルを使用することです。</p>
 <h3><a class="header" href="#ファイルのキャッシュとロック" id="ファイルのキャッシュとロック">ファイルのキャッシュとロック</a></h3>
 <p>Denoは、小さなJSONファイルを使用して、モジュールのサブリソースの整合性を保存およびチェックできます。</p>
 <p><code>--lock=lock.json</code>を使用して、ロックファイルのチェックを有効にして指定します。ロックを更新または作成するには、<code>--lock=lock.json --lock-write</code>を使用します。<code>--lock=lock.json</code>はDenoに使用するロックファイルを教えますが、<code>--lock-write</code>は依存関係ハッシュをロックファイルに出力するために使用されます（<code>--lock-write</code>は<code>--lock</code>と組み合わせて使用​​する必要があります） ）。 </p>
 <p><code>lock.json</code>は次のようになり、依存関係に対するファイルのハッシュを保存します。</p>
 <pre><code class="language-json">{
-  &quot;https://deno.land/std@v0.64.0/textproto/mod.ts&quot;: &quot;3118d7a42c03c242c5a49c2ad91c8396110e14acca1324e7aaefd31a999b71a4&quot;,
-  &quot;https://deno.land/std@v0.64.0/io/util.ts&quot;: &quot;ae133d310a0fdcf298cea7bc09a599c49acb616d34e148e263bcb02976f80dee&quot;,
-  &quot;https://deno.land/std@v0.64.0/async/delay.ts&quot;: &quot;35957d585a6e3dd87706858fb1d6b551cb278271b03f52c5a2cb70e65e00c26a&quot;,
+  &quot;https://deno.land/std@v0.65.0/textproto/mod.ts&quot;: &quot;3118d7a42c03c242c5a49c2ad91c8396110e14acca1324e7aaefd31a999b71a4&quot;,
+  &quot;https://deno.land/std@v0.65.0/io/util.ts&quot;: &quot;ae133d310a0fdcf298cea7bc09a599c49acb616d34e148e263bcb02976f80dee&quot;,
+  &quot;https://deno.land/std@v0.65.0/async/delay.ts&quot;: &quot;35957d585a6e3dd87706858fb1d6b551cb278271b03f52c5a2cb70e65e00c26a&quot;,
    ...
 }
 </code></pre>
@@ -1052,7 +1060,7 @@ deno test --allow-read src
 <p><strong>import_map.json</strong></p>
 <pre><code class="language-js">{
    &quot;imports&quot;: {
-      &quot;fmt/&quot;: &quot;https://deno.land/std@0.64.0/fmt/&quot;
+      &quot;fmt/&quot;: &quot;https://deno.land/std@0.65.0/fmt/&quot;
    }
 }
 </code></pre>
@@ -1091,36 +1099,36 @@ import { MyUtil } from &quot;/util.ts&quot;;
 <p>標準ライブラリは<a href="https://deno.land/std/">https://deno.land/std/</a>で入手できます。</p>
 <h2><a class="header" href="#バージョン管理と安定性" id="バージョン管理と安定性">バージョン管理と安定性</a></h2>
 <p>標準ライブラリはまだ安定していないため、Denoとはバージョンが異なります。最新のリリースについては、<a href="https://deno.land/std/">https://deno.land/std/</a>または<a href="https://deno.land/std/version.ts">https://deno.land/std/version.ts</a>。を参照してください。標準ライブラリは、Denoがリリースされるたびにリリースされます。</p>
-<p>意図しない変更を避けるために、常に標準ライブラリの固定バージョンでインポートを使用することを強くお勧めします。たとえば、いつでも変更される可能性があるコードのマスターブランチにリンクするのではなく、コンパイルエラーや予期しない動作を引き起こす可能性があります。</p>
+<p>意図しない変更を避けるために、常に標準ライブラリの固定バージョンでインポートを使用することを強くお勧めします。例えば、いつでも変更される可能性があるコードのマスターブランチにリンクするのではなく、コンパイルエラーや予期しない動作を引き起こす可能性があります。</p>
 <pre><code class="language-typescript">// imports from master, this should be avoided
 import { copy } from &quot;https://deno.land/std/fs/copy.ts&quot;;
 </code></pre>
 <p>代わりに、バージョンを指定してstdライブラリを使用すればイミュータブルです：</p>
-<pre><code class="language-typescript">// imports from v0.64.0 of std, never changes
-import { copy } from &quot;https://deno.land/std@0.64.0/fs/copy.ts&quot;;
+<pre><code class="language-typescript">// imports from v0.65.0 of std, never changes
+import { copy } from &quot;https://deno.land/std@0.65.0/fs/copy.ts&quot;;
 </code></pre>
 <h2><a class="header" href="#トラブルシューティング" id="トラブルシューティング">トラブルシューティング</a></h2>
 <p>標準ライブラリで提供されているモジュールの一部は、不安定なDeno APIを使用しています。 </p>
 <p>このようなモジュールを<code>--unstable</code> CLIフラグなしで実行しようとすると、<code>Deno</code>名前空間にいくつかのAPIが存在しないことを示唆する多くのTypeScriptエラーが発生します。</p>
 <pre><code class="language-typescript">// main.ts
-import { copy } from &quot;https://deno.land/std@0.64.0/fs/copy.ts&quot;;
+import { copy } from &quot;https://deno.land/std@0.65.0/fs/copy.ts&quot;;
 
 copy(&quot;log.txt&quot;, &quot;log-old.txt&quot;);
 </code></pre>
 <pre><code class="language-shell">$ deno run --allow-read --allow-write main.ts
 Compile file:///dev/deno/main.ts
-Download https://deno.land/std@0.64.0/fs/copy.ts
-Download https://deno.land/std@0.64.0/fs/ensure_dir.ts
-Download https://deno.land/std@0.64.0/fs/_util.ts
+Download https://deno.land/std@0.65.0/fs/copy.ts
+Download https://deno.land/std@0.65.0/fs/ensure_dir.ts
+Download https://deno.land/std@0.65.0/fs/_util.ts
 error: TS2339 [ERROR]: Property 'utime' does not exist on type 'typeof Deno'.
     await Deno.utime(dest, statInfo.atime, statInfo.mtime);
                ~~~~~
-    at https://deno.land/std@0.64.0/fs/copy.ts:90:16
+    at https://deno.land/std@0.65.0/fs/copy.ts:90:16
 
 TS2339 [ERROR]: Property 'utimeSync' does not exist on type 'typeof Deno'.
     Deno.utimeSync(dest, statInfo.atime, statInfo.mtime);
          ~~~~~~~~~
-    at https://deno.land/std@0.64.0/fs/copy.ts:101:10
+    at https://deno.land/std@0.65.0/fs/copy.ts:101:10
 </code></pre>
 <p>解决方法是加上 <code>--unstable</code> 选项：</p>
 <pre><code class="language-shell">deno run --allow-read --allow-write --unstable main.ts
@@ -1150,7 +1158,7 @@ Deno.test({
 });
 </code></pre>
 <h2><a class="header" href="#アサーション" id="アサーション">アサーション</a></h2>
-<p>テストを容易にするために、<a href="https://deno.land/std@0.64.0/testing#usage">https：//deno.land/std@0.64.0/testing#usage</a>に有用なアサーションユーティリティがいくつかあります。</p>
+<p>テストを容易にするために、<a href="https://deno.land/std@0.65.0/testing#usage">https：//deno.land/std@0.65.0/testing#usage</a>に有用なアサーションユーティリティがいくつかあります。</p>
 <pre><code class="language-ts">import {
   assertEquals,
   assertArrayContains,
@@ -1201,7 +1209,7 @@ deno test util/
 # Run just my_test.ts
 deno test my_test.ts
 </code></pre>
-<p><code>deno test</code>は<code>deno run</code>と同じアクセス許可モデルを使用するため、たとえば、テスト中に<code>--allow-write</code>を実行してファイルシステムに書き込む必要があります。</p>
+<p><code>deno test</code>は<code>deno run</code>と同じアクセス許可モデルを使用するため、例えば、テスト中に<code>--allow-write</code>を実行してファイルシステムに書き込む必要があります。</p>
 <p><code>deno test</code>のすべてのランタイムオプションを表示するには、コマンドラインのhelpで参照できます。</p>
 <pre><code class="language-shell">deno help test
 </code></pre>
@@ -1225,7 +1233,7 @@ Deno.test({ name: &quot;test2&quot;, fn: test2 });
 <h3><a class="header" href="#テスト定義のフィルタリング" id="テスト定義のフィルタリング">テスト定義のフィルタリング</a></h3>
 <p>テスト自体には、フィルタリングのための2つのオプションがあります。</p>
 <h4><a class="header" href="#フィルタリング特定のテストは無視" id="フィルタリング特定のテストは無視">フィルタリング（特定のテストは無視）</a></h4>
-<p>ある種の条件に基づくテストを無視したい場合があります（たとえば、Windowsでのみテストを実行したい場合など）。このために、テスト定義で<code>ignore</code>のboolean値を使用できます。 trueに設定されている場合、テストはスキップされます。</p>
+<p>ある種の条件に基づくテストを無視したい場合があります（例えば、Windowsでのみテストを実行したい場合など）。このために、テスト定義で<code>ignore</code>のboolean値を使用できます。 trueに設定されている場合、テストはスキップされます。</p>
 <pre><code class="language-ts">Deno.test({
   name: &quot;do macOS feature&quot;,
   ignore: Deno.build.os !== &quot;darwin&quot;,
@@ -1250,8 +1258,8 @@ Deno.test({ name: &quot;test2&quot;, fn: test2 });
 </code></pre>
 <h2><a class="header" href="#アサーション-1" id="アサーション-1">アサーション</a></h2>
 <p>開発者がテストを記述できるように、Deno標準ライブラリには、
-<code>https：//deno.land/std@0.64.0/testing/asserts.ts</code>からインポートできる組み込みの<a href="https://deno.land/std/testing/asserts.ts">アサーションモジュール</a>が付属しています。</p>
-<pre><code class="language-js">import { assert } from &quot;https://deno.land/std@0.64.0/testing/asserts.ts&quot;;
+<code>https：//deno.land/std@0.65.0/testing/asserts.ts</code>からインポートできる組み込みの<a href="https://deno.land/std/testing/asserts.ts">アサーションモジュール</a>が付属しています。</p>
+<pre><code class="language-js">import { assert } from &quot;https://deno.land/std@0.65.0/testing/asserts.ts&quot;;
 
 Deno.test(&quot;Hello Test&quot;, () =&gt; {
   assert(&quot;Hello&quot;);
@@ -1375,7 +1383,7 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
 </code></pre>
 <h3><a class="header" href="#カスタムメッセージ" id="カスタムメッセージ">カスタムメッセージ</a></h3>
 <p>Denoの組み込みアサーションはそれぞれ、必要に応じて標準のCLIエラーメッセージを上書きできます。</p>
-<p>たとえば、この例では&quot;Values Don't Match!&quot;が出力されます。標準のCLIエラーメッセージではなく。</p>
+<p>例えば、この例では&quot;Values Don't Match!&quot;が出力されます。標準のCLIエラーメッセージではなく。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Equal Fail Custom Message&quot;, () =&gt; {
   assertEquals(1, 2, &quot;Values Don't Match!&quot;);
 });
@@ -1402,13 +1410,13 @@ support the protocol (eg. VSCode).</p>
 the first line of code.</p>
 <h3><a class="header" href="#chrome-devtools" id="chrome-devtools">Chrome Devtools</a></h3>
 <p>Let's try debugging a program using Chrome Devtools. For this, we'll use
-<a href="https://deno.land/std@v0.64.0/http/file_server.ts">file_server.ts</a> from <code>std</code>,
+<a href="https://deno.land/std@v0.65.0/http/file_server.ts">file_server.ts</a> from <code>std</code>,
 a static file server.</p>
 <p>Use the <code>--inspect-brk</code> flag to break execution on the first line:</p>
-<pre><code class="language-shell">$ deno run --inspect-brk --allow-read --allow-net https://deno.land/std@v0.64.0/http/file_server.ts
+<pre><code class="language-shell">$ deno run --inspect-brk --allow-read --allow-net https://deno.land/std@v0.65.0/http/file_server.ts
 Debugger listening on ws://127.0.0.1:9229/ws/1e82c406-85a9-44ab-86b6-7341583480b1
-Download https://deno.land/std@v0.64.0/http/file_server.ts
-Compile https://deno.land/std@v0.64.0/http/file_server.ts
+Download https://deno.land/std@v0.65.0/http/file_server.ts
+Compile https://deno.land/std@v0.65.0/http/file_server.ts
 ...
 </code></pre>
 <p>Open <code>chrome://inspect</code> and click <code>Inspect</code> next to target:</p>
@@ -1467,7 +1475,7 @@ config:</p>
 <p><strong>NOTE</strong>: This uses the file you have open as the entry point; replace <code>${file}</code>
 with a script name if you want a fixed entry point.</p>
 <p>Let's try out debugging a local source file. Create <code>server.ts</code>:</p>
-<pre><code class="language-ts">import { serve } from &quot;https://deno.land/std@v0.64.0/http/server.ts&quot;;
+<pre><code class="language-ts">import { serve } from &quot;https://deno.land/std@v0.65.0/http/server.ts&quot;;
 const server = serve({ port: 8000 });
 console.log(&quot;http://localhost:8000/&quot;);
 
@@ -3496,17 +3504,17 @@ for (const filename of filenames) {
   file.close();
 }
 </code></pre>
-<p>ここの<code>copy()</code>関数は、実際には必要なカーネル-&gt;ユーザースペース-&gt;カーネルのコピーしか作成しません。つまり、データがファイルから読み取られるのと同じメモリがstdoutに書き込まれます。これは、DenoのI / Oストリームの一般的な設計目標を示しています。</p>
+<p>ここの<code>copy()</code>関数は、実際には必要なカーネル-&gt;ユーザースペース-&gt;カーネルのコピーしか作成しません。つまり、データがファイルから読み取られるのと同じメモリがstdoutに書き込まれます。これは、Denoの I/Oストリームの一般的な設計目標を示しています。</p>
 <p>プログラムを試してください：</p>
-<pre><code class="language-shell">deno run --allow-read https://deno.land/std@$STD_VERSION/examples/cat.ts /etc/passwd
+<pre><code class="language-shell">deno run --allow-read https://deno.land/std@0.65.0/examples/cat.ts /etc/passwd
 </code></pre>
 <h2><a class="header" href="#ファイルサーバー" id="ファイルサーバー">ファイルサーバー</a></h2>
 <p>これはHTTPでローカルディレクトリを提供します。</p>
-<pre><code class="language-shell">deno install --allow-net --allow-read https://deno.land/std@$STD_VERSION/http/file_server.ts
+<pre><code class="language-shell">deno install --allow-net --allow-read https://deno.land/std@0.65.0/http/file_server.ts
 </code></pre>
 <p>それを実行します：</p>
 <pre><code class="language-shell">$ file_server .
-Downloading https://deno.land/std@$STD_VERSION/http/file_server.ts...
+Downloading https://deno.land/std@0.65.0/http/file_server.ts...
 [...]
 HTTP server listening on http://0.0.0.0:4500/
 </code></pre>
@@ -3522,14 +3530,14 @@ for await (const conn of listener) {
 }
 </code></pre>
 <p>このプログラムを起動すると、PermissionDeniedエラーがスローされます。</p>
-<pre><code class="language-shell">$ deno run https://deno.land/std@$STD_VERSION/examples/echo_server.ts
+<pre><code class="language-shell">$ deno run https://deno.land/std@0.65.0/examples/echo_server.ts
 error: Uncaught PermissionDenied: network access to &quot;0.0.0.0:8080&quot;, run again with the --allow-net flag
 ► $deno$/dispatch_json.ts:40:11
     at DenoError ($deno$/errors.ts:20:5)
     ...
 </code></pre>
 <p>セキュリティ上の理由から、Denoは明示的な許可なしにプログラムがネットワークにアクセスすることを許可していません。ネットワークへのアクセスを許可するには、コマンドラインフラグを使用します：</p>
-<pre><code class="language-shell">deno run --allow-net https://deno.land/std@$STD_VERSION/examples/echo_server.ts
+<pre><code class="language-shell">$ deno run --allow-net https://deno.land/std@0.65.0/examples/echo_server.ts
 </code></pre>
 <p>テストするには、netcatを使用してデータを送信してみてください。</p>
 <pre><code class="language-shell">$ nc localhost 8080
@@ -3561,7 +3569,7 @@ const p = Deno.run({
     &quot;deno&quot;,
     &quot;run&quot;,
     &quot;--allow-read&quot;,
-    &quot;https://deno.land/std@$STD_VERSION/examples/cat.ts&quot;,
+    &quot;https://deno.land/std@0.65.0/examples/cat.ts&quot;,
     ...fileNames,
   ],
   stdout: &quot;piped&quot;,
@@ -3597,7 +3605,7 @@ Uncaught NotFound: No such file or directory (os error 2)
 <p>このプログラムは、不安定なDeno機能を利用しています。
 <a href="examples/../runtime/stability.html">不安定な機能の詳細</a>をご覧ください。</p>
 </blockquote>
-<p>プログラムによっては、以前に付与されたアクセス許可を取り消すことが必要な場合があります。後の段階でプログラムがこれらの権限を必要とする場合、プログラムは失敗します。</p>
+<p>プログラムによっては、以前に付与されたアクセス許可を取り消すことが必要な場合があります。後の段階でプログラムがこれらのパーミッションを必要とする場合、プログラムは失敗します。</p>
 <pre><code class="language-ts">// lookup a permission
 const status = await Deno.permissions.query({ name: &quot;write&quot; });
 if (status.state !== &quot;granted&quot;) {

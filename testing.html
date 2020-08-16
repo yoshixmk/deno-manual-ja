@@ -180,7 +180,7 @@ Deno.test({
 });
 </code></pre>
 <h2><a class="header" href="#アサーション" id="アサーション">アサーション</a></h2>
-<p>テストを容易にするために、<a href="https://deno.land/std@0.64.0/testing#usage">https：//deno.land/std@0.64.0/testing#usage</a>に有用なアサーションユーティリティがいくつかあります。</p>
+<p>テストを容易にするために、<a href="https://deno.land/std@0.65.0/testing#usage">https：//deno.land/std@0.65.0/testing#usage</a>に有用なアサーションユーティリティがいくつかあります。</p>
 <pre><code class="language-ts">import {
   assertEquals,
   assertArrayContains,
@@ -231,7 +231,7 @@ deno test util/
 # Run just my_test.ts
 deno test my_test.ts
 </code></pre>
-<p><code>deno test</code>は<code>deno run</code>と同じアクセス許可モデルを使用するため、たとえば、テスト中に<code>--allow-write</code>を実行してファイルシステムに書き込む必要があります。</p>
+<p><code>deno test</code>は<code>deno run</code>と同じアクセス許可モデルを使用するため、例えば、テスト中に<code>--allow-write</code>を実行してファイルシステムに書き込む必要があります。</p>
 <p><code>deno test</code>のすべてのランタイムオプションを表示するには、コマンドラインのhelpで参照できます。</p>
 <pre><code class="language-shell">deno help test
 </code></pre>
@@ -255,7 +255,7 @@ Deno.test({ name: &quot;test2&quot;, fn: test2 });
 <h3><a class="header" href="#テスト定義のフィルタリング" id="テスト定義のフィルタリング">テスト定義のフィルタリング</a></h3>
 <p>テスト自体には、フィルタリングのための2つのオプションがあります。</p>
 <h4><a class="header" href="#フィルタリング特定のテストは無視" id="フィルタリング特定のテストは無視">フィルタリング（特定のテストは無視）</a></h4>
-<p>ある種の条件に基づくテストを無視したい場合があります（たとえば、Windowsでのみテストを実行したい場合など）。このために、テスト定義で<code>ignore</code>のboolean値を使用できます。 trueに設定されている場合、テストはスキップされます。</p>
+<p>ある種の条件に基づくテストを無視したい場合があります（例えば、Windowsでのみテストを実行したい場合など）。このために、テスト定義で<code>ignore</code>のboolean値を使用できます。 trueに設定されている場合、テストはスキップされます。</p>
 <pre><code class="language-ts">Deno.test({
   name: &quot;do macOS feature&quot;,
   ignore: Deno.build.os !== &quot;darwin&quot;,

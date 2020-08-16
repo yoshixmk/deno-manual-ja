@@ -160,7 +160,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2><a class="header" href="#コマンドラインインターフェースcli" id="コマンドラインインターフェースcli">コマンドラインインターフェース(CLI)</a></h2>
-<p>Denoはコマンドラインプログラムです。これまでの例に従ってきたいくつかの簡単なコマンドに精通し、シェルの使用法の基本をすでに理解している必要があります。</p>
+<p>Denoはコマンドラインプログラムです。これまでの例に従ってきたいくつかの簡単なコマンドに精通し、シェルの使用法の基本を理解している必要があります。</p>
 <p>メインのヘルプテキストを表示する方法はいくつかあります。</p>
 <pre><code class="language-shell"># Using the subcommand.
 deno help
@@ -176,9 +176,9 @@ deno --help
 deno bundle -h
 deno bundle --help
 </code></pre>
-<p>各サブコマンドの詳細なガイドは<a href="../tools.html">这里</a>にあります。</p>
+<p>各サブコマンドの詳細なガイドは<a href="../tools.html">こちら</a>にあります。</p>
 <h3><a class="header" href="#スクリプト" id="スクリプト">スクリプト</a></h3>
-<p>Denoは、複数のソース、ファイル名、URL、および「-」からスクリプトを取得して、stdinからファイルを読み取ることができます。最後は他のアプリケーションとの統合に役立ちます。</p>
+<p>Denoは、複数のソース、ファイル名、URL、および「-」を用いてstdinからファイルを読み取りスクリプトを取得して、実行することができます。最後のは他のアプリケーションとの統合に役立ちます。</p>
 <pre><code class="language-shell">deno run main.ts
 deno run https://mydomain.com/main.ts
 cat main.ts | deno run -
@@ -190,8 +190,7 @@ cat main.ts | deno run -
 <pre><code class="language-ts">// main.ts
 console.log(Deno.args); // [ &quot;a&quot;, &quot;b&quot;, &quot;-c&quot;, &quot;--quiet&quot; ]
 </code></pre>
-<p><strong>スクリプト名の後に渡されたものはすべてスクリプト引数として渡され、Denoランタイムフラグとしては消費されないことに注意してください。</strong></p>
-<p>これは、次の落とし穴につながります:</p>
+<p><strong>スクリプト名の後に渡されたものはすべてスクリプト引数として渡され、Denoランタイムフラグとしては消費されないことに注意してください。</strong> これは、次のような落とし穴につながります:</p>
 <pre><code class="language-shell"># Good. We grant net permission to net_client.ts.
 deno run --allow-net net_client.ts
 
@@ -206,8 +205,7 @@ deno run net_client.ts --allow-net
 <ol>
 <li>これは、ランタイムフラグとスクリプト引数を区別する最も論理的な方法です。</li>
 <li>これは、ランタイムフラグとスクリプト引数を区別する最も人間工学的な方法です。</li>
-<li>これは実際には、他の一般的なランタイムと同じ動作です。</li>
-<li>实际上，这和其他流行的运行时具有相同的行为。
+<li>これは実際には、他の一般的なランタイムと同じ動作です。
 <ul>
 <li><code>node -c index.js</code> と <code>node index.js -c</code>を試してみます。すると1つ目は、ノードの<code>-c</code>フラグに従って、<code>index.js</code>の構文チェックのみを実行します。2番目は、<code>require(&quot;process&quot;).argv</code>に<code>-c</code>を渡して<code>index.js</code>を実行します。</li>
 </ul>
@@ -220,7 +218,7 @@ deno run net_client.ts --allow-net
 <pre><code>--lock &lt;FILE&gt;    Check the specified lock file
 --lock-write     Write lock file. Use with --lock.
 </code></pre>
-<p>これらの詳細については、<a href="../linking_to_external_code/integrity_checking.html">这里</a>をご覧ください。</p>
+<p>これらの詳細については、<a href="../linking_to_external_code/integrity_checking.html">こちら</a>をご覧ください。</p>
 <h3><a class="header" href="#キャッシュとコンパイルのフラグ" id="キャッシュとコンパイルのフラグ">キャッシュとコンパイルのフラグ</a></h3>
 <p>キャッシュにデータを入力できるコマンドに影響を与えます：<code>deno cache</code>、<code>deno run</code>、<code>deno test</code>。上記のフラグに加えて、これにはモジュールの解決、コンパイル構成などに影響するフラグが含まれます。</p>
 <pre><code>--config &lt;FILE&gt;               Load tsconfig.json configuration file

@@ -162,39 +162,39 @@
                         <h2><a class="header" href="#typescriptの使用" id="typescriptの使用">TypeScriptの使用</a></h2>
 <!-- TODO(lucacasonato): text on 'just import .ts' -->
 <p>Denoは、実行時にファーストクラス言語としてJavaScriptとTypeScriptの両方をサポートします。つまり、拡張子（または正しいメディアタイプを提供するサーバー）を含む完全修飾モジュール名が必要です。さらに、Denoには「魔法の」モジュール解決策がありません。代わりに、インポートされたモジュールは、ファイル（拡張子を含む）または完全修飾URLインポートとして指定されます。 Typescriptモジュールは直接インポートできます。例えば：</p>
-<pre><code class="language-ts">import { Response } from &quot;https://deno.land/std@0.64.0/http/server.ts&quot;;
+<pre><code class="language-ts">import { Response } from &quot;https://deno.land/std@0.65.0/http/server.ts&quot;;
 import { queue } from &quot;./collections.ts&quot;;
 </code></pre>
 <h3><a class="header" href="#--no-check-オプション" id="--no-check-オプション"><code>--no-check</code> オプション</a></h3>
-<p><code>deno run</code>、<code>deno test</code>、<code>deno cache</code>、<code>deno info</code>、<code>deno bundle</code>を使用する場合、<code>--no-check</code>フラグを指定してTypeScriptタイプのチェックを無効にすることができます。これにより、プログラムの起動にかかる時間を大幅に短縮できます。これは、エディターによって型チェックが提供され、起動時間をできるだけ速くしたい場合（ファイルウォッチャーでプログラムを自動的に再起動する場合など）に非常に役立ちます。</p>
+<p><code>deno run</code>、<code>deno test</code>、<code>deno cache</code>、<code>deno info</code>、<code>deno bundle</code>を使用する場合、<code>--no-check</code>フラグを指定してTypeScriptタイプのチェックを無効にすることができます。これにより、プログラムの起動にかかる時間を大幅に短縮できます。これは、エディタによって型チェックが提供され、起動時間をできるだけ速くしたい場合（ファイルウォッチャーでプログラムを自動的に再起動する場合など）に非常に役立ちます。</p>
 <p><code>--no-check</code>はTypeScriptの型チェックを行わないため、型情報が必要になるため、型のみのインポートとエクスポートを自動的に削除することはできません。この目的のために、TypeScriptは<a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-8.html#type-only-imports-and-exports"><code>importタイプとexportタイプの構文</code></a>を提供します。タイプを別のファイルにエクスポートするには、<code>export type {AnInterface} from &quot;./mod.ts&quot;;</code>を使用します。タイプをインポートするには、 <code>import type { AnInterface } from &quot;./mod.ts&quot;;</code>を使用します。 <code>importsNotUsedAsValues</code> TypeScriptコンパイラオプションを<code>&quot;error&quot;</code>に設定することで、必要に応じてインポートタイプとエクスポートタイプを使用していることを確認できます。このオプションを使用した<a href="https://github.com/denoland/deno/blob/master/std/tsconfig_test.json"><code>tsconfig_test.json</code></a>の例は、標準ライブラリ内にあります。</p>
+<p><code>--no-check</code>を使用すると型情報がないため、<code>const enum</code>は型の指定であるためサポートされません。<code>--no-check</code>は、従来の<code>import =</code>および<code>export =</code>構文もサポートしていません。</p>
 <h3><a class="header" href="#外部型定義の使用" id="外部型定義の使用">外部型定義の使用</a></h3>
 <p>ただし、標準のTypeScriptコンパイラは、JavaScriptモジュールにタイプを適用するために、拡張機能のないモジュールとNode.jsモジュール解決ロジックの両方に依存しています。</p>
-<p>このギャップを埋めるために、Denoは「魔法の」解決に頼ることなくタイプ定義ファイルを参照する3つの方法をサポートしています。</p>
-<h4><a class="header" href="#コンパイラーのヒント" id="コンパイラーのヒント">コンパイラーのヒント</a></h4>
-<p>JavaScriptモジュールをインポートしていて、そのモジュールの型定義の場所がわかっている場合は、インポート時に型定義を指定できます。これはコンパイラのヒントの形をとります。コンパイラーのヒントは、<code>.d.ts</code>ファイルの場所と、それらが関連付けられているインポートされたJavaScriptコードをDenoに通知します。ヒントは<code>@deno-types</code>であり、指定すると、JavaScriptモジュールの代わりにコンパイラで値が使用されます。</p>
-<p>たとえば、<code>foo.js</code>があったが、それに加えてファイルのタイプであるfoo.d.tsであることがわかっている場合、コードは次のようになります:</p>
+<p>このギャップを埋めるために、Denoは「魔法の」解決に頼ることなく型定義ファイルを参照する3つの方法をサポートしています。</p>
+<h4><a class="header" href="#コンパイラーへのヒント" id="コンパイラーへのヒント">コンパイラーへのヒント</a></h4>
+<p>JavaScriptモジュールをインポートしていて、そのモジュールの型定義の場所がわかっている場合は、インポート時に型定義を指定できます。これでコンパイラへヒントを与えた形になります。コンパイラーへのヒントは、<code>.d.ts</code>ファイルの場所と、それらが関連付けられているインポートされたJavaScriptコードをDenoに通知します。ヒントは<code>@deno-types</code>であり、指定すると、JavaScriptモジュールの代わりにコンパイラで値が使用されます。</p>
+<p>例えば、<code>foo.js</code>があったが、それに加えてファイルのタイプであるfoo.d.tsであることがわかっている場合、コードは次のようになります:</p>
 <pre><code class="language-ts">// @deno-types=&quot;./foo.d.ts&quot;
 import * as foo from &quot;./foo.js&quot;;
 </code></pre>
 <p>値は、モジュールのインポートと同じ解決ロジックに従います。つまり、ファイルには拡張子が必要であり、現在のモジュールに対して相対的です。リモート指定子も使用できます。</p>
 <p>ヒントは、<code>@deno-types</code>の値が、指定されたモジュールの代わりにコンパイル時に置換される次の<code>import</code>ステートメント（または<code>export ... from</code>ステートメント）に影響します。上記の例のように、Denoコンパイラは<code>./foo.js</code>ではなく<code>./foo.d.ts</code>をロードします。 Denoはプログラムの実行時に<code>./foo.js</code>を引き続きロードします。</p>
 <h4><a class="header" href="#javascriptファイルのトリプルスラッシュ参照ディレクティブ" id="javascriptファイルのトリプルスラッシュ参照ディレクティブ">JavaScriptファイルのトリプルスラッシュ参照ディレクティブ</a></h4>
-<p>Denoで使用するモジュールをホストしていて、型定義の場所についてDenoに通知する場合は、実際のコードでトリプルスラッシュディレクティブを使用できます。たとえば、JavaScriptモジュールがあり、そのファイルの横にある型定義の場所をDenoに提供する場合、<code>foo.js</code>という名前のJavaScriptモジュールは次のようになります。：</p>
+<p>Denoで使用するモジュールをホストしていて、型定義の場所についてDenoに通知する場合は、実際のコードでトリプルスラッシュディレクティブを使用できます。例えば、JavaScriptモジュールがあり、そのファイルの横にある型定義の場所をDenoに提供する場合、<code>foo.js</code>という名前のJavaScriptモジュールは次のようになります。：</p>
 <pre><code class="language-js">/// &lt;reference types=&quot;./foo.d.ts&quot; /&gt;
 export const foo = &quot;foo&quot;;
 </code></pre>
-<p>Denoはこれを確認し、コンパイラはファイルの型チェック時に<code>foo.d.ts</code>を使用しますが、<code>foo.js</code>は実行時にロードされます。ディレクティブの値の解決は、モジュールのインポートと同じ解決ロジックに従います。</p>
-<p>つまり、ファイルには拡張子が必要であり、現在のファイルに対して相対的です。リモート指定子も使用できます。</p>
+<p>Denoはこれを確認し、コンパイラはファイルの型チェック時に<code>foo.d.ts</code>を使用しますが、<code>foo.js</code>は実行時にロードされます。ディレクティブの値の解決は、モジュールのインポートと同じ解決ロジックに従います。つまり、ファイルには拡張子が必要であり、現在のファイルに対して相対的です。リモート指定子も使用できます。</p>
 <h4><a class="header" href="#x-typescript-types-カスタムヘッダー" id="x-typescript-types-カスタムヘッダー">X-TypeScript-Types カスタムヘッダー</a></h4>
 <p>Denoによって使用されるモジュールをホストしていて、Denoに型定義の場所を通知する場合は、<code>X-TypeScript-Types</code>のカスタムHTTPヘッダーを使用して、そのファイルの場所をDenoに通知できます。</p>
 <p>ヘッダーは、前述のトリプルスラッシュリファレンスと同じように機能します。つまり、JavaScriptファイル自体のコンテンツを変更する必要がなく、型定義の場所をサーバー自体が決定できることを意味します。</p>
 <p><strong>すべての型定義がサポートされているわけではありません。</strong></p>
-<p>Denoはコンパイラヒントを使用して、指定された<code>.d.ts</code>ファイルをロードしますが、一部の<code>.d.ts</code>ファイルにはサポートされていない機能が含まれています。具体的には、一部の<code>.d.ts</code>ファイルは、モジュール解決ロジックを使用して、他のパッケージからタイプ定義をロードまたは参照できると想定しています。たとえば、<code>node</code>を含めるタイプ参照ディレクティブは、。<code>./node_modules/@types/node/index.d.ts</code>のようなパスに解決されることを期待しています。これは相対的でない「魔法の」解像度に依存するため、Denoはこれを解決できません。</p>
+<p>Denoはコンパイラヒントを使用して、指定された<code>.d.ts</code>ファイルをロードしますが、一部の<code>.d.ts</code>ファイルにはサポートされていない機能が含まれています。具体的には、一部の<code>.d.ts</code>ファイルは、モジュール解決ロジックを使用して、他のパッケージから型定義をロードまたは参照できると想定しています。例えば、<code>node</code>を含める型の参照ディレクティブは、。<code>./node_modules/@types/node/index.d.ts</code>のようなパスに解決されることを期待しています。これは相対的でない「魔法の」解像度に依存するため、Denoはこれを解決できません。</p>
 <p><strong>TypeScriptファイルでトリプルスラッシュタイプの参照を使用しないのはなぜですか？</strong></p>
-<p>TypeScriptコンパイラは、タイプ参照ディレクティブを含むトリプルスラッシュディレクティブをサポートします。 Denoがこれを使用した場合、TypeScriptコンパイラの動作に干渉します。 DenoはJavaScript（およびJSX）ファイルでディレクティブを検索するだけです。</p>
+<p>TypeScriptコンパイラは、型の参照ディレクティブを含むトリプルスラッシュディレクティブをサポートします。 Denoがこれを使用した場合、TypeScriptコンパイラの動作に干渉します。 DenoはJavaScript（およびJSX）ファイルでディレクティブを検索するだけです。</p>
 <h3><a class="header" href="#カスタムtypescriptコンパイラオプション" id="カスタムtypescriptコンパイラオプション">カスタムTypeScriptコンパイラオプション</a></h3>
-<p>Denoエコシステムでは、デフォルトで<code>厳格</code>であるというTypeScriptの理想に準拠するために、すべての厳格なフラグが有効になっています。ただし、カスタマイズをサポートする方法を提供するために、プログラムの実行時に<code>tsconfig.json</code>などの構成ファイルがDenoに提供される場合があります。 </p>
+<p>Denoエコシステムでは、デフォルトで<code>strict</code>(=厳格)であるというTypeScriptの理想に準拠するために、すべての厳格なフラグが有効になっています。ただし、カスタマイズをサポートする方法を提供するために、プログラムの実行時に<code>tsconfig.json</code>などの構成ファイルがDenoに提供される場合があります。 </p>
 <p>アプリケーションを実行するときに<code>-C</code>（または<code>--config</code>）引数を設定して、この構成を探す場所をDenoに明示的に指示する必要があります。</p>
 <pre><code class="language-shell">deno run -c tsconfig.json mod.ts
 </code></pre>
