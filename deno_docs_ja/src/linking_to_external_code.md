@@ -5,7 +5,7 @@
 **test.ts**
 
 ```ts
-import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+import { assertEquals } from "https://deno.land/std@0.65.0/testing/asserts.ts";
 
 assertEquals("hello", "hello");
 assertEquals("world", "world");
@@ -18,9 +18,9 @@ console.log("Asserted! ✓");
 ```shell
 $ deno run test.ts
 Compile file:///mnt/f9/Projects/github.com/denoland/deno/docs/test.ts
-Download https://deno.land/std/testing/asserts.ts
-Download https://deno.land/std/fmt/colors.ts
-Download https://deno.land/std/testing/diff.ts
+Download https://deno.land/std@0.65.0/testing/asserts.ts
+Download https://deno.land/std@0.65.0/fmt/colors.ts
+Download https://deno.land/std@0.65.0/testing/diff.ts
 Asserted! ✓
 ```
 
@@ -38,7 +38,7 @@ Denoは、`DENO_DIR`の環境変数で指定された特別なディレクトリ
 
 URLでバージョンを指定します。例えば、次のように実行中のコードで完全URLで指定します。 `https://unpkg.com/liltest@0.0.5/dist/liltest.js`。
 
-### どこにでもURLをインポートするのは扱いにくいようです。
+### どこにでもURLをインポートするのは扱いにくいと思います。
 
 > URLの1つが微妙に異なるバージョンのライブラリにリンクしている場合はどうなりますか？  
 > 大規模なプロジェクトのどこにでもURLを保持するのは間違いやすいのではないでしょうか？
@@ -52,7 +52,7 @@ export {
   assert,
   assertEquals,
   assertStrContains,
-} from "https://deno.land/std/testing/asserts.ts";
+} from "https://deno.land/std@0.65.0/testing/asserts.ts";
 ```
 
 また、同じプロジェクト全体で、`deps.ts`からインポートして、同じURLへの多くの参照を避けることができます。

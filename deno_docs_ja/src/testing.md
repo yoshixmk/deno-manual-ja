@@ -28,13 +28,13 @@ Deno.test({
 
 ## アサーション
 
-テストを容易にするために、[https：//deno.land/std@0.65.0/testing#usage](https://deno.land/std@0.65.0/testing#usage)に有用なアサーションユーティリティがいくつかあります。
+テストを容易にするために、[https://deno.land/std@0.65.0/testing#usage](https://deno.land/std@0.65.0/testing#usage)に有用なアサーションユーティリティがいくつかあります。
 
 ```ts
 import {
   assertEquals,
   assertArrayContains,
-} from "https://deno.land/std/testing/asserts.ts";
+} from "https://deno.land/std@0.65.0/testing/asserts.ts";
 
 Deno.test("hello world", () => {
   const x = 1 + 2;
@@ -43,12 +43,12 @@ Deno.test("hello world", () => {
 });
 ```
 
-### 非同期ファンクション
+### 非同期なファンクション
 
 promiseを返すテスト関数を渡すことで、非同期コードをテストすることもできます。このため、関数を定義するときに`async`キーワードを使用できます:
 
 ```ts
-import { delay } from "https://deno.land/std/async/delay.ts";
+import { delay } from "https://deno.land/std@0.65.0/async/delay.ts";
 
 Deno.test("async hello world", async () => {
   const x = 1 + 2;
@@ -62,7 +62,7 @@ Deno.test("async hello world", async () => {
 });
 ```
 
-### リソースおよび非同期opサニタイザー
+### リソースおよび非同期なopサニタイザー
 
 Denoの特定のアクションは、リソーステーブルにリソースを作成します（[詳細はこちら]((./contributing/architecture.md))）。これらのリソースは、使い終わったら閉じてください。
 
@@ -83,7 +83,7 @@ Deno.test({
 
 ## テストの実行
 
-テストを実行するには、テスト関数を含むファイルを使用して`deno test`を呼び出します。また、ファイル名を省略することもできます。その場合、現在のディレクトリ内でglobが`{*_,*.,}test.{js,mjs,ts,jsx,tsx}`に一致するすべてのテストが（再帰的に）実行されます。ディレクトリを渡すと、このグロブに一致するディレクトリ内のすべてのファイルが実行されます。
+テストを実行するには、テスト関数を含むファイルを使用して`deno test`を呼び出します。また、ファイル名を省略することもできます。その場合、現在のディレクトリ内でglobが`{*_,*.,}test.{js,mjs,ts,jsx,tsx}`に一致するすべてのテストが（再帰的に）実行されます。ディレクトリを渡すと、このglobに一致するディレクトリ内のすべてのファイルが実行されます。
 
 ```shell
 # Run all tests in the current directly and all sub-directories

@@ -35,7 +35,7 @@ Deno.test("Test Assert", () => {
 });
 ```
 
-### 同等性
+### 等価性
 
 利用可能な等価アサーションには、`assertEquals()`、`assertNotEquals()` 、 `assertStrictEquals()`の3つがあります
 
@@ -79,14 +79,13 @@ Deno.test("Test Assert Strict Equals", () => {
 });
 ```
 
-`assertStrictEquals()` 最好用于精确判断两个基本类型的相等性。
+`assertStrictEquals()`アサーションは、2つのプリミティブ型を正確にチェックする場合に最適です。
 
 ### 包含
 
-値が値を含むことをアサートするために使用できるメソッドは、`assertStringContains()`と`assertArrayContains()`の2つです。 `assertStringContains()`アサーションは、期待される文字列が含まれているかどうかを確認するために、文字列に対して単純なインクルードチェックを実行します。
+値が値を含むことをアサートするために使用できるメソッドは、`assertStringContains()`と`assertArrayContains()`の2つです。
 
-
-`assertStringContains()`アサーションは、期待される文字列が含まれているかどうかを確認するために、文字列に対して単純なインクルードチェックを実行します。
+`assertStringContains()`アサーションは、対象の文字列に対して、単純に期待される文字列が含まれているかどうかを調べます。
 
 ```js
 Deno.test("Test Assert String Contains", () => {
@@ -118,7 +117,7 @@ Deno.test("Test Assert Match", () => {
 });
 ```
 
-### 例外スロー
+### エラーのスロー
 
 Denoでエラーがスローされたかどうかをアサートするには、`assertThrows()`と`assertAsyncThrows()`の2つの方法があります。どちらのアサーションでも、[Error](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Error)がスローされたこと、スローされたエラーのタイプ、メッセージが何であったかを確認できます。
 
@@ -166,7 +165,7 @@ Deno.test("Test Assert Throws Async", () => {
 
 Denoの組み込みアサーションはそれぞれ、必要に応じて標準のCLIエラーメッセージを上書きできます。
 
-例えば、この例では"Values Don't Match!"が出力されます。標準のCLIエラーメッセージではなく。
+例えば、この例では標準のCLIエラーメッセージではなく、"Values Don't Match!"が出力されます。
 
 ```js
 Deno.test("Test Assert Equal Fail Custom Message", () => {
