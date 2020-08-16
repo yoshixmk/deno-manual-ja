@@ -2,9 +2,9 @@
 
 <a href="https://github.com/denoland/deno/releases"><img src="https://img.shields.io/github/release/denoland/deno" alt="Deno English">※英語</a><br>
 <a href="https://github.com/denoland/deno/releases"><img src="https://img.shields.io/badge/release-v1.2.1-blue.svg" alt="deno manual zh cn version">※中国語</a><br>
-<a href="https://github.com/denoland/deno/releases"><img src="https://img.shields.io/badge/release-v1.2.1-blue.svg" alt="deno manual ja version">※日本語</a>
+<a href="https://github.com/denoland/deno/releases"><img src="https://img.shields.io/badge/release-v1.3.0-blue.svg" alt="deno manual ja version">※日本語</a>
 
-> 最終更新 2020 年 08 月 10 日  
+> 最終更新 2020 年 08 月 16 日  
 > Snapshot is [deno @ a8f74aa](https://github.com/denoland/deno/tree/a8f74aa381c99e9c3c3d8fdfde02919966a3a824)
 
 このマニュアルは[Deno公式マニュアル](https://github.com/[denoland/doc](https://deno.land/manual))  

@@ -1,14 +1,14 @@
 ## 環境セットアップ
 
-Denoを生産的に使用するには、環境をセットアップする必要があります。つまり、シェルのオートコンプリート、環境変数、選択したエディターまたはIDEを設定します。
+Denoを生産的に使用するには、環境をセットアップする必要があります。つまり、シェルのオートコンプリート、環境変数、エディタ・IDEの設定を行います。
 
 ### 環境変数
 
-Denoの動作を制御するいくつかの環境変数があります。：
+Denoの動作を制御するいくつかの環境変数があります：
 
-`DENO_DIR`のデフォルトは `$HOME/.cache/deno`で、任意のパスに設定できますが、生成およびキャッシュされたソースコードの書き込みと読み取りを制御します。  
+環境変数`DENO_DIR`のデフォルトは `$HOME/.cache/deno`で、任意のパスに設定できますが、生成およびキャッシュされたソースコードの書き込みと読み取りを制御します。  
 
-もし`NO_COLOR`を設定すれば、カラー出力がオフになります。 <https://no-color.org/>を参照してください。`NO_COLOR`を使用することで`--allow-env`を使うことなく、ソースコードでboolean定数の`Deno.noColor`を使用して、設定されているかどうかをテストできます。
+もし、環境変数`NO_COLOR`を設定すれば、カラー出力がオフになります。 <https://no-color.org/>を参照してください。`NO_COLOR`を使用しているかのテストはソースコード内で、`--allow-env`なしで使用できるboolean定数の`Deno.noColor`を用いることで設定されているか確認ができます。
 
 ### シェルのオートコンプリート
 
@@ -29,18 +29,35 @@ deno completions bash > /usr/local/etc/bash_completion.d/deno.bash
 source /usr/local/etc/bash_completion.d/deno.bash
 ```
 
-例 (zsh):
+例 (フレームワークなしでのzsh):
 
 ```shell
 mkdir ~/.oh-my-zsh/custom/plugins/deno
 deno completions zsh > ~/.oh-my-zsh/custom/plugins/deno/_deno
 ```
 
-在此之后，在 `~/.zshrc` 文件中的 plugins 标签下增加 `deno` 插件。
+次に、`.zshrc`に追加します。
 
-### エディターとIDE
+```shell
+fpath=(~/.zsh $fpath)
+autoload -Uz compinit
+compinit -u
+```
 
-Denoはモジュールのインポートにファイル拡張子を使用する必要があり、さらにはhttpのインポートを許可が必要で、現在ほとんどのエディターと言語サーバーはこれをネイティブでサポートしていないため、多くのエディターは不要なファイル拡張子を持つファイルまたはインポートを見つけられないというエラーをスローします。
+それからターミナルを再起動します。補完がまだロードされない場合は、`rm ~/.zcompdump/`を実行して、以前に生成された補完を削除してから、`compinit`を実行してそれらを再度生成する必要があります。
+
+例（zsh + oh-my-zsh）[zshユーザーに推奨]：
+
+```shell
+mkdir ~/.oh-my-zsh/custom/plugins/deno
+deno completions zsh > ~/.oh-my-zsh/custom/plugins/deno/_deno
+```
+
+この後`~/.zshrc`ファイルへdenoプラグインを追加します。`antigen`パスのようなツールの場合は`~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins`になり、コマンドは`antigen bundle deno`などになります。
+
+### エディタとIDE
+
+Denoはモジュールのインポートにファイル拡張子を使用する必要があり、さらにはhttpのインポートを許可が必要で、現在ほとんどのエディタと言語サーバーはこれをネイティブでサポートしていないため、多くのエディタは不要なファイル拡張子を持つファイルまたはインポートを見つけられないというエラーをスローします。
 
 コミュニティは、一部の編集者がこれらの問題を解決するための拡張機能を開発しています:
 
@@ -56,11 +73,9 @@ JetBrains IDEをDeno用に設定する方法の詳細については、YouTrack�
 
 ### Vim と NeoVim
 
-もし[CoC](https://github.com/neoclide/coc.nvim)（intellisense engine and language server protocol）をインストールすれば、Vim は Deno/TypeScript に対してかなりうまく機能します。
+もし[CoC](https://github.com/neoclide/coc.nvim)（intellisense engine and language server protocol）をインストールしていれば、Vim は Deno/TypeScript に対してかなりうまく機能します。
 
-当安装完 CoC 后，可以在 Vim 内部运行 `:CocInstall coc-deno`。你会发现，诸如 `gd`（转到定义）和 `gr`（转到/查找引用）之类的东西可以正常工作了。
-
-CoCをインストールした後、Vim内からおよび`：CocInstall coc-deno`と`:CocInstall coc-deno`を実行します。 Denoタイプ定義でオートコンプリートを機能させるには、`：CocCommand deno.types`を実行します。必要に応じて、`：CocRestart`でCoCサーバーを再起動します。これからは、`gd`（定義に移動）や`gr`（goto / find参照）などが機能するようになります。
+CoCをインストールした後、Vim内から`：CocInstall coc-deno`と`:CocInstall coc-deno`を実行します。 Deno型定義でオートコンプリートを機能させるには、`：CocCommand deno.types`を実行します。必要に応じて、`：CocRestart`でCoCサーバーを再起動します。これからは、`gd`(go to definition)や`gr`(goto/find references)などが機能するようになります。
 
 #### Emacs
 

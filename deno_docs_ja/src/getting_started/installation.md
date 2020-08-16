@@ -49,7 +49,7 @@ CLIの詳細については、[こちら](./command_line_interface.md)をご確�
 
 ### アップデート
 
-以前にインストールされたバージョンのDenoを更新するには、次のコマンドを実行します:
+以前にインストールしたDenoのバージョンを更新するには、次のコマンドを実行します:
 ```shell
 deno upgrade
 ```
@@ -58,7 +58,7 @@ deno upgrade
 
 次のユーティリティを使用して、特定のバージョンのDenoをインストールすることもできます:
 ```shell
-deno upgrade --version 1.0.1
+deno upgrade --version 1.3.0
 ```
 
 ### ソースからビルドする

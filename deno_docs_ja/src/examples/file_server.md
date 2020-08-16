@@ -3,14 +3,14 @@
 これはHTTPでローカルディレクトリを提供します。
 
 ```shell
-deno install --allow-net --allow-read https://deno.land/std@$STD_VERSION/http/file_server.ts
+deno install --allow-net --allow-read https://deno.land/std@0.65.0/http/file_server.ts
 ```
 
 それを実行します：
 
 ```shell
 $ file_server .
-Downloading https://deno.land/std@$STD_VERSION/http/file_server.ts...
+Downloading https://deno.land/std@0.65.0/http/file_server.ts...
 [...]
 HTTP server listening on http://0.0.0.0:4500/
 ```

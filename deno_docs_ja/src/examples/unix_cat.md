@@ -11,10 +11,10 @@ for (const filename of filenames) {
 }
 ```
 
-ここの`copy()`関数は、実際には必要なカーネル->ユーザースペース->カーネルのコピーしか作成しません。つまり、データがファイルから読み取られるのと同じメモリがstdoutに書き込まれます。これは、DenoのI / Oストリームの一般的な設計目標を示しています。
+ここの`copy()`関数は、実際には必要なカーネル->ユーザースペース->カーネルのコピーしか作成しません。つまり、データがファイルから読み取られるのと同じメモリがstdoutに書き込まれます。これは、Denoの I/Oストリームの一般的な設計目標を示しています。
 
 プログラムを試してください：
 
 ```shell
-deno run --allow-read https://deno.land/std@$STD_VERSION/examples/cat.ts /etc/passwd
+deno run --allow-read https://deno.land/std@0.65.0/examples/cat.ts /etc/passwd
 ```

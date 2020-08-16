@@ -1,6 +1,6 @@
 ## Workers
 
-Denoは[Web Worker API](https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/Worker)をサポートしています。
+Denoは[Web Worker API](https://developer.mozilla.org/ja/docs/Web/API/Worker/Worker)をサポートしています。
 
 Workerを使用して、複数のスレッドでコードを実行できます。 `Worker`の各インスタンスは、そのWorker専用の個別のスレッドで実行されます。
 
@@ -107,4 +107,4 @@ hello world
 $ deno run --allow-read --unstable main.js
 hello world
 ```
-`Deno`名前空間がWorkerスコープで使用可能な場合、Workerは親プロセスの権限（`--allow-*`フラグを使用して指定されたもの）を継承します。 パーミッションをWorkerに対して構成可能にする予定です。
+`Deno`名前空間がWorkerスコープで使用可能な場合、Workerは親プロセスのパーミッション（`--allow-*`フラグを使用して指定されたもの）を継承します。 パーミッションをWorkerに対して構成可能にする予定です。

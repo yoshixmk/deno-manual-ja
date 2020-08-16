@@ -14,16 +14,16 @@ deno cache --reload my_module.ts
 
 一部のモジュールのみをアップグレードしたい場合があります。 `--reload`フラグに引数を渡すことで制御できます。
 
-全ての 0.64.0 標準モジュールをリロードする：
+全ての 0.65.0 標準モジュールをリロードする：
 
 ```ts
-deno cache --reload=https://deno.land/std@v0.64.0 my_module.ts
+deno cache --reload=https://deno.land/std@v0.65.0 my_module.ts
 ```
 
 特定のモジュール（この例では、色とファイルシステムのコピー）を再ロードするには、コンマを使用してURLを区切ります：
 
 ```ts
-deno cache --reload=https://deno.land/std@0.64.0/fs/copy.ts,https://deno.land/std@0.64.0/fmt/colors.ts my_module.ts
+deno cache --reload=https://deno.land/std@0.65.0/fs/copy.ts,https://deno.land/std@0.65.0/fmt/colors.ts my_module.ts
 ```
 
 <!-- Should this be part of examples? -->

@@ -1,10 +1,10 @@
 ## アサーション
 
 開発者がテストを記述できるように、Deno標準ライブラリには、
-`https：//deno.land/std@0.64.0/testing/asserts.ts`からインポートできる組み込みの[アサーションモジュール](https://deno.land/std/testing/asserts.ts)が付属しています。
+`https：//deno.land/std@0.65.0/testing/asserts.ts`からインポートできる組み込みの[アサーションモジュール](https://deno.land/std/testing/asserts.ts)が付属しています。
 
 ```js
-import { assert } from "https://deno.land/std@0.64.0/testing/asserts.ts";
+import { assert } from "https://deno.land/std@0.65.0/testing/asserts.ts";
 
 Deno.test("Hello Test", () => {
   assert("Hello");
@@ -166,7 +166,7 @@ Deno.test("Test Assert Throws Async", () => {
 
 Denoの組み込みアサーションはそれぞれ、必要に応じて標準のCLIエラーメッセージを上書きできます。
 
-たとえば、この例では"Values Don't Match!"が出力されます。標準のCLIエラーメッセージではなく。
+例えば、この例では"Values Don't Match!"が出力されます。標準のCLIエラーメッセージではなく。
 
 ```js
 Deno.test("Test Assert Equal Fail Custom Message", () => {

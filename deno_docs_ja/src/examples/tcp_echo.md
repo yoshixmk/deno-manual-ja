@@ -13,7 +13,7 @@ for await (const conn of listener) {
 このプログラムを起動すると、PermissionDeniedエラーがスローされます。
 
 ```shell
-$ deno run https://deno.land/std@$STD_VERSION/examples/echo_server.ts
+$ deno run https://deno.land/std@0.65.0/examples/echo_server.ts
 error: Uncaught PermissionDenied: network access to "0.0.0.0:8080", run again with the --allow-net flag
 ► $deno$/dispatch_json.ts:40:11
     at DenoError ($deno$/errors.ts:20:5)
@@ -23,7 +23,7 @@ error: Uncaught PermissionDenied: network access to "0.0.0.0:8080", run again wi
 セキュリティ上の理由から、Denoは明示的な許可なしにプログラムがネットワークにアクセスすることを許可していません。ネットワークへのアクセスを許可するには、コマンドラインフラグを使用します：
 
 ```shell
-deno run --allow-net https://deno.land/std@$STD_VERSION/examples/echo_server.ts
+$ deno run --allow-net https://deno.land/std@0.65.0/examples/echo_server.ts
 ```
 
 テストするには、netcatを使用してデータを送信してみてください。

@@ -33,7 +33,7 @@ const p = Deno.run({
     "deno",
     "run",
     "--allow-read",
-    "https://deno.land/std@$STD_VERSION/examples/cat.ts",
+    "https://deno.land/std@0.65.0/examples/cat.ts",
     ...fileNames,
   ],
   stdout: "piped",

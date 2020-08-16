@@ -28,7 +28,7 @@ Deno.test({
 
 ## アサーション
 
-テストを容易にするために、[https：//deno.land/std@0.64.0/testing#usage](https://deno.land/std@0.64.0/testing#usage)に有用なアサーションユーティリティがいくつかあります。
+テストを容易にするために、[https：//deno.land/std@0.65.0/testing#usage](https://deno.land/std@0.65.0/testing#usage)に有用なアサーションユーティリティがいくつかあります。
 
 ```ts
 import {
@@ -96,7 +96,7 @@ deno test util/
 deno test my_test.ts
 ```
 
-`deno test`は`deno run`と同じアクセス許可モデルを使用するため、たとえば、テスト中に`--allow-write`を実行してファイルシステムに書き込む必要があります。
+`deno test`は`deno run`と同じアクセス許可モデルを使用するため、例えば、テスト中に`--allow-write`を実行してファイルシステムに書き込む必要があります。
 
 `deno test`のすべてのランタイムオプションを表示するには、コマンドラインのhelpで参照できます。
 
@@ -142,7 +142,7 @@ _パターンを使用することをDenoに通知するには、REGEXのJavaScr
 
 #### フィルタリング（特定のテストは無視）
 
-ある種の条件に基づくテストを無視したい場合があります（たとえば、Windowsでのみテストを実行したい場合など）。このために、テスト定義で`ignore`のboolean値を使用できます。 trueに設定されている場合、テストはスキップされます。
+ある種の条件に基づくテストを無視したい場合があります（例えば、Windowsでのみテストを実行したい場合など）。このために、テスト定義で`ignore`のboolean値を使用できます。 trueに設定されている場合、テストはスキップされます。
 
 ```ts
 Deno.test({
