@@ -45,7 +45,7 @@ $ deno run --allow-read main.ts
 hello world
 ```
 
-リモートモジュールを使用するWorker向け。 --allow-netパーミッションが必要です:
+リモートモジュールを使用するWorker向け。`--allow-net`パーミッションが必要です:
 
 **main.ts**
 
@@ -74,7 +74,7 @@ hello world
 
 デフォルトでは、`Deno`名前空間はWorkerスコープでは使用できません。 
 
-新しいWorkerを作成するときに`Deno`名前空間パス`deno：true`オプションを追加するには：
+新しいWorkerを作成するときに`Deno`名前空間に渡すには`deno：true`オプションを追加します：
 
 **main.js**
 
@@ -107,4 +107,6 @@ hello world
 $ deno run --allow-read --unstable main.js
 hello world
 ```
-`Deno`名前空間がWorkerスコープで使用可能な場合、Workerは親プロセスのパーミッション（`--allow-*`フラグを使用して指定されたもの）を継承します。 パーミッションをWorkerに対して構成可能にする予定です。
+`Deno`名前空間がWorkerスコープで使用可能な場合、Workerは親プロセスのパーミッション（`--allow-*`フラグを使用して指定されたもの）を継承します。
+
+パーミッションをWorkerに対して構成可能にする予定です。
