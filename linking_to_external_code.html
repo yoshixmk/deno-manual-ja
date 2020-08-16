@@ -162,7 +162,7 @@
                         <h1><a class="header" href="#サードパーティのコードへのリンク" id="サードパーティのコードへのリンク">サードパーティのコードへのリンク</a></h1>
 <p>「<a href="(./getting_started.html">入門</a>」のセクションでは、DenoがURLからスクリプトを実行できることを確認しました。ブラウザのJavaScriptと同様に、DenoはURLから直接ライブラリをインポートできます。この例では、URLを使用してアサーションライブラリをインポートします。</p>
 <p><strong>test.ts</strong></p>
-<pre><code class="language-ts">import { assertEquals } from &quot;https://deno.land/std/testing/asserts.ts&quot;;
+<pre><code class="language-ts">import { assertEquals } from &quot;https://deno.land/std@0.65.0/testing/asserts.ts&quot;;
 
 assertEquals(&quot;hello&quot;, &quot;hello&quot;);
 assertEquals(&quot;world&quot;, &quot;world&quot;);
@@ -172,9 +172,9 @@ console.log(&quot;Asserted! ✓&quot;);
 <p>これを実行してみてください：</p>
 <pre><code class="language-shell">$ deno run test.ts
 Compile file:///mnt/f9/Projects/github.com/denoland/deno/docs/test.ts
-Download https://deno.land/std/testing/asserts.ts
-Download https://deno.land/std/fmt/colors.ts
-Download https://deno.land/std/testing/diff.ts
+Download https://deno.land/std@0.65.0/testing/asserts.ts
+Download https://deno.land/std@0.65.0/fmt/colors.ts
+Download https://deno.land/std@0.65.0/testing/diff.ts
 Asserted! ✓
 </code></pre>
 <p>このプログラムに<code>--allow-net</code>フラグを提供する必要はなかったが、ネットワークにアクセスしたことに注意してください。ランタイムには、インポートをダウンロードしてディスクにキャッシュするための特別なアクセス権があります。</p>
@@ -188,7 +188,7 @@ Asserted! ✓
 <h2><a class="header" href="#faq" id="faq">FAQ</a></h2>
 <h3><a class="header" href="#モジュールの特定のバージョンをインポートするにはどうすればよいですか" id="モジュールの特定のバージョンをインポートするにはどうすればよいですか">モジュールの特定のバージョンをインポートするにはどうすればよいですか？</a></h3>
 <p>URLでバージョンを指定します。例えば、次のように実行中のコードで完全URLで指定します。 <code>https://unpkg.com/liltest@0.0.5/dist/liltest.js</code>。</p>
-<h3><a class="header" href="#どこにでもurlをインポートするのは扱いにくいようです" id="どこにでもurlをインポートするのは扱いにくいようです">どこにでもURLをインポートするのは扱いにくいようです。</a></h3>
+<h3><a class="header" href="#どこにでもurlをインポートするのは扱いにくいと思います" id="どこにでもurlをインポートするのは扱いにくいと思います">どこにでもURLをインポートするのは扱いにくいと思います。</a></h3>
 <blockquote>
 <p>URLの1つが微妙に異なるバージョンのライブラリにリンクしている場合はどうなりますか？<br />
 大規模なプロジェクトのどこにでもURLを保持するのは間違いやすいのではないでしょうか？</p>
@@ -199,7 +199,7 @@ Asserted! ✓
   assert,
   assertEquals,
   assertStrContains,
-} from &quot;https://deno.land/std/testing/asserts.ts&quot;;
+} from &quot;https://deno.land/std@0.65.0/testing/asserts.ts&quot;;
 </code></pre>
 <p>また、同じプロジェクト全体で、<code>deps.ts</code>からインポートして、同じURLへの多くの参照を避けることができます。</p>
 <pre><code class="language-ts">import { assertEquals, runTests, test } from &quot;./deps.ts&quot;;

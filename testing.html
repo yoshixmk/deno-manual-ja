@@ -180,11 +180,11 @@ Deno.test({
 });
 </code></pre>
 <h2><a class="header" href="#アサーション" id="アサーション">アサーション</a></h2>
-<p>テストを容易にするために、<a href="https://deno.land/std@0.65.0/testing#usage">https：//deno.land/std@0.65.0/testing#usage</a>に有用なアサーションユーティリティがいくつかあります。</p>
+<p>テストを容易にするために、<a href="https://deno.land/std@0.65.0/testing#usage">https://deno.land/std@0.65.0/testing#usage</a>に有用なアサーションユーティリティがいくつかあります。</p>
 <pre><code class="language-ts">import {
   assertEquals,
   assertArrayContains,
-} from &quot;https://deno.land/std/testing/asserts.ts&quot;;
+} from &quot;https://deno.land/std@0.65.0/testing/asserts.ts&quot;;
 
 Deno.test(&quot;hello world&quot;, () =&gt; {
   const x = 1 + 2;
@@ -192,9 +192,9 @@ Deno.test(&quot;hello world&quot;, () =&gt; {
   assertArrayContains([1, 2, 3, 4, 5, 6], [3], &quot;Expected 3 to be in the array&quot;);
 });
 </code></pre>
-<h3><a class="header" href="#非同期ファンクション" id="非同期ファンクション">非同期ファンクション</a></h3>
+<h3><a class="header" href="#非同期なファンクション" id="非同期なファンクション">非同期なファンクション</a></h3>
 <p>promiseを返すテスト関数を渡すことで、非同期コードをテストすることもできます。このため、関数を定義するときに<code>async</code>キーワードを使用できます:</p>
-<pre><code class="language-ts">import { delay } from &quot;https://deno.land/std/async/delay.ts&quot;;
+<pre><code class="language-ts">import { delay } from &quot;https://deno.land/std@0.65.0/async/delay.ts&quot;;
 
 Deno.test(&quot;async hello world&quot;, async () =&gt; {
   const x = 1 + 2;
@@ -207,7 +207,7 @@ Deno.test(&quot;async hello world&quot;, async () =&gt; {
   }
 });
 </code></pre>
-<h3><a class="header" href="#リソースおよび非同期opサニタイザー" id="リソースおよび非同期opサニタイザー">リソースおよび非同期opサニタイザー</a></h3>
+<h3><a class="header" href="#リソースおよび非同期なopサニタイザー" id="リソースおよび非同期なopサニタイザー">リソースおよび非同期なopサニタイザー</a></h3>
 <p>Denoの特定のアクションは、リソーステーブルにリソースを作成します（<a href="(./contributing/architecture.html">詳細はこちら</a>）。これらのリソースは、使い終わったら閉じてください。</p>
 <p>各テスト定義について、テストランナーはこのテストで作成されたすべてのリソースが閉じられていることを確認します。これは、リソースの「リーク」を防ぐためです。これはすべてのテストでデフォルトで有効になっていますが、テスト定義で<code>sanitizeResources</code>のboolean値をfalseに設定することで無効にできます。</p>
 <p>ファイルシステムとの対話などの非同期操作についても同様です。テストランナーは、テストで開始する各操作がテストの終了前に完了することを確認します。これはすべてのテストでデフォルトで有効になっていますが、テスト定義でsanitizeOpsのboolean値をfalseに設定することで無効にできます。</p>
@@ -221,7 +221,7 @@ Deno.test(&quot;async hello world&quot;, async () =&gt; {
 });
 </code></pre>
 <h2><a class="header" href="#テストの実行" id="テストの実行">テストの実行</a></h2>
-<p>テストを実行するには、テスト関数を含むファイルを使用して<code>deno test</code>を呼び出します。また、ファイル名を省略することもできます。その場合、現在のディレクトリ内でglobが<code>{*_,*.,}test.{js,mjs,ts,jsx,tsx}</code>に一致するすべてのテストが（再帰的に）実行されます。ディレクトリを渡すと、このグロブに一致するディレクトリ内のすべてのファイルが実行されます。</p>
+<p>テストを実行するには、テスト関数を含むファイルを使用して<code>deno test</code>を呼び出します。また、ファイル名を省略することもできます。その場合、現在のディレクトリ内でglobが<code>{*_,*.,}test.{js,mjs,ts,jsx,tsx}</code>に一致するすべてのテストが（再帰的に）実行されます。ディレクトリを渡すと、このglobに一致するディレクトリ内のすべてのファイルが実行されます。</p>
 <pre><code class="language-shell"># Run all tests in the current directly and all sub-directories
 deno test
 

@@ -188,7 +188,7 @@ Deno.test(&quot;Hello Test&quot;, () =&gt; {
   assert(true);
 });
 </code></pre>
-<h3><a class="header" href="#同等性" id="同等性">同等性</a></h3>
+<h3><a class="header" href="#等価性" id="等価性">等価性</a></h3>
 <p>利用可能な等価アサーションには、<code>assertEquals()</code>、<code>assertNotEquals()</code> 、 <code>assertStrictEquals()</code>の3つがあります</p>
 <p><code>assertEquals()</code> と <code>assertNotEquals()</code> のメソッドは、一般的な等価チェックを提供し、プリミティブ型とオブジェクト間の等価をアサートすることができます。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Equals&quot;, () =&gt; {
@@ -224,10 +224,10 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
   assertStrictEquals(undefined, undefined);
 });
 </code></pre>
-<p><code>assertStrictEquals()</code> 最好用于精确判断两个基本类型的相等性。</p>
+<p><code>assertStrictEquals()</code>アサーションは、2つのプリミティブ型を正確にチェックする場合に最適です。</p>
 <h3><a class="header" href="#包含" id="包含">包含</a></h3>
-<p>値が値を含むことをアサートするために使用できるメソッドは、<code>assertStringContains()</code>と<code>assertArrayContains()</code>の2つです。 <code>assertStringContains()</code>アサーションは、期待される文字列が含まれているかどうかを確認するために、文字列に対して単純なインクルードチェックを実行します。</p>
-<p><code>assertStringContains()</code>アサーションは、期待される文字列が含まれているかどうかを確認するために、文字列に対して単純なインクルードチェックを実行します。</p>
+<p>値が値を含むことをアサートするために使用できるメソッドは、<code>assertStringContains()</code>と<code>assertArrayContains()</code>の2つです。</p>
+<p><code>assertStringContains()</code>アサーションは、対象の文字列に対して、単純に期待される文字列が含まれているかどうかを調べます。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert String Contains&quot;, () =&gt; {
   assertStringContains(&quot;Hello World&quot;, &quot;Hello&quot;);
 });
@@ -249,7 +249,7 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
   assertMatch(&quot;http://facebook.com&quot;, basicUrl);
 });
 </code></pre>
-<h3><a class="header" href="#例外スロー" id="例外スロー">例外スロー</a></h3>
+<h3><a class="header" href="#エラーのスロー" id="エラーのスロー">エラーのスロー</a></h3>
 <p>Denoでエラーがスローされたかどうかをアサートするには、<code>assertThrows()</code>と<code>assertAsyncThrows()</code>の2つの方法があります。どちらのアサーションでも、<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>がスローされたこと、スローされたエラーのタイプ、メッセージが何であったかを確認できます。</p>
 <p>2つのアサーションの違いは、<code>assertThrows()</code>が標準関数を受け入れ、<code>assertAsyncThrows()</code>が<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a> を返す関数を受け入れることです。</p>
 <p><code>assertThrows()</code>は、エラーがスローされたことを確認し、オプションで、スローされたエラーが正しいタイプであることを確認し、エラーメッセージが期待どおりであることをアサートします。</p>
@@ -286,7 +286,7 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
 </code></pre>
 <h3><a class="header" href="#カスタムメッセージ" id="カスタムメッセージ">カスタムメッセージ</a></h3>
 <p>Denoの組み込みアサーションはそれぞれ、必要に応じて標準のCLIエラーメッセージを上書きできます。</p>
-<p>例えば、この例では&quot;Values Don't Match!&quot;が出力されます。標準のCLIエラーメッセージではなく。</p>
+<p>例えば、この例では標準のCLIエラーメッセージではなく、&quot;Values Don't Match!&quot;が出力されます。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Equal Fail Custom Message&quot;, () =&gt; {
   assertEquals(1, 2, &quot;Values Don't Match!&quot;);
 });

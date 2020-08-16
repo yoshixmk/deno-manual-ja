@@ -924,7 +924,7 @@ hello world
 <h1><a class="header" href="#サードパーティのコードへのリンク" id="サードパーティのコードへのリンク">サードパーティのコードへのリンク</a></h1>
 <p>「<a href="(./getting_started.html">入門</a>」のセクションでは、DenoがURLからスクリプトを実行できることを確認しました。ブラウザのJavaScriptと同様に、DenoはURLから直接ライブラリをインポートできます。この例では、URLを使用してアサーションライブラリをインポートします。</p>
 <p><strong>test.ts</strong></p>
-<pre><code class="language-ts">import { assertEquals } from &quot;https://deno.land/std/testing/asserts.ts&quot;;
+<pre><code class="language-ts">import { assertEquals } from &quot;https://deno.land/std@0.65.0/testing/asserts.ts&quot;;
 
 assertEquals(&quot;hello&quot;, &quot;hello&quot;);
 assertEquals(&quot;world&quot;, &quot;world&quot;);
@@ -934,9 +934,9 @@ console.log(&quot;Asserted! ✓&quot;);
 <p>これを実行してみてください：</p>
 <pre><code class="language-shell">$ deno run test.ts
 Compile file:///mnt/f9/Projects/github.com/denoland/deno/docs/test.ts
-Download https://deno.land/std/testing/asserts.ts
-Download https://deno.land/std/fmt/colors.ts
-Download https://deno.land/std/testing/diff.ts
+Download https://deno.land/std@0.65.0/testing/asserts.ts
+Download https://deno.land/std@0.65.0/fmt/colors.ts
+Download https://deno.land/std@0.65.0/testing/diff.ts
 Asserted! ✓
 </code></pre>
 <p>このプログラムに<code>--allow-net</code>フラグを提供する必要はなかったが、ネットワークにアクセスしたことに注意してください。ランタイムには、インポートをダウンロードしてディスクにキャッシュするための特別なアクセス権があります。</p>
@@ -950,7 +950,7 @@ Asserted! ✓
 <h2><a class="header" href="#faq" id="faq">FAQ</a></h2>
 <h3><a class="header" href="#モジュールの特定のバージョンをインポートするにはどうすればよいですか" id="モジュールの特定のバージョンをインポートするにはどうすればよいですか">モジュールの特定のバージョンをインポートするにはどうすればよいですか？</a></h3>
 <p>URLでバージョンを指定します。例えば、次のように実行中のコードで完全URLで指定します。 <code>https://unpkg.com/liltest@0.0.5/dist/liltest.js</code>。</p>
-<h3><a class="header" href="#どこにでもurlをインポートするのは扱いにくいようです" id="どこにでもurlをインポートするのは扱いにくいようです">どこにでもURLをインポートするのは扱いにくいようです。</a></h3>
+<h3><a class="header" href="#どこにでもurlをインポートするのは扱いにくいと思います" id="どこにでもurlをインポートするのは扱いにくいと思います">どこにでもURLをインポートするのは扱いにくいと思います。</a></h3>
 <blockquote>
 <p>URLの1つが微妙に異なるバージョンのライブラリにリンクしている場合はどうなりますか？<br />
 大規模なプロジェクトのどこにでもURLを保持するのは間違いやすいのではないでしょうか？</p>
@@ -961,7 +961,7 @@ Asserted! ✓
   assert,
   assertEquals,
   assertStrContains,
-} from &quot;https://deno.land/std/testing/asserts.ts&quot;;
+} from &quot;https://deno.land/std@0.65.0/testing/asserts.ts&quot;;
 </code></pre>
 <p>また、同じプロジェクト全体で、<code>deps.ts</code>からインポートして、同じURLへの多くの参照を避けることができます。</p>
 <pre><code class="language-ts">import { assertEquals, runTests, test } from &quot;./deps.ts&quot;;
@@ -983,8 +983,7 @@ git add -u deno_dir
 git commit
 </code></pre>
 <h2><a class="header" href="#モジュールの再読み込み" id="モジュールの再読み込み">モジュールの再読み込み</a></h2>
-<p>デフォルトでは、キャッシュ内のモジュールは、フェッチまたは再コンパイルせずに再利用されます。これは望ましくない場合があり、denoにモジュールを再フェッチしてキャッシュに再コンパイルさせることができます。 <code>deno cache</code>サブコマンドの<code>--reload</code>フラグを使用して、ローカルの<code>DENO_DIR</code>キャッシュを無効にすることができます。</p>
-<p>使い方は以下の通りです:</p>
+<p>デフォルトでは、キャッシュ内のモジュールは、フェッチまたは再コンパイルせずに再利用されます。これは望ましくない場合があり、denoにモジュールを再フェッチしてキャッシュに再コンパイルさせることができます。 <code>deno cache</code>サブコマンドの<code>--reload</code>フラグを使用して、ローカルの<code>DENO_DIR</code>キャッシュを無効にすることができます。使い方は以下の通りです:</p>
 <h3><a class="header" href="#すべてをリロードする" id="すべてをリロードする">すべてをリロードする</a></h3>
 <pre><code class="language-ts">deno cache --reload my_module.ts
 </code></pre>
@@ -1043,7 +1042,7 @@ deno test --allow-read src
 <h2><a class="header" href="#プロキシ" id="プロキシ">プロキシ</a></h2>
 <p>Denoは、モジュールダウンロードのプロキシとWeb標準<code>fetch</code>APIをサポートしています。</p>
 <p>プロキシ構成は、環境変数<code>HTTP_PROXY</code>および<code>HTTPS_PROXY</code>から読み取られます。 </p>
-<p>Windowsの場合、環境変数が見つからない場合、Denoはレジストリからプロキシを読み取ることにフォールバックします。</p>
+<p>Windowsの場合、環境変数が見つからない場合、Denoはレジストリからプロキシを読み取るようにフォールバックします。</p>
 <h2><a class="header" href="#import-maps" id="import-maps">Import maps</a></h2>
 <blockquote>
 <p>これは不安定な機能です。<a href="linking_to_external_code/../runtime/stability.html">不安定な機能の詳細</a>をご覧ください。</p>
@@ -1131,7 +1130,7 @@ TS2339 [ERROR]: Property 'utimeSync' does not exist on type 'typeof Deno'.
          ~~~~~~~~~
     at https://deno.land/std@0.65.0/fs/copy.ts:101:10
 </code></pre>
-<p>解决方法是加上 <code>--unstable</code> 选项：</p>
+<p>この問題を解決するには、<code>--unstable</code>フラグを追加する必要があります:</p>
 <pre><code class="language-shell">deno run --allow-read --allow-write --unstable main.ts
 </code></pre>
 <p>API生成エラーが不安定であることを確認するには、
@@ -1159,11 +1158,11 @@ Deno.test({
 });
 </code></pre>
 <h2><a class="header" href="#アサーション" id="アサーション">アサーション</a></h2>
-<p>テストを容易にするために、<a href="https://deno.land/std@0.65.0/testing#usage">https：//deno.land/std@0.65.0/testing#usage</a>に有用なアサーションユーティリティがいくつかあります。</p>
+<p>テストを容易にするために、<a href="https://deno.land/std@0.65.0/testing#usage">https://deno.land/std@0.65.0/testing#usage</a>に有用なアサーションユーティリティがいくつかあります。</p>
 <pre><code class="language-ts">import {
   assertEquals,
   assertArrayContains,
-} from &quot;https://deno.land/std/testing/asserts.ts&quot;;
+} from &quot;https://deno.land/std@0.65.0/testing/asserts.ts&quot;;
 
 Deno.test(&quot;hello world&quot;, () =&gt; {
   const x = 1 + 2;
@@ -1171,9 +1170,9 @@ Deno.test(&quot;hello world&quot;, () =&gt; {
   assertArrayContains([1, 2, 3, 4, 5, 6], [3], &quot;Expected 3 to be in the array&quot;);
 });
 </code></pre>
-<h3><a class="header" href="#非同期ファンクション" id="非同期ファンクション">非同期ファンクション</a></h3>
+<h3><a class="header" href="#非同期なファンクション" id="非同期なファンクション">非同期なファンクション</a></h3>
 <p>promiseを返すテスト関数を渡すことで、非同期コードをテストすることもできます。このため、関数を定義するときに<code>async</code>キーワードを使用できます:</p>
-<pre><code class="language-ts">import { delay } from &quot;https://deno.land/std/async/delay.ts&quot;;
+<pre><code class="language-ts">import { delay } from &quot;https://deno.land/std@0.65.0/async/delay.ts&quot;;
 
 Deno.test(&quot;async hello world&quot;, async () =&gt; {
   const x = 1 + 2;
@@ -1186,7 +1185,7 @@ Deno.test(&quot;async hello world&quot;, async () =&gt; {
   }
 });
 </code></pre>
-<h3><a class="header" href="#リソースおよび非同期opサニタイザー" id="リソースおよび非同期opサニタイザー">リソースおよび非同期opサニタイザー</a></h3>
+<h3><a class="header" href="#リソースおよび非同期なopサニタイザー" id="リソースおよび非同期なopサニタイザー">リソースおよび非同期なopサニタイザー</a></h3>
 <p>Denoの特定のアクションは、リソーステーブルにリソースを作成します（<a href="(./contributing/architecture.html">詳細はこちら</a>）。これらのリソースは、使い終わったら閉じてください。</p>
 <p>各テスト定義について、テストランナーはこのテストで作成されたすべてのリソースが閉じられていることを確認します。これは、リソースの「リーク」を防ぐためです。これはすべてのテストでデフォルトで有効になっていますが、テスト定義で<code>sanitizeResources</code>のboolean値をfalseに設定することで無効にできます。</p>
 <p>ファイルシステムとの対話などの非同期操作についても同様です。テストランナーは、テストで開始する各操作がテストの終了前に完了することを確認します。これはすべてのテストでデフォルトで有効になっていますが、テスト定義でsanitizeOpsのboolean値をfalseに設定することで無効にできます。</p>
@@ -1200,7 +1199,7 @@ Deno.test(&quot;async hello world&quot;, async () =&gt; {
 });
 </code></pre>
 <h2><a class="header" href="#テストの実行" id="テストの実行">テストの実行</a></h2>
-<p>テストを実行するには、テスト関数を含むファイルを使用して<code>deno test</code>を呼び出します。また、ファイル名を省略することもできます。その場合、現在のディレクトリ内でglobが<code>{*_,*.,}test.{js,mjs,ts,jsx,tsx}</code>に一致するすべてのテストが（再帰的に）実行されます。ディレクトリを渡すと、このグロブに一致するディレクトリ内のすべてのファイルが実行されます。</p>
+<p>テストを実行するには、テスト関数を含むファイルを使用して<code>deno test</code>を呼び出します。また、ファイル名を省略することもできます。その場合、現在のディレクトリ内でglobが<code>{*_,*.,}test.{js,mjs,ts,jsx,tsx}</code>に一致するすべてのテストが（再帰的に）実行されます。ディレクトリを渡すと、このglobに一致するディレクトリ内のすべてのファイルが実行されます。</p>
 <pre><code class="language-shell"># Run all tests in the current directly and all sub-directories
 deno test
 
@@ -1286,7 +1285,7 @@ Deno.test(&quot;Hello Test&quot;, () =&gt; {
   assert(true);
 });
 </code></pre>
-<h3><a class="header" href="#同等性" id="同等性">同等性</a></h3>
+<h3><a class="header" href="#等価性" id="等価性">等価性</a></h3>
 <p>利用可能な等価アサーションには、<code>assertEquals()</code>、<code>assertNotEquals()</code> 、 <code>assertStrictEquals()</code>の3つがあります</p>
 <p><code>assertEquals()</code> と <code>assertNotEquals()</code> のメソッドは、一般的な等価チェックを提供し、プリミティブ型とオブジェクト間の等価をアサートすることができます。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Equals&quot;, () =&gt; {
@@ -1322,10 +1321,10 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
   assertStrictEquals(undefined, undefined);
 });
 </code></pre>
-<p><code>assertStrictEquals()</code> 最好用于精确判断两个基本类型的相等性。</p>
+<p><code>assertStrictEquals()</code>アサーションは、2つのプリミティブ型を正確にチェックする場合に最適です。</p>
 <h3><a class="header" href="#包含" id="包含">包含</a></h3>
-<p>値が値を含むことをアサートするために使用できるメソッドは、<code>assertStringContains()</code>と<code>assertArrayContains()</code>の2つです。 <code>assertStringContains()</code>アサーションは、期待される文字列が含まれているかどうかを確認するために、文字列に対して単純なインクルードチェックを実行します。</p>
-<p><code>assertStringContains()</code>アサーションは、期待される文字列が含まれているかどうかを確認するために、文字列に対して単純なインクルードチェックを実行します。</p>
+<p>値が値を含むことをアサートするために使用できるメソッドは、<code>assertStringContains()</code>と<code>assertArrayContains()</code>の2つです。</p>
+<p><code>assertStringContains()</code>アサーションは、対象の文字列に対して、単純に期待される文字列が含まれているかどうかを調べます。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert String Contains&quot;, () =&gt; {
   assertStringContains(&quot;Hello World&quot;, &quot;Hello&quot;);
 });
@@ -1347,7 +1346,7 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
   assertMatch(&quot;http://facebook.com&quot;, basicUrl);
 });
 </code></pre>
-<h3><a class="header" href="#例外スロー" id="例外スロー">例外スロー</a></h3>
+<h3><a class="header" href="#エラーのスロー" id="エラーのスロー">エラーのスロー</a></h3>
 <p>Denoでエラーがスローされたかどうかをアサートするには、<code>assertThrows()</code>と<code>assertAsyncThrows()</code>の2つの方法があります。どちらのアサーションでも、<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>がスローされたこと、スローされたエラーのタイプ、メッセージが何であったかを確認できます。</p>
 <p>2つのアサーションの違いは、<code>assertThrows()</code>が標準関数を受け入れ、<code>assertAsyncThrows()</code>が<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a> を返す関数を受け入れることです。</p>
 <p><code>assertThrows()</code>は、エラーがスローされたことを確認し、オプションで、スローされたエラーが正しいタイプであることを確認し、エラーメッセージが期待どおりであることをアサートします。</p>
@@ -1384,7 +1383,7 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
 </code></pre>
 <h3><a class="header" href="#カスタムメッセージ" id="カスタムメッセージ">カスタムメッセージ</a></h3>
 <p>Denoの組み込みアサーションはそれぞれ、必要に応じて標準のCLIエラーメッセージを上書きできます。</p>
-<p>例えば、この例では&quot;Values Don't Match!&quot;が出力されます。標準のCLIエラーメッセージではなく。</p>
+<p>例えば、この例では標準のCLIエラーメッセージではなく、&quot;Values Don't Match!&quot;が出力されます。</p>
 <pre><code class="language-js">Deno.test(&quot;Test Assert Equal Fail Custom Message&quot;, () =&gt; {
   assertEquals(1, 2, &quot;Values Don't Match!&quot;);
 });
@@ -1392,13 +1391,13 @@ Deno.test(&quot;Test Assert Not Equals&quot;, () =&gt; {
 <h1><a class="header" href="#ビルトインツール" id="ビルトインツール">ビルトインツール</a></h1>
 <p>Denoは、JavaScriptおよびTypeScriptを操作するときに役立つ組み込みツールをいくつか提供しています。</p>
 <ul>
-<li><a href="./tools/bundler.html"><code>deno bundle</code></a></li>
-<li><a href="./tools/debugger.html"><code>--inspect, --inspect-brk</code></a></li>
-<li><a href="./tools/dependency_inspector.html"><code>deno info</code></a></li>
-<li><a href="./tools/documentation_generator.html"><code>deno doc</code></a></li>
-<li><a href="./tools/formatter.html"><code>deno fmt</code></a></li>
-<li><a href="./testing.html"><code>deno test</code></a></li>
-<li><a href="./tools/linter.html"><code>deno lint</code></a></li>
+<li><a href="./tools/bundler.html"><code>bundler (deno bundle)</code></a></li>
+<li><a href="./tools/debugger.html"><code>debugger (--inspect, --inspect-brk)</code></a></li>
+<li><a href="./tools/dependency_inspector.html"><code>dependency inspector (deno info)</code></a></li>
+<li><a href="./tools/documentation_generator.html"><code>documentation generator (deno doc)</code></a></li>
+<li><a href="./tools/formatter.html"><code>formatter (deno fmt)</code></a></li>
+<li><a href="./testing.html"><code>test runner (deno test)</code></a></li>
+<li><a href="./tools/linter.html"><code>linter (deno lint)</code></a></li>
 </ul>
 <h2><a class="header" href="#debugger" id="debugger">Debugger</a></h2>
 <p>Deno supports the <a href="https://v8.dev/docs/inspector">V8 Inspector Protocol</a>.</p>
@@ -3400,7 +3399,7 @@ console.log(hello(&quot;kai&quot;));
 **/
 </code></pre>
 <h1><a class="header" href="#モジュールのインポートとエクスポート" id="モジュールのインポートとエクスポート">モジュールのインポートとエクスポート</a></h1>
-<p>Denoはデフォルトで、JavaScriptとTypeScriptの両方でモジュールをインポートする方法を標準化しています。 ECMAScript 6の<code>インポート/エクスポート</code>標準に従いますが、注意点が1つあります。ファイルタイプはインポートステートメントの最後に含める必要があります。</p>
+<p>Denoはデフォルトで、JavaScriptとTypeScriptの両方でモジュールをインポートする方法を標準化しています。 ECMAScript 6の<code>import/export</code>標準に従いますが、注意点が1つあります。ファイルタイプはインポートステートメントの最後に含める必要があります。</p>
 <pre><code class="language-js">import {
   add,
   multiply,
@@ -3496,7 +3495,7 @@ console.log(totalCost(45, 27, 1.15));
  * 82.8
  */
 </code></pre>
-<h2><a class="header" href="#unix-cat" id="unix-cat">Unix cat</a></h2>
+<h2><a class="header" href="#unixのcatプログラムの実装" id="unixのcatプログラムの実装">Unixの&quot;cat&quot;プログラムの実装</a></h2>
 <p>このプログラムでは、各コマンドライン引数はファイル名であると想定され、ファイルが開かれ、標準出力に出力されます。</p>
 <pre><code class="language-ts">const filenames = Deno.args;
 for (const filename of filenames) {
