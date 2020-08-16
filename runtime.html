@@ -160,16 +160,16 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#ランタイム" id="ランタイム">ランタイム</a></h1>
-<p>すべてのランタイム関数（Web API + Denoグローバル）の ドキュメントは、<a href="https://doc.deno.land/https/github.com/denoland/deno/releases/latest/download/lib.deno.d.ts">doc.deno.land</a>にあります。</p>
+<p>すべてのランタイム関数（Web API + <code>Deno</code>グローバル）の ドキュメントは、<a href="https://doc.deno.land/https/github.com/denoland/deno/releases/latest/download/lib.deno.d.ts">doc.deno.land</a>にあります。</p>
 <h2><a class="header" href="#web-api" id="web-api">Web API</a></h2>
-<p><code>fetch</code> HTTPリクエストのように、Web標準がすでに存在するAPIの場合、Denoは新しい独自のAPIを発明するのではなく、これらを使用します。</p>
+<p>HTTPリクエストのための<code>fetch</code>のように、Web標準がすでに存在するAPIの場合、Denoは新しい独自のAPIを発明するのではなく、これらを使用します。</p>
 <p>実装されたWeb APIの詳細なドキュメントは、<a href="https://doc.deno.land/https/raw.githubusercontent.com/denoland/deno/master/cli/dts/lib.deno.shared_globals.d.ts">doc.deno.land</a>にあります。さらに、Denoが実装するWeb APIの完全なリストは、<a href="https://github.com/denoland/deno/blob/master/cli/rt/README.md">リポジトリ</a>にもあります。</p>
 <p>実装されたWeb APIのTypeScript定義は、
 <a href="https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.shared_globals.d.ts">lib.deno.shared_globals.d.ts</a> および
 <a href="https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.window.d.ts">lib.deno.window.d.ts</a>ファイルにあります。</p>
-<p>ワーカーに固有の定義は<a href="https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.worker.d.ts">lib.deno.worker.d.ts</a>ファイルにあります。</p>
-<h2><a class="header" href="#deno-グローバル名前空間" id="deno-グローバル名前空間"><code>Deno</code> グローバル名前空間</a></h2>
-<p>Web標準ではないすべてのAPIは、グローバル<code>Deno</code>名前空間に含まれています。ファイルからの読み取り、TCPソケットのオープン、サブプロセスの実行などのためのAPIを備えています。</p>
+<p>ワーカー固有の定義は<a href="https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.worker.d.ts">lib.deno.worker.d.ts</a>ファイルにあります。</p>
+<h2><a class="header" href="#denoグローバル" id="denoグローバル"><code>Deno</code>グローバル</a></h2>
+<p>Web標準ではないすべてのAPIは、グローバルな<code>Deno</code>名前空間に含まれています。ファイルからの読み取り、TCPソケットのオープン、サブプロセスの実行などのためのAPIを備えています。</p>
 <p>Deno名前空間のTypeScript定義は
 <a href="https://github.com/denoland/deno/blob/master/cli/dts/lib.deno.ns.d.ts">lib.deno.ns.d.ts</a>ファイルにあります。</p>
 <p>Deno固有のすべてのAPIのドキュメントは、

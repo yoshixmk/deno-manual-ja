@@ -188,7 +188,7 @@ error: Uncaught PermissionDenied: read access to &quot;./worker.ts&quot;, run ag
 $ deno run --allow-read main.ts
 hello world
 </code></pre>
-<p>リモートモジュールを使用するWorker向け。 --allow-netパーミッションが必要です:</p>
+<p>リモートモジュールを使用するWorker向け。<code>--allow-net</code>パーミッションが必要です:</p>
 <p><strong>main.ts</strong></p>
 <pre><code class="language-ts">new Worker(&quot;https://example.com/worker.ts&quot;, { type: &quot;module&quot; });
 </code></pre>
@@ -207,7 +207,7 @@ hello world
 <p>これは不安定なDeno機能です。<a href="stability.html">不安定な機能の詳細</a>をご覧ください。</p>
 </blockquote>
 <p>デフォルトでは、<code>Deno</code>名前空間はWorkerスコープでは使用できません。 </p>
-<p>新しいWorkerを作成するときに<code>Deno</code>名前空間パス<code>deno：true</code>オプションを追加するには：</p>
+<p>新しいWorkerを作成するときに<code>Deno</code>名前空間に渡すには<code>deno：true</code>オプションを追加します：</p>
 <p><strong>main.js</strong></p>
 <pre><code class="language-ts">const worker = new Worker(new URL(&quot;worker.js&quot;, import.meta.url).href, {
   type: &quot;module&quot;,
@@ -229,7 +229,8 @@ worker.postMessage({ filename: &quot;./log.txt&quot; });
 <pre><code class="language-shell">$ deno run --allow-read --unstable main.js
 hello world
 </code></pre>
-<p><code>Deno</code>名前空間がWorkerスコープで使用可能な場合、Workerは親プロセスのパーミッション（<code>--allow-*</code>フラグを使用して指定されたもの）を継承します。 パーミッションをWorkerに対して構成可能にする予定です。</p>
+<p><code>Deno</code>名前空間がWorkerスコープで使用可能な場合、Workerは親プロセスのパーミッション（<code>--allow-*</code>フラグを使用して指定されたもの）を継承します。</p>
+<p>パーミッションをWorkerに対して構成可能にする予定です。</p>
 
                     </main>
 

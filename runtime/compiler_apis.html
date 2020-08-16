@@ -165,9 +165,9 @@
 </blockquote>
 <p>Denoは、組み込みのTypeScriptコンパイラへのランタイムアクセスをサポートしています。 <code>Deno</code>名前空間には、このアクセスを提供する3つのメソッドがあります。</p>
 <h3><a class="header" href="#denocompile" id="denocompile"><code>Deno.compile()</code></a></h3>
-<p>これは<code>deno cacheと</code>同様に機能し、コードのフェッチ、キャッシュ、コンパイルはできますが、実行はできません。これは、最大3つの引数で、<code>rootName</code>と、オプションで<code>sources</code>、<code>options</code>を取ります。 <code>rootName</code>は、結果のプログラムを生成するために使用されるルートモジュールです。これは、<code>deno run --reload example.ts</code>のコマンドラインで渡すモジュール名に似ています。<code>sources</code>はハッシュであり、キーは完全修飾モジュール名であり、値はモジュールのテキストソースです。<code>sources</code>が渡された場合、Denoはそのハッシュ内からすべてのモジュールを解決し、Denoの外部では解決を試みません。ソースが提供されない場合、Denoは、ルートモジュールがコマンドラインで渡されたかのようにモジュールを解決します。 Denoはこれらのリソースもキャッシュします。解決されたすべてのリソースは動的インポートとして扱われ、ローカルかリモートかに応じて読み取りまたはネットパーミッションが必要です。 <code>options</code>引数は、<code>Deno.CompilerOptions</code>タイプのオプションのセットです。これは、Denoでサポートされているオプションを含むTypeScriptコンパイラオプションのサブセットです。</p>
+<p>これは<code>deno cache</code>と同様に機能し、コードのフェッチ、キャッシュ、コンパイルはできますが、実行はできません。これは、最大3つの引数で、<code>rootName</code>と、オプションで<code>sources</code>、<code>options</code>を取ります。 <code>rootName</code>は、結果のプログラムを生成するために使用されるルートモジュールです。これは、<code>deno run --reload example.ts</code>のコマンドラインで渡すモジュール名に似ています。<code>sources</code>はハッシュであり、キーは完全修飾モジュール名であり、値はモジュールのテキストソースです。<code>sources</code>が渡された場合、Denoはそのハッシュ内からすべてのモジュールを解決し、Denoの外部では解決を試みません。ソースが提供されない場合、Denoは、ルートモジュールがコマンドラインで渡されたかのようにモジュールを解決します。 Denoはこれらのリソースもキャッシュします。解決されたすべてのリソースは動的インポートとして扱われ、ローカルかリモートかに応じて読み取りまたはネットへのパーミッションが必要です。 <code>options</code>引数は、<code>Deno.CompilerOptions</code>タイプのオプションのセットです。これは、Denoでサポートされているオプションを含むTypeScriptコンパイラオプションのサブセットです。</p>
 <p>メソッドはタプルで解決されます。最初の引数には、コードに関連するすべての診断（構文または型エラー）が含まれます。 2番目の引数は、キーが出力ファイル名で値がコンテンツであるマップです。</p>
-<p>ソースを提供する例：:</p>
+<p>ソースを提供する例：</p>
 <pre><code class="language-ts">const [diagnostics, emitMap] = await Deno.compile(&quot;/foo.ts&quot;, {
   &quot;/foo.ts&quot;: `import * as bar from &quot;./bar.ts&quot;;\nconsole.log(bar);\n`,
   &quot;/bar.ts&quot;: `export const bar = &quot;bar&quot;;\n`,
@@ -179,30 +179,30 @@ console.log(emitMap);
 <p>mapには、<code>/foo.js.map</code>、<code>/foo.js</code>、<code>/bar.js.map</code>、<code>/bar.js</code>という名前の4つの「ファイル」が含まれていると予想されます。</p>
 <p>リソースを提供しない場合は、コマンドラインで行うのと同じように、ローカルモジュールまたはリモートモジュールを使用できます。だからあなたはこのようなことをすることができます：</p>
 <pre><code class="language-ts">const [diagnostics, emitMap] = await Deno.compile(
-  &quot;https://deno.land/std/examples/welcome.ts&quot;,
+  &quot;https://deno.land/std@0.65.0/examples/welcome.ts&quot;,
 );
 </code></pre>
 <p>この場合、<code>emitMap</code>には<code>console.log()</code>ステートメントが含まれます。</p>
 <h3><a class="header" href="#denobundle" id="denobundle"><code>Deno.bundle()</code></a></h3>
-<p>これは、コマンドラインで<code>deno bundle</code>が行うのとよく似ています。これも<code>Deno.compile()</code>に似ていますが、ファイルのマップを返す代わりに、提供または解決されたすべてのコードとエクスポートを含む自己完結型のJavaScript ESモジュールである単一の文字列を返します。提供されたルートモジュールのすべてのエクスポートのこれは、最大3つの引数で、<code>rootName</code>、オプションで<code>sources</code>、<code>options</code>を取ります。 <code>rootName</code>は、結果のプログラムを生成するために使用されるルートモジュールです。これは、<code>deno bundle example.ts</code>のコマンドラインで渡すモジュール名に似ています。<code>sources</code>はハッシュであり、キーは完全修飾モジュール名であり、値はモジュールのテキストソースです。<code>sources</code>が渡された場合、Denoはそのハッシュ内からすべてのモジュールを解決し、Denoの外部では解決を試みません。<code>sources</code>が提供されない場合、Denoは、ルートモジュールがコマンドラインで渡されたかのようにモジュールを解決します。解決されたすべてのリソースは動的インポートとして扱われ、ローカルかリモートかに応じて読み取りまたはネットパーミッションが必要です。 Denoはこれらのリソースもキャッシュします。 <code>options</code>引数は、<code>Deno.CompilerOptions</code>タイプのオプションのセットです。これは、Denoでサポートされているオプションを含むTypeScriptコンパイラオプションのサブセットです。</p>
+<p>これは、コマンドラインで<code>deno bundle</code>が行うのとよく似ています。これも<code>Deno.compile()</code>に似ていますが、ファイルのマップを返す代わりに、提供または解決されたすべてのコードとエクスポートを含む自己完結型のJavaScript ESモジュールである単一の文字列を返します。提供されたルートモジュールのすべてのエクスポートのこれは、最大3つの引数で、<code>rootName</code>、オプションで<code>sources</code>、<code>options</code>を取ります。 <code>rootName</code>は、結果のプログラムを生成するために使用されるルートモジュールです。これは、<code>deno bundle example.ts</code>のコマンドラインで渡すモジュール名に似ています。<code>sources</code>はハッシュで、キーは完全修飾モジュール名であり、値はモジュールのテキストソースです。<code>sources</code>が渡された場合、Denoはそのハッシュ内からすべてのモジュールを解決し、Denoの外部では解決を試みません。<code>sources</code>が提供されない場合、Denoは、ルートモジュールがコマンドラインで渡されたかのようにモジュールを解決します。解決されたすべてのリソースは動的インポートとして扱われ、ローカルかリモートかに応じて読み取りまたはネットへのパーミッションが必要です。 Denoはこれらのリソースもキャッシュします。 <code>options</code>引数は、<code>Deno.CompilerOptions</code>タイプのオプションのセットです。これは、Denoでサポートされているオプションを含むTypeScriptコンパイラオプションのサブセットです。</p>
 <p>ソースを提供する例:</p>
 <pre><code class="language-ts">const [diagnostics, emit] = await Deno.bundle(&quot;/foo.ts&quot;, {
   &quot;/foo.ts&quot;: `import * as bar from &quot;./bar.ts&quot;;\nconsole.log(bar);\n`,
   &quot;/bar.ts&quot;: `export const bar = &quot;bar&quot;;\n`,
 });
 
-assert(diagnostics == null); // 确保没有返回诊断信息
+assert(diagnostics == null); // ensuring no diagnostics are returned
 console.log(emit);
 </code></pre>
-<p>両方のモジュールの出力ソースを含む、ESモジュールのテキストが<code>出力</code>されることを期待します。</p>
+<p>両方のモジュールの出力ソースを含め、<code>emit</code>がESモジュールのテキストであることを期待します。</p>
 <p>リソースを提供しない場合は、コマンドラインで行うのと同じように、ローカルモジュールまたはリモートモジュールを使用できます。だからあなたはこのようなことをすることができます:</p>
 <pre><code class="language-ts">const [diagnostics, emit] = await Deno.bundle(
-  &quot;https://deno.land/std/http/server.ts&quot;,
+  &quot;https://deno.land/std@0.65.0/http/server.ts&quot;,
 );
 </code></pre>
-<p>在这种情况下，<code>emit</code> 将是一个自包含的 JavaScript ES 模块，并解析了所有依赖项，导出与源模块相同的导出。</p>
+<p>この場合、<code>emit</code>は、すべての依存関係が解決され、ソースモジュールと同じエクスポートを出力する、自身を含むJavaScript ESモジュールになります。</p>
 <h3><a class="header" href="#denotranspileonly" id="denotranspileonly"><code>Deno.transpileOnly()</code></a></h3>
-<p>これは、TypeScript関数<code>transpileModule()</code>に基づいています。これが行うことは、モジュールからすべてのタイプを「消去」し、JavaScriptを発行することだけです。型チェックや依存関係の解決はありません。最大2つの引数を受け入れます。最初の引数は、キーがモジュール名で値がコンテンツであるハッシュです。モジュール名の唯一の目的は、ソースファイル名とは何か、ソースマップに情報を入れるときです。 2番目の引数には、<code>Deno.CompilerOptions</code>タイプの<code>options</code>オプションが含まれます。関数はマップで解決されます。キーは指定されたソースモジュール名であり、値は<code>source</code>のプロパティを持つオブジェクトで、オプションで<code>map</code>されます。 1つ目は、モジュールの出力内容です。 <code>map</code>プロパティはソースマップです。ソースマップはデフォルトで提供されますが、<code>options</code>引数を介してオフにすることができます。</p>
+<p>これは、TypeScript関数<code>transpileModule()</code>に基づいています。これが行うことは、モジュールからすべての型を「消去」し、JavaScriptを出力します。型チェックや依存関係の解決はありません。最大2つの引数を受け入れます。最初の引数は、キーがモジュール名で値がコンテンツであるハッシュです。モジュール名の唯一の目的は、ソースファイル名とは何か、ソースマップに情報を入れるときです。 2番目の引数には、<code>Deno.CompilerOptions</code>型の<code>options</code>オプションが含まれます。関数はmapで解決されます。キーは指定されたソースモジュール名であり、値は<code>source</code>と必要に応じて<code>map</code>のプロパティを持つオブジェクトです。 1つ目は、モジュールの出力内容です。 <code>map</code>プロパティはソースマップです。ソースマップはデフォルトで提供されますが、<code>options</code>引数を介してオフにすることができます。</p>
 <p>例：</p>
 <pre><code class="language-ts">const result = await Deno.transpileOnly({
   &quot;/foo.ts&quot;: `enum Foo { Foo, Bar, Baz };\n`,
@@ -211,9 +211,9 @@ console.log(emit);
 console.log(result[&quot;/foo.ts&quot;].source);
 console.log(result[&quot;/foo.ts&quot;].map);
 </code></pre>
-<p><code>enum</code>は、enumerableを構成するIIFEに書き換えられ、マップが定義されることを期待します。</p>
+<p><code>enum</code>は、列挙可能な構成のIIFEに書き換えられ、マップが定義されることを期待します。</p>
 <h3><a class="header" href="#typescriptライブラリファイルの参照" id="typescriptライブラリファイルの参照">TypeScriptライブラリファイルの参照</a></h3>
-<p><code>deno run</code>、またはTypeScriptを型チェックする他のDenoコマンドを使用すると、そのコードは、Denoがサポートする環境を記述するカスタムライブラリに対して評価されます。デフォルトでは、TypeScriptを型チェックするコンパイラランタイムAPIもこれらのライブラリ（<code>Deno.compile()</code>および<code>Deno.bundle()</code>）を使用します。</p>
+<p><code>deno run</code>を使用する時、またはTypeScriptを型チェックする他のDenoコマンドを使用した時、そのコードはDenoがサポートする環境を記述するカスタムライブラリに対して評価されます。デフォルトでは、TypeScriptを型チェックするコンパイラランタイムAPIもこれらのライブラリ（<code>Deno.compile()</code>および<code>Deno.bundle()</code>）を使用します。</p>
 <p>ただし、他のランタイム用にTypeScriptをコンパイルまたはバンドルする場合は、デフォルトのライブラリをオーバーライドすることができます。これを行うために、ランタイムAPIはコンパイラオプションの<code>lib</code>プロパティをサポートしています。例えば、ブラウザを宛先とするTypeScriptコードがある場合、TypeScriptの<code>&quot;dom&quot;</code>ライブラリを使用します。:</p>
 <pre><code class="language-ts">const [errors, emitted] = await Deno.compile(
   &quot;main.ts&quot;,
@@ -227,7 +227,7 @@ console.log(result[&quot;/foo.ts&quot;].map);
 </code></pre>
 <p>TypeScriptがサポートするすべてのライブラリのリストについては、<a href="https://www.typescriptlang.org/docs/handbook/compiler-options.html"><code>lib</code> コンパイラオプション</a>のドキュメントを参照してください。</p>
 <p><strong>JavaScriptライブラリを含めることを忘れないでください</strong></p>
-<p>就像 <code>tsc</code> 一样，当您提供一个 <code>lib</code> 编译器选项时，它会覆盖默认的选项，这意味着基本的 JavaScript 库不会被包含，而您应该包含最能代表您的目标运行时的选项（例如 <code>es5</code>，<code>es2015</code>，<code>es2016</code>，<code>es2017</code>，<code>es2018</code>，<code>es2019</code>，<code>es2020</code> 或 <code>esnext</code>）。</p>
+<p><code>tsc</code>と同様に、<code>lib</code>コンパイラオプションを指定すると、デフォルトのオプションが上書きされるため、基本的なJavaScriptライブラリは、対象のランタイムを最もよく表すものを含める必要があります（例えば、<code>es5</code>，<code>es2015</code>，<code>es2016</code>，<code>es2017</code>，<code>es2018</code>，<code>es2019</code>，<code>es2020</code>, <code>esnext</code>）。</p>
 <h4><a class="header" href="#deno名前空間を含める" id="deno名前空間を含める">Deno名前空間を含める</a></h4>
 <p>TypeScriptによって提供されるライブラリーに加えて、参照可能なDenoに組み込まれている4つのライブラリーがあります:</p>
 <ul>
@@ -259,7 +259,7 @@ document.getElementById(&quot;foo&quot;);
   lib: [&quot;esnext&quot;],
 });
 </code></pre>
-<p><strong>注意</strong>，<code>dom</code>ライブラリは、Denoのデフォルトタイプライブラリで定義されているデフォルトグローバルの一部と競合することに注意してください。これを回避するには、ランタイムコンパイラAPIのコンパイラオプションで<code>lib</code>オプションを指定する必要があります。</p>
+<p><strong>注意</strong> <code>dom</code>ライブラリは、Denoのデフォルトタイプライブラリで定義されているデフォルトグローバルの一部と競合することに注意してください。これを回避するには、ランタイムコンパイラAPIのコンパイラオプションで<code>lib</code>オプションを指定する必要があります。</p>
 
                     </main>
 

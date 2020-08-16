@@ -161,7 +161,7 @@
                     <main>
                         <h2><a class="header" href="#安定" id="安定">安定</a></h2>
 <p>Deno 1.0.0以降、<code>Deno</code>名前空間APIは安定しています。つまり、1.0.0で動作するコードが今後のバージョンでも引き続き動作するように努めます。</p>
-<p>ただし、Denoの機能のすべてがまだプロダクションの準備ができているわけではありません。まだドラフト段階にあるため準備ができていない機能は、<code>--unstable</code>コマンドラインフラグの背後にロックされています。</p>
+<p>ただし、Denoの機能のすべてがまだプロダクションの準備ができているわけではありません。まだドラフト段階にあるため準備ができていない機能は、<code>--unstable</code>コマンドラインフラグでロックされています。</p>
 <pre><code class="language-shell">deno run --unstable mod_which_uses_unstable_stuff.ts
 </code></pre>
 <p>このフラグを渡すと、いくつかのことが行われます。</p>
@@ -169,7 +169,7 @@
 <li>実行時に不安定なAPIを使用できるようにします。</li>
 <li><a href="https://doc.deno.land/https/raw.githubusercontent.com/denoland/deno/master/cli/dts/lib.deno.unstable.d.ts"><code>lib.deno.unstable.d.ts</code></a>型チェックに使用されるTypeScript定義のリストにファイルを追加します。<code>deno types</code>にはこの出力が含まれます。</li>
 </ul>
-<p>多くの不安定なAPIは<strong>セキュリティレビューを受けておらず</strong>、将来APIに重大な変更が加えられる可能性が あり、<strong>本稼働の準備ができていない</strong>ことに注意してください。</p>
+<p>多くの不安定なAPIは<strong>セキュリティレビューを受けておらず</strong>、将来<strong>APIに破壊的な変更が加えられる</strong>可能性があり、<strong>本稼働の準備ができていない</strong>ことに注意してください。</p>
 <h3><a class="header" href="#標準モジュール" id="標準モジュール">標準モジュール</a></h3>
 <p>Denoの標準モジュール（<a href="https://deno.land/std/">https://deno.land/std/</a>）はまだ安定していません。現在、これを反映するために、CLIとは異なる方法で標準モジュールをバージョン管理しています。<code>Deno</code>名前空間とは異なり、標準モジュールの使用には<code>--unstable</code>フラグが不要であることに注意してください（標準モジュール自体が不安定なDeno機能を使用しない限り）。</p>
 
